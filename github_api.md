@@ -1,7 +1,7 @@
 # GithubX
 
-# Docs
-## Api.Readme
+# Github Api
+
 ### Get Readme
 https://raw.githubusercontent.com/{user}/{repo}/master/README.md
 
@@ -27,8 +27,7 @@ https://api.github.com/users/yazdipour/starred
         "owner": {
         "login": "pqina",
         "id": 22966117,
-        "avatar_url": "https://avatars0.githubusercontent.com/u/22966117?v=4"
-        }
+        "avatar_url": "https://avatars0.githubusercontent.com/u/22966117?v=4"},
         "private": false,
         "html_url": "https://github.com/pqina/filepond",
         "description": "🌊 A Flexible and Fun JavaScript File Upload Library",
