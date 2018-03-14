@@ -4,10 +4,17 @@
 
 * Json.NET
 * [HTML2Markdown](https://github.com/baynezy/Html2Markdown): Some readmes also have html tags
-* UWPCommunityToolkit
+* UWPCommunityToolkit 2.2
 
 # Cache
 
 * [WindowsCacheHandler](/GithubX.UWP/Services/Cache/WindowsCacheHandler.cs) [For User Profile and Settings]
 * [LocalCacheHandler](/GithubX.UWP/Services/Cache/LocalCacheHandler.cs) [For Offline Mode and MD Files]
 * [ServerCacheHandler](/GithubX.UWP/Services/Cache/ServerCacheHandler.cs) [For Saving Categories in Server]
+
+# Tasks
+
+- [ ] Fix 403 forbidden response
+- [ ] md Cache
+- [ ] Save to Pocket?!
+- [ ] Category Change Dialog
