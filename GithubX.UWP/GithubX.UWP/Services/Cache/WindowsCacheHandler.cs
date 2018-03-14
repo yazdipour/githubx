@@ -3,16 +3,17 @@ using Windows.Storage;
 
 namespace GithubX.UWP.Services.Cache
 {
-	static class WindowsCacheHandler
+	internal class WindowsCacheHandler:ICache
 	{
-		public static bool Exists(string address, bool roam = false)
+		ApplicationDataContainer ls = ApplicationData.Current.LocalSettings;
+
+		public bool Exists(string address)
 		{
-			return Read(address, roam) != null;
+			return Read(address) != null;
 		}
 
-		public static string Read(string address, bool roam = false)
+		public string Read(string address)
 		{
-			var ls = !roam ? ApplicationData.Current.LocalSettings : ApplicationData.Current.RoamingSettings;
 			try
 			{
 				return ls.Values[address].ToString();
@@ -20,9 +21,8 @@ namespace GithubX.UWP.Services.Cache
 			catch (Exception) { return null; }
 		}
 
-		public static bool Save(string address, string setting, bool roam = false)
+		public bool Save(string address, string setting)
 		{
-			var ls = !roam ? ApplicationData.Current.LocalSettings : ApplicationData.Current.RoamingSettings;
 			try
 			{
 				ls.Values[address] = setting;
@@ -31,14 +31,14 @@ namespace GithubX.UWP.Services.Cache
 			catch (Exception) { return false; }
 		}
 
-		public static void Remove(string address, bool roam = false)
+		public void Remove(string address)
 		{
-			var ls = !roam ? ApplicationData.Current.LocalSettings : ApplicationData.Current.RoamingSettings;
 			try
 			{
 				ls.Values.Remove(address);
 			}
 			catch (Exception) { }
 		}
+
 	}
 }

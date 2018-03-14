@@ -13,6 +13,13 @@
                                         TintOpacity="0.8" 
                                         TintColor="#ccc" 
                                         FallbackColor="#ccc"/>
+
+        <media:AcrylicBrush x:Key="DialogBoxAcrylicBrush" 
+                            BackgroundSource="Backdrop" 
+                            TintOpacity="0.2" 
+                            TintColor="#55FFFFFF" 
+                            FallbackColor="#FFF" />
+
     </Application.Resources>
 
 </Application>

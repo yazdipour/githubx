@@ -1,0 +1,2 @@
+GET https://api.github.com/users/yazdipour/starred?page=1 HTTP/1.1
+User-Agent: Test

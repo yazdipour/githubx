@@ -7,8 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:media="using:Windows.UI.Xaml.Media"
-    SizeChanged="Page_SizeChanged"
-    Loaded="Page_Loaded"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -23,9 +21,10 @@
         <StackPanel Margin="0 92 0 0">
             <StackPanel x:Name="buttonPanel" Margin="32 42 32 0" Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonBar}" Tag="0" Click="ButtonBar_Click" Content=" Share"/>
+                <Button Style="{StaticResource ButtonBar}" Tag="4" Click="ButtonBar_Click" Content=" Refresh"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open in Browser" />
                 <Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>
-                <Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content=" Save in Pocket"/>
+                <!--<Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content=" Save in Pocket"/>-->
             </StackPanel>
             <controls:DropShadowPanel 
                 Margin="32 0 32 32" OffsetY="3" 
@@ -34,14 +33,16 @@
                   BorderThickness="2" VerticalScrollMode="Enabled"
                   HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Visible">
-                    <controls:MarkdownTextBlock x:Name="MarkdownText" Background="White" Padding="16 8" LinkForeground="DodgerBlue"/>
+                    <controls:MarkdownTextBlock x:Name="MarkdownText" Text="### I will try load ReadMe.MD here!!!" 
+                                                Background="White" Padding="16 8"
+                                                LinkForeground="{x:Bind repo.Color}"/>
                 </ScrollViewer>
             </controls:DropShadowPanel>
         </StackPanel>
 
         <Grid VerticalAlignment="Top">
             <controls:DropShadowPanel Height="92" BlurRadius="6" ShadowOpacity="1" OffsetY="1" OffsetX="1"  Color="#55000000">
-                <Border Width="28" Height="92"  Opacity="0.7" Background="{x:Bind repo.Color}" Tapped="Border_Tapped">
+                <Border Width="28" Height="92"  Opacity="0.7" Background="{x:Bind repo.Color, Mode=OneWay}" Tapped="Border_Tapped">
                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE239;" FontSize="20"/>
                 </Border>
             </controls:DropShadowPanel>
@@ -59,7 +60,7 @@
                     </Grid.ColumnDefinitions>
                     <controls:ImageEx
                          IsCacheEnabled="True"
-                    Source="{x:Bind repo.owner.avatar_url}"
+                    Source="{x:Bind repo.owner.avatar_url, Mode=OneWay}"
                     Height="92"
                     Width="92"
                     Stretch="UniformToFill"
@@ -67,29 +68,28 @@
                     VerticalAlignment="Center" Grid.RowSpan="2"/>
                     <TextBlock 
                     Margin="8 0 0 0"
-                    Text="{x:Bind repo.full_name}" Grid.Column="1" VerticalAlignment="Bottom" 
+                    Text="{x:Bind repo.full_name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Bottom" 
                            FontWeight="Bold" FontSize="18"/>
                     <TextBlock 
                     Margin="8 4 4 0"
                     MaxLines="2"
                     TextWrapping="Wrap"
-                    Text="{x:Bind repo.description}" 
+                    Text="{x:Bind repo.description, Mode=OneWay}" 
                     Grid.Row="1" 
                     Grid.Column="1" VerticalAlignment="Top" FontSize="14" FontWeight="SemiLight"/>
                     <StackPanel Grid.Column="2" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Right" Margin="8">
-                        <TextBlock Text="{x:Bind repo.stars_label}" FontFamily="Segoe UI Emoji" TextAlignment="Right"/>
-                        <TextBlock Text="{x:Bind repo.forks_label}" FontFamily="Segoe UI Emoji" TextAlignment="Right"/>
+                        <TextBlock Text="{x:Bind repo.stars_label, Mode=OneWay}" FontFamily="Segoe UI Emoji" TextAlignment="Right"/>
+                        <TextBlock Text="{x:Bind repo.forks_label, Mode=OneWay}" FontFamily="Segoe UI Emoji" TextAlignment="Right"/>
                     </StackPanel>
                     <Border Width="20" Grid.Column="3" Grid.RowSpan="2">
-                        <Border Background="{x:Bind repo.Color}"
+                        <Border Background="{x:Bind repo.Color, Mode=OneWay}"
                                 HorizontalAlignment="Center" 
                                 Height="92" 
                                 Width="92">
-                            <TextBlock Text="{x:Bind repo.language}" 
+                            <TextBlock Text="{x:Bind repo.language, Mode=OneWay}" 
                                    HorizontalAlignment="Center"
-                                   TextAlignment="Center"
-                                   Height="20" FontWeight="Light"
-                                   RenderTransformOrigin="0.5,0.5">
+                                   TextAlignment="Center" Foreground="White"
+                                   Height="20" RenderTransformOrigin="0.5,0.5">
                                 <TextBlock.RenderTransform>
                                     <RotateTransform Angle="90" />
                                 </TextBlock.RenderTransform>

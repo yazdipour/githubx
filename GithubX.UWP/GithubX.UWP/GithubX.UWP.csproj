@@ -101,6 +101,9 @@
     <Compile Include="Services\Api\Api.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\HttpHandler.cs" />
+    <Compile Include="Services\Api\Pocket\PocketApi.cs" />
+    <Compile Include="Services\Cache\CacheKeys.cs" />
+    <Compile Include="Services\Cache\ICache.cs" />
     <Compile Include="Services\Cache\LocalCacheHandler.cs" />
     <Compile Include="Services\Cache\ServerCacheHandler.cs" />
     <Compile Include="Services\Cache\WindowsCacheHandler.cs" />
@@ -129,6 +132,12 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Files\octopus.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Files\loading.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="GithubX.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +189,9 @@
     <PackageReference Include="HtmlAgilityPack">
       <Version>1.7.1</Version>
     </PackageReference>
+    <PackageReference Include="LottieUWP">
+      <Version>2.5.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.8</Version>
     </PackageReference>
@@ -193,9 +205,7 @@
       <Version>11.0.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Icon\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

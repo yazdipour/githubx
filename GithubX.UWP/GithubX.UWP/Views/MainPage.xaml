@@ -6,6 +6,8 @@
     xmlns:media="using:Windows.UI.Xaml.Media"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:lottieUwp="using:LottieUWP"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -19,11 +21,34 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource CustomAcrylicBackgroundBrush}">
-        <Rectangle VerticalAlignment="Top" Fill="{ThemeResource HeaderAcrylic}" Height="92"/>
-        <Grid Background="Transparent" x:Name="myTitleBar" VerticalAlignment="Top" Height="36" Canvas.ZIndex="98">
-            <TextBlock Text="Github✘" FontSize="16" Margin="32 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Grid Background="{ThemeResource HeaderAcrylic}" x:Name="myTitleBar" VerticalAlignment="Top" Height="92" >
+            <TextBlock Text="Github✘" FontSize="16" Margin="32 8" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </Grid>
+        <controls:InAppNotification x:Name="Notif"
+                                    Content="Error!"
+                                    AnimationDuration="00:00:00.1000000"
+                                    VerticalOffset="100" BorderThickness="0"
+                                    HorizontalOffset="0">
+            <controls:InAppNotification.Background>
+                <LinearGradientBrush EndPoint="0,0" StartPoint="1,.5">
+                    <GradientStop Color="#0FF0B3"/>
+                    <GradientStop Color="#0470dc" Offset="1"/>
+                </LinearGradientBrush>
+            </controls:InAppNotification.Background>
+        </controls:InAppNotification>
         <Frame x:Name="iframe" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <controls:Loading x:Name="LoadingControl" IsLoading="False">
+            <controls:Loading.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7"/>
+            </controls:Loading.Background>
+            <lottieUwp:LottieAnimationView 
+                FileName="Assets/Files/loading.json"
+                RepeatCount="-1"
+                AutoPlay="True"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
+        </controls:Loading>
     </Grid>
 
 </Page>

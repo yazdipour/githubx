@@ -1,4 +1,6 @@
-﻿namespace GithubX.UWP.Models
+﻿using GithubX.UWP.Services.Api;
+
+namespace GithubX.UWP.Models
 {
 	class RepoModel
 	{
@@ -41,18 +43,20 @@
 		public int stargazers_count { get; set; }
 		public int watchers_count { get; set; }
 		public string language { get; set; }
-		public bool has_issues { get; set; }
-		public bool has_projects { get; set; }
 		public bool has_downloads { get; set; }
 		public bool has_wiki { get; set; }
 		public bool has_pages { get; set; }
 		public int forks { get; set; }
 		public string default_branch { get; set; }
 
-		public static string FindColor()
+		public string FindColor()
 		{
-			//language
-			return "#ff00ff00";
+			//REF https://github.com/doda/github-language-colors/blob/master/colors.json
+			var key = "," + language + ":";
+			var a = Api.colors.IndexOf(key);
+			if (a == -1) return "#ffffff";
+			a += key.Length;
+			return Api.colors.Substring(a, 7);
 		}
 	}
 }

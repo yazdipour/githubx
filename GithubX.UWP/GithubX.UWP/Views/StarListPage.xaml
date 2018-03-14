@@ -8,46 +8,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:media="using:Windows.UI.Xaml.Media"
-    Loaded="Page_Loaded"
     mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="GridViewItem">
-            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Margin" Value="2"/>
         </Style>
 
         <DataTemplate x:Key="StarBoxTemplate" x:DataType="m:RepoModel">
             <controls:DropShadowPanel>
-                <Grid Height="125" MinWidth="320" Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
+                <Grid Height="125" Width="400" Background="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="125"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="18"/>
                     </Grid.ColumnDefinitions>
                     <controls:ImageEx
                         IsCacheEnabled="True"
-                    Source="{x:Bind owner.avatar_url}"
-                    Height="125"
-                    Width="125"
-                    Stretch="UniformToFill"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Grid.RowSpan="2"/>
-                    <TextBlock 
-                    Margin="8 0 0 0"
-                    Text="{x:Bind full_name}" Grid.Column="1" VerticalAlignment="Bottom" 
-                           FontWeight="Bold" FontSize="18"/>
-                    <TextBlock 
-                    Margin="8 4 4 0"
-                    MaxLines="2"
-                    TextWrapping="Wrap"
-                    Text="{x:Bind description}"
-                    Grid.Row="1" 
-                    Grid.Column="1" VerticalAlignment="Top" FontSize="14" FontWeight="SemiLight"/>
+                        Source="{x:Bind owner.avatar_url}"
+                        Height="125"
+                        Width="125"
+                        Stretch="UniformToFill"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+
+                    <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
+                        <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap" Text="{x:Bind description}" FontSize="14" FontWeight="SemiLight"/>
+                    </StackPanel>
+                    
                     <Border Height="125" 
-                            Width="20"
+                            Width="18"
                             Grid.Column="2" 
                             Grid.RowSpan="2">
                         <Border Background="{x:Bind Color}"
@@ -57,8 +47,7 @@
                             <TextBlock Text="{x:Bind language}" 
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"
-                                   Height="20"
-                                       FontWeight="Light"
+                                   Height="20" Foreground="White"
                                    RenderTransformOrigin="0.5,0.5">
                                 <TextBlock.RenderTransform>
                                     <RotateTransform Angle="90" />
@@ -70,13 +59,45 @@
             </controls:DropShadowPanel>
         </DataTemplate>
     </Page.Resources>
-    <Grid>
+    <Grid Margin="0 42 0 0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="92"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <Button VerticalAlignment="Bottom" RequestedTheme="Dark" HorizontalAlignment="Right" Background="Transparent">
+        <!--tab-->
+        <Button Content=""
+                VerticalAlignment="Bottom"
+                FontFamily="Segoe UI Symbol" 
+                    Height="48" RequestedTheme="Light"
+                    Foreground="Black" Click="CategorySetting_Click"
+                    FontSize="20" Background="Transparent" Margin="48,0,0,0"/>
+        <ListView x:Name="tabList" 
+                  Height="48"
+                  VerticalAlignment="Bottom"
+                      IsItemClickEnabled="True"
+                      ItemClick="tabList_ItemClick" 
+                      FontFamily="Segoe UI Emoji" Grid.Column="1">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="m:CategoryModel">
+                    <TextBlock Text="{x:Bind Text,Mode=OneTime}" 
+                                   FontSize="24" FontWeight="SemiLight"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button VerticalAlignment="Bottom"
+                RequestedTheme="Dark" HorizontalAlignment="Right" 
+                Background="Transparent" Grid.Column="3">
             <Button.Flyout>
                 <MenuFlyout>
                     <MenuFlyoutItem Text="Sync"/>
@@ -87,45 +108,20 @@
             </Button.Flyout>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{x:Bind User.name}" VerticalAlignment="Center" Foreground="Black"/>
-                <controls:RoundImageEx Height="40" Width="40" IsCacheEnabled="True"
+                <controls:RoundImageEx Height="42" Width="42"
+                                       IsCacheEnabled="True"
                                        CornerRadius="99"
                                        Source="{x:Bind User.avatar_url}" 
-                                       VerticalAlignment="Center" Margin="4 0"/>
+                                       VerticalAlignment="Center" Margin="4 -4"/>
             </StackPanel>
         </Button>
 
-        <StackPanel Margin="24 0 0 0" 
-                    Height="48"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Bottom">
-            <Button Content="" FontFamily="Segoe UI Symbol" 
-                    Height="48" Width="48" RequestedTheme="Light"
-                    Foreground="Black" Click="CategorySetting_Click"
-                    FontSize="20" Background="Transparent"/>
-            <ListView x:Name="tabList" 
-                      IsItemClickEnabled="True"
-                      ItemClick="tabList_ItemClick" 
-                      FontFamily="Segoe UI Emoji">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="m:CategoryModel">
-                        <TextBlock Text="{x:Bind Text,Mode=OneTime}" 
-                                   FontSize="24" FontWeight="SemiLight"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-
-        <StackPanel>
-
-            <controls:AdaptiveGridView Grid.Row="1" Name="gridView"
+        <!--body-->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+            <controls:AdaptiveGridView Name="gridView"
                                    OneRowModeEnabled="False"
                                    ItemHeight="125"
-                                   DesiredWidth="420"
+                                   DesiredWidth="400"
                                    SelectionMode="None"
                                    IsItemClickEnabled="True"
                                    ItemClick="AdaptiveGridViewControl_ItemClick"

@@ -36,7 +36,7 @@ namespace GithubX.UWP.Services.UI
 		{
 			hex = hex.Replace("#", string.Empty);
 			if (hex.Length == 4) hex = "ff" + hex;
-			if (hex.Length != 6) throw new Exception();
+			if (hex.Length != 8) return new SolidColorBrush(Colors.LimeGreen);
 			byte a = (byte)(Convert.ToUInt32(hex.Substring(0, 2), 16));
 			byte r = (byte)(Convert.ToUInt32(hex.Substring(2, 2), 16));
 			byte g = (byte)(Convert.ToUInt32(hex.Substring(4, 2), 16));

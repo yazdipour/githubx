@@ -8,7 +8,6 @@ namespace GithubX.UWP.Views
 		public ErrorPage()
 		{
 			this.InitializeComponent();
-			msgLabel.Text = App.ErrorMsg;
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)

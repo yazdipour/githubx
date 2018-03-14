@@ -3,13 +3,12 @@
 # Github Api
 
 ### Get Readme
+
+** Attention: Sometimes dev use html tags
+
 https://raw.githubusercontent.com/{user}/{repo}/master/README.md
 
-* Sometimes dev use html tags
-
-https://raw.githubusercontent.com/pqina/filepond/master/README.md
-
-### Get Readme.Base64 (Hard)
+### Get Readme.Base64 (Forget it)
 
 https://api.github.com/repos/yazdipour/dm17/contents/README.md
 

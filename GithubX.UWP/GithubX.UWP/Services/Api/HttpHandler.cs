@@ -1,54 +1,44 @@
 ﻿using System;
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 
 namespace GithubX.UWP.Services.Api
 {
 	static class HttpHandler
 	{
-		//if(NetworkInformation.GetInternetConnectionProfile() == null)
-		//    return "[ERROR!]";
+		internal static bool CheckConnection => (NetworkInformation.GetInternetConnectionProfile() != null);
 
-		//var response = await http.GetAsync(new Uri(url), token);
-		//response.EnsureSuccessStatusCode();
-		//var htmlFile = await response.Content.ReadAsStringAsync();
-		//await DownloadFile(url, name);
 		internal static async Task<string> Get(string url)
 		{
-			// How to download .md content from the web and display it
-			//using (var client = new HttpClient())
-			//{
-			string str_ReturnValue = "";
+			var httpClient = new Windows.Web.Http.HttpClient();
+			var headers = httpClient.DefaultRequestHeaders;
+
+			var header = Api.HttpUserAgent;
+			if (!headers.UserAgent.TryParseAdd(header))
+			{
+				throw new Exception("Invalid header value: " + header);
+			}
+			var httpResponse = new Windows.Web.Http.HttpResponseMessage();
+			string httpResponseBody = null;
 			try
 			{
-				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-				request.UserAgent = "User-Agent: XGithub";
-				var webResponse = await request.GetResponseAsync();
-				//HttpWebResponse
-				//return myHttpWebResponse.GetResponseStream();
-				using (Stream s = request.GetResponse().GetResponseStream())
-				{
-					using (StreamReader sr = new StreamReader(s))
-					{
-						var jsonData = sr.ReadToEnd();
-						str_ReturnValue += jsonData.ToString();
-					}
-				}
-				return str_ReturnValue;
-				//var response = await client.GetAsync(url);
-				//return await response.Content.ReadAsStringAsync();
+				httpResponse = await httpClient.GetAsync(new Uri(url));
+				httpResponse.EnsureSuccessStatusCode();
+				httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
 			}
-			catch { return null; }
-			//}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message);
+			}
+			return httpResponseBody;
 		}
+
 		internal static async Task<string> GetString(string url)
 		{
-			// How to download .md content from the web and display it
 			using (var client = new HttpClient())
 			{
 				try

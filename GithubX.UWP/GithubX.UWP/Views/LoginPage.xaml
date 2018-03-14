@@ -22,16 +22,13 @@
             <TextBlock Text="👽" FontSize="68"/>
             <TextBlock Text="Github Account" Margin="8"/>
             <TextBox Width="180" x:Name="accTextBox"/>
-            <!--<TextBlock Text="Key"/>-->
-            <!--<TextBlock FontSize="14" FontWeight="SemiLight" Text="To Store Categories (Not Github Password)"/>-->
-            <!--<TextBox Width="180" />-->
 
             <Button Content="Lets Go" 
                     HorizontalAlignment="Center"
                     Margin="8"
                     Click="Login_Click"
                     Width="180"/>
-
         </StackPanel>
+        <TextBlock VerticalAlignment="Bottom" Text="GithubX is a place to review and manage your starred repos readme (even offline)" Margin="8"/>
     </Grid>
 </Page>

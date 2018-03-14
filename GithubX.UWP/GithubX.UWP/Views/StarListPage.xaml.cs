@@ -12,25 +12,37 @@ namespace GithubX.UWP.Views
 		OwnerModel User = new OwnerModel();
 		List<CategoryModel> Categories = new List<CategoryModel>();
 		private int currentPageInAllCat = 0;
+
 		#region OnLoad
 		public StarListPage()
 		{
 			this.InitializeComponent();
-		}
-		private void Page_Loaded(object sender, RoutedEventArgs e)
-		{
-			Categories = Services.Api.ApiHandler.GetCategories(User.id);
-			if (Categories.Count > 0)
+			Loaded += (sender, e) =>
 			{
-				tabList.SelectedIndex = 0;
-				LoadingRepos(0);
-			}
+				LoadCategories();
+			};
+			SizeChanged += (sender, e) =>
+			{
+				gridView.Height = ActualHeight - 92;
+			};
 		}
 
-		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		async void LoadCategories()
+		{
+			Categories = await Services.Api.ApiHandler.GetCategoriesAsync(User.login);
+			if (Categories != null)
+				if (Categories.Count > 0)
+				{
+					tabList.ItemsSource = Categories;
+					tabList.SelectedIndex = 0;
+					gridView.ItemsSource = Categories[0].RepoList;
+				}
+		}
+		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedFrom(e);
 			User = e.Parameter as OwnerModel;
+			App.UserLoginAccountName = User.login;
 		}
 
 		#endregion
@@ -51,29 +63,23 @@ namespace GithubX.UWP.Views
 		{
 			var item = e.ClickedItem as CategoryModel;
 			new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", item.Color);
-			LoadingRepos(item.Id);
+			LoadingRepos(item);
 		}
 		#endregion
 
-		private void LoadingRepos(int catId = 0, int page = 0)
+		private void LoadingRepos(CategoryModel cat, int page = 0)
 		{
 			try
 			{
-				var cat = Categories.Find(obj => obj.Id == catId);
-				if (cat == null) return;
-				if (cat.RepoList == null)
-					cat.RepoList = Services.Api.ApiHandler.GetRepos(userId: User.id, catId: catId, page: 0);
-				else
-					cat.RepoList.AddRange(Services.Api.ApiHandler.GetRepos(userId: User.id, catId: catId, page: page));
-				LoadMoreButton.Visibility = (catId == 0 && cat.RepoList.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
-				gridView.ItemsSource = cat.RepoList;
+				gridView.ItemsSource = Services.Api.ApiHandler.GetReposAsync(User.login, cat, page);
+				LoadMoreButton.Visibility = (cat.Id == 0 && gridView.Items.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
 			}
 			catch { }
 		}
 
 		private void LoadMoreButton_Click(object sender, RoutedEventArgs e)
 		{
-			LoadingRepos(User.id, ++currentPageInAllCat);
+			LoadingRepos(Categories[0], ++currentPageInAllCat);
 		}
 
 		private void AdaptiveGridViewControl_ItemClick(object sender, ItemClickEventArgs e)
