@@ -1,11 +1,36 @@
 # GithubX
 
+* Goal: Make Categorizing Starred Github Repositories Easier
+
+# Tasks
+
+- [x] Windows.UWP.Code
+- [x] Windows.UWP.Sketch
+- [ ] Website.Sketch
+- [ ] Website.Code
+
+* Planning
+*   - [ ] Online Backup 
+*   - [ ] Server Side Strategy
+*   - [ ] Site Domain Name
+
 # UWP
-* [UWP](/GithubX.UWP/readme.md)
+
+* Can show Github Starred Repos and Categorize them
+* Can show README_MD 
+* Can Cache Repositories List and README files
+* Most importantly: A Beautiful UI 
+* [Project](/GithubX.UWP/readme.md)
+
+# Website
+
+* Store Categories for each User (I am thinking for the best and inexpensive cenario)
+* Can show Github Starred Repos and Categorize them
+* Good looking UI
 
 # Api
 
-* [Api View](/Api/readme.md)
+* [What I need from Github_Api](/Api/readme.md)
 
 # UI
 

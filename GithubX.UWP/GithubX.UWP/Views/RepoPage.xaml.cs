@@ -13,8 +13,7 @@ namespace GithubX.UWP.Views
 		public RepoPage()
 		{
 			this.InitializeComponent();
-			DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-			dataTransferManager.DataRequested += (sender, args) =>
+			DataTransferManager.GetForCurrentView().DataRequested += (sender, args) =>
 			{
 				DataRequest request = args.Request;
 				request.Data.SetText(repo.html_url);
@@ -27,12 +26,8 @@ namespace GithubX.UWP.Views
 			};
 			Loaded += async (sender, args) =>
 			{
-				try
-				{
-					string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
-					MarkdownText.Text = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, true);
-				}
-				catch { }
+				string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
+				MarkdownText.Text = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, true);
 			};
 		}
 
@@ -64,9 +59,9 @@ namespace GithubX.UWP.Views
 					//move
 					await new CategoryPanel(repo.id).ShowAsync();
 					break;
-				case "3":
-					//TODO :save pocket
-					break;
+				//case "3":
+				//	//TODO :save pocket
+				//	break;
 				case "4":
 					//MD reload
 					try

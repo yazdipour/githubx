@@ -5,7 +5,7 @@
 		public string url { get; set; }
 		public string title { get; set; }
 		public int time { get; set; }
-		public string consumer_key = "75741-f02874032bdaa2a87b6a9dd6";
+		public string consumer_key;
 		public string access_token { get; set; }
 	}
 	class PocketApi

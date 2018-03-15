@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using GithubX.UWP.Models;
@@ -25,32 +27,37 @@ namespace GithubX.UWP.Services.Api
 					catsId = JsonConvert.DeserializeObject<int[]>(json);
 					foreach (var id in catsId)
 					{
-						try
-						{
-							json = await lCache.ReadAsync(CacheKeys.CategoryKey(id));
-							cats.Add(JsonConvert.DeserializeObject<CategoryModel>(json));
-						}
-						catch { }
+						json = await lCache.ReadAsync(CacheKeys.CategoryKey(id));
+						cats.Add(JsonConvert.DeserializeObject<CategoryModel>(json));
 					}
 				}
 				else
 				{
 					var all = new CategoryModel { Id = 0, Text = "All" };
 					all.RepoList = await GetReposAsync(userId, all, 0);
-					cats.Add(all);
 					await NewCategoryAsync(userId, all);
+					cats.Add(all);
 				}
 				return cats.OrderBy(o => o.OrderId).ToList();
 			}
-			catch { return null; }
+			catch (Exception ex)
+			{
+				// todo: not a good code!!
+				MainPage.NotifyElement.Content = ex.Message;
+				MainPage.NotifyElement.Show();
+				return null;
+			}
 		}
 
-		internal static async Task<List<RepoModel>> GetReposAsync(string userAcc, CategoryModel cat, int page)
+		internal static async Task<List<RepoModel>> GetReposAsync(string userAcc, CategoryModel cat, int page, bool cacheEnable = true)
 		{
+			if (HttpHandler.CheckConnection && !cacheEnable)
+				throw new System.Exception("No internet no repo!🤬");
 			if (HttpHandler.CheckConnection && cat.Id == 0)
 			{
 				var json = await HttpHandler.Get(Api.AccountStarsUrl(userAcc, page));
-				if (json == null) return null;
+				if (json == null)
+					throw new System.Exception("Oops!🤨🤔");
 				cat.RepoList = JsonConvert.DeserializeObject<List<RepoModel>>(json);
 				if (page == 0)
 					await lCache.SaveAsync(CacheKeys.CategoryKey(cat.Id), JsonConvert.SerializeObject(cat)).ConfigureAwait(false);
@@ -60,7 +67,7 @@ namespace GithubX.UWP.Services.Api
 			else if (page != 0 || cat.RepoList == null)
 			{
 				var json = await lCache.ReadAsync(CacheKeys.CategoryKey(cat.Id)).ConfigureAwait(false);
-				if (json == null) return null;
+				if (json == null) throw new System.Exception("Oops!🤨🤔");
 				return JsonConvert.DeserializeObject<CategoryModel>(json).RepoList;
 			}
 			else
@@ -99,40 +106,55 @@ namespace GithubX.UWP.Services.Api
 			if (fromCache)
 			{
 				md = await lCache.ReadAsync(key);
-				removeUnSupported();
-				if (md != null) return md;
+				if (md != null)
+				{
+					removeUnSupported();
+					await lCache.SaveAsync(key, md).ConfigureAwait(false);
+					return md;
+				}
 			}
 			try
 			{
 				md = await HttpHandler.GetString(url);
+				if (md == null) return "> Nothing";
 				md = new Html2Markdown.Converter().Convert(md);
 				removeUnSupported();
+				await lCache.SaveAsync(key, md).ConfigureAwait(false);
 			}
 			catch { }
-			await lCache.SaveAsync(key, md).ConfigureAwait(false);
 			return md;
 
 			void removeUnSupported()
 			{
-				//md = System.Text.RegularExpressions.Regex.Replace(md, @"([')(\w)('])", "$2");
+				md = md.Replace("- [ ]", "*");
+				md = md.Replace("- [*]", "*");
 				md = md.Replace("[`", "[");
 				md = md.Replace("`]", "]");
+				md = md.Replace("[x]", "*");
+				md = md.Replace("[ ]", "*");
 			}
 		}
 		#endregion
 
-		internal static void AddRepo(CategoryModel category, RepoModel repo)
+		#region Category Management
+		internal static void MoveRepo(CategoryModel category, RepoModel repo)
 		{
 			category.RepoList.Add(repo);
 			var json = JsonConvert.SerializeObject(category);
 			lCache.SaveAsync(CacheKeys.CategoryKey(category.Id), json).ConfigureAwait(false);
 		}
-		internal static async Task AddRepoAsync(int categoryId, RepoModel repo)
+		internal static async Task MoveRepoAsync(int categoryId, RepoModel repo)
 		{
 			var json = await lCache.ReadAsync(CacheKeys.CategoryKey(categoryId)).ConfigureAwait(false);
 			CategoryModel category = JsonConvert.DeserializeObject<CategoryModel>(json);
-			AddRepo(category, repo);
+			MoveRepo(category, repo);
 		}
+
+		internal static void LogOut()
+		{
+			wCache.Remove(CacheKeys.UserKey);
+		}
+
 		internal static async Task NewCategoryAsync(string userId, CategoryModel cat)
 		{
 			var keys = CacheKeys.CategoriesKey(userId);
@@ -152,5 +174,13 @@ namespace GithubX.UWP.Services.Api
 			category.Text = newCat.Text;
 			await lCache.SaveAsync(CacheKeys.CategoryKey(category.Id), JsonConvert.SerializeObject(category)).ConfigureAwait(false);
 		}
+
+
+		internal static async Task SaveCategoriesAsync(string userLoginAccountName, List<CategoryModel> categories)
+		{
+			var json = JsonConvert.SerializeObject(categories);
+			await lCache.SaveAsync(CacheKeys.CategoriesKey(userLoginAccountName), json);
+		}
+		#endregion
 	}
 }

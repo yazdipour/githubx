@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:media="using:Windows.UI.Xaml.Media"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="GridViewItem">
@@ -15,7 +16,7 @@
         </Style>
 
         <DataTemplate x:Key="StarBoxTemplate" x:DataType="m:RepoModel">
-            <controls:DropShadowPanel>
+            <controls:DropShadowPanel Tag="{x:Bind id}">
                 <Grid Height="125" Width="400" Background="White">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="125"/>
@@ -100,10 +101,11 @@
                 Background="Transparent" Grid.Column="3">
             <Button.Flyout>
                 <MenuFlyout>
-                    <MenuFlyoutItem Text="Sync"/>
-                    <MenuFlyoutItem Text="Switch Account"/>
+                    <MenuFlyoutItem Tag="0" Text="Refresh" Click="AvatarBtn_Click"/>
+                    <MenuFlyoutItem Tag="1" Text="Backup all Categories" Click="AvatarBtn_Click"/>
+                    <MenuFlyoutItem Tag="2" Text="Switch Account" Click="AvatarBtn_Click"/>
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="About"/>
+                    <MenuFlyoutItem Tag="-1" Text="About" Click="AvatarBtn_Click"/>
                 </MenuFlyout>
             </Button.Flyout>
             <StackPanel Orientation="Horizontal">
@@ -125,7 +127,7 @@
                                    SelectionMode="None"
                                    IsItemClickEnabled="True"
                                    ItemClick="AdaptiveGridViewControl_ItemClick"
-                                   ItemTemplate="{StaticResource StarBoxTemplate}"/>
+                                   ItemTemplate="{StaticResource StarBoxTemplate}" RightTapped="gridView_RightTapped"/>
 
             <Button x:Name="LoadMoreButton" Visibility="Collapsed" Click="LoadMoreButton_Click" Content="Load More" Width="160" Height="42" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="12"/>
         </StackPanel>

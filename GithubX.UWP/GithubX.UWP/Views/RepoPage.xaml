@@ -33,7 +33,7 @@
                   BorderThickness="2" VerticalScrollMode="Enabled"
                   HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Visible">
-                    <controls:MarkdownTextBlock x:Name="MarkdownText" Text="### I will try load ReadMe.MD here!!!" 
+                    <controls:MarkdownTextBlock x:Name="MarkdownText" Text="## . . ." 
                                                 Background="White" Padding="16 8"
                                                 LinkForeground="{x:Bind repo.Color}"/>
                 </ScrollViewer>
