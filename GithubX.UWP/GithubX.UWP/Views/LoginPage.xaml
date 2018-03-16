@@ -15,10 +15,7 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            >
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Welcome to" FontSize="18"/>
             <TextBlock Text="Github✘" FontSize="58"/>
             <TextBlock Text="👽" FontSize="68"/>
@@ -44,7 +41,7 @@
                     AutoPlay="{x:Bind LoadingControl.IsLoading,Mode=OneWay}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"/>
-                <TextBlock Foreground="White" Text="Gadering Data ..." HorizontalAlignment="Center"/>
+                <TextBlock Foreground="White" Text="Gadering Data ..."/>
             </StackPanel>
         </controls:Loading>
     </Grid>

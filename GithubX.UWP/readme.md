@@ -9,6 +9,7 @@
 # First Release Tasks
 
 ## Todo
+- [ ] Something To Manage Api Keys
 - [ ] Find a better HTML2Markdown Lib
 - [ ] Try https://github.com/lunet-io/markdig + if good : replace Html2Markdown Lib
 - [ ] Push to Store

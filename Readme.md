@@ -18,11 +18,13 @@
 
 # UWP
 
+[![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
 * Can show Github Starred Repos and Categorize them
 * Can show README_MD 
 * Can Cache Repositories List and README files
 * Most importantly: A Beautiful UI 
 * [Project](/GithubX.UWP/readme.md)
+![Sketch](/Screenshots.UWP/MainPage.png)
 
 # Website
 
@@ -38,4 +40,4 @@
 
 ### [Designed by Adobe Xd](/UI/)
 
-![Sketch](/UI/ContenxMenu.jpg)
+![Sketch](/UI.UWP/ContenxMenu.jpg)

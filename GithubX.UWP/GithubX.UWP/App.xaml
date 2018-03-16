@@ -11,8 +11,8 @@
         <media:AcrylicBrush x:Key="HeaderAcrylic" 
                                         BackgroundSource="HostBackdrop" 
                                         TintOpacity="0.8" 
-                                        TintColor="#ccc" 
-                                        FallbackColor="#ccc"/>
+                                        TintColor="#66ffffff" 
+                                        FallbackColor="#eee"/>
 
         <media:AcrylicBrush x:Key="DialogBoxAcrylicBrush" 
                             BackgroundSource="Backdrop" 
