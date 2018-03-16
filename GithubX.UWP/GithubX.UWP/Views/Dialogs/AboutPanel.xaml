@@ -6,12 +6,35 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    Title="About GithubX"
+    SecondaryButtonText="Close">
 
-    <Grid>
-    </Grid>
+    <StackPanel>
+        <Image Source="ms-appx:///Assets/LargeTile.png" Width="78" Height="78" />
+
+        <RichTextBlock>
+            <Paragraph>
+                <Bold>
+                    The goal of this application is to Make Categorizing Starred Github Repositories Easier for developers
+                </Bold>
+                <LineBreak/>
+                <LineBreak/>
+                <Run>
+                    This app is an Open Source Project Licensed by Apache and right now it is
+                    under-construction and you can follow this project at Github in this address - Pull request and Submit Issues:
+                </Run>
+                <LineBreak/>
+                <Hyperlink NavigateUri="https://github.com/yazdipour/githubx">https://github.com/yazdipour/githubx</Hyperlink>
+                <LineBreak/>
+                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Do not forget to ⭐Star Github✘</Run>
+            </Paragraph>
+            <Paragraph>
+            <LineBreak/>
+                <Run FontFamily="Segoe UI Emoji" FontSize="16" >👦 Developed and Designed by:</Run>
+                <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="16"
+                           NavigateUri="https://yazdipour.github.io">Shahriar Yazdipour</Hyperlink>
+
+            </Paragraph>
+        </RichTextBlock>
+    </StackPanel>
 </ContentDialog>

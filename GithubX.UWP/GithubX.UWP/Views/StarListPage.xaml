@@ -12,18 +12,18 @@
     mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="GridViewItem">
-            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Margin" Value="4 8"/>
         </Style>
-
         <DataTemplate x:Key="StarBoxTemplate" x:DataType="m:RepoModel">
-            <controls:DropShadowPanel Tag="{x:Bind id}">
-                <Grid Height="125" Width="400" Background="White">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="125"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="18"/>
-                    </Grid.ColumnDefinitions>
-                    <controls:ImageEx
+                <controls:DropShadowPanel HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                    <Grid Height="125" Background="White" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="125"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="18"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:ImageEx
+                        x:Phase="2"
                         IsCacheEnabled="True"
                         Source="{x:Bind owner.avatar_url}"
                         Height="125"
@@ -32,32 +32,33 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center" />
 
-                    <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
-                        <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap" Text="{x:Bind description}" FontSize="14" FontWeight="SemiLight"/>
-                    </StackPanel>
-                    
-                    <Border Height="125" 
+                        <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
+                            <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap"
+                                   Text="{x:Bind description}" FontSize="14" FontWeight="SemiLight"/>
+                        </StackPanel>
+
+                        <Border Height="125" 
                             Width="18"
                             Grid.Column="2" 
                             Grid.RowSpan="2">
-                        <Border Background="{x:Bind Color}"
+                            <Border Background="{x:Bind Color}"
                                 HorizontalAlignment="Center" 
                                 Height="125" 
                                 Width="125">
-                            <TextBlock Text="{x:Bind language}" 
+                                <TextBlock Text="{x:Bind language}" 
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"
                                    Height="20" Foreground="White"
                                    RenderTransformOrigin="0.5,0.5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="90" />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
+                                    <TextBlock.RenderTransform>
+                                        <RotateTransform Angle="90" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Border>
                         </Border>
-                    </Border>
-                </Grid>
-            </controls:DropShadowPanel>
+                    </Grid>
+                </controls:DropShadowPanel>
         </DataTemplate>
     </Page.Resources>
     <Grid Margin="0 42 0 0">
@@ -71,7 +72,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <!--tab-->
+        <!--#region tab-->
         <Button Content=""
                 VerticalAlignment="Bottom"
                 FontFamily="Segoe UI Symbol" 
@@ -79,6 +80,7 @@
                     Foreground="Black" Click="CategorySetting_Click"
                     FontSize="20" Background="Transparent" Margin="48,0,0,0"/>
         <ListView x:Name="tabList" 
+                  ItemsSource="{x:Bind Categories,Mode=OneWay}"
                   Height="48"
                   VerticalAlignment="Bottom"
                       IsItemClickEnabled="True"
@@ -117,19 +119,32 @@
                                        VerticalAlignment="Center" Margin="4 -4"/>
             </StackPanel>
         </Button>
+        <!--#endregion-->
 
-        <!--body-->
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
-            <controls:AdaptiveGridView Name="gridView"
+        <!--#region body-->
+        <controls:AdaptiveGridView Name="gridView"
+                                   ItemsSource="{x:Bind Repositories,Mode=OneWay}"
                                    OneRowModeEnabled="False"
                                    ItemHeight="125"
-                                   DesiredWidth="400"
+                                   DesiredWidth="400" Grid.Row="1" Grid.ColumnSpan="3"
+                                   Padding="16"
                                    SelectionMode="None"
                                    IsItemClickEnabled="True"
                                    ItemClick="AdaptiveGridViewControl_ItemClick"
-                                   ItemTemplate="{StaticResource StarBoxTemplate}" RightTapped="gridView_RightTapped"/>
+                                   ItemTemplate="{StaticResource StarBoxTemplate}" 
+                                   RightTapped="gridView_RightTapped">
+            <controls:AdaptiveGridView.Footer>
+                <Button x:Name="LoadMoreButton"
+                    Click="LoadMoreButton_Click" Content="Load More"
+                    Width="260" Height="36" Margin=" 0 8 0 0"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom"/>
+            </controls:AdaptiveGridView.Footer>
+        </controls:AdaptiveGridView>
 
-            <Button x:Name="LoadMoreButton" Visibility="Collapsed" Click="LoadMoreButton_Click" Content="Load More" Width="160" Height="42" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="12"/>
-        </StackPanel>
+
+
+
+        <!--#endregion-->
     </Grid>
 </Page>

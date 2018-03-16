@@ -1,4 +1,6 @@
-# GithubX
+## GithubX
+
+![GithubX](/Icon/Octocat.png)
 
 * Goal: Make Categorizing Starred Github Repositories Easier
 
@@ -10,9 +12,9 @@
 - [ ] Website.Code
 
 * Planning
-*   - [ ] Online Backup 
-*   - [ ] Server Side Strategy
-*   - [ ] Site Domain Name
+    - [ ] Online Backup 
+    - [ ] Server Side Strategy
+    - [ ] Site Domain Name
 
 # UWP
 

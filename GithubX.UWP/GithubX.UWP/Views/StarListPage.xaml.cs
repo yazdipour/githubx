@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using GithubX.UWP.Models;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
@@ -11,7 +12,9 @@ namespace GithubX.UWP.Views
 	public sealed partial class StarListPage : Page
 	{
 		OwnerModel User = new OwnerModel();
-		List<CategoryModel> Categories = new List<CategoryModel>();
+		ObservableCollection<CategoryModel> Categories { get; set; }
+		ObservableCollection<RepoModel> Repositories { get; set; }
+
 		private int currentPageInAllCat = 0;
 
 		#region OnLoad
@@ -27,15 +30,18 @@ namespace GithubX.UWP.Views
 
 		async void LoadCategories()
 		{
-			Categories = await Services.Api.ApiHandler.GetCategoriesAsync(User.login);
+			var ls = await Services.Api.ApiHandler.GetCategoriesAsync(User.login);
+			Categories = new ObservableCollection<CategoryModel>(ls);
 			if (Categories != null)
 				if (Categories.Count > 0)
 				{
-					tabList.ItemsSource = Categories;
+					Repositories = new ObservableCollection<RepoModel>(Categories[0].RepoList);
+					Bindings.Update();
 					tabList.SelectedIndex = 0;
-					gridView.ItemsSource = Categories[0].RepoList;
+					LoadMoreButton.Visibility = Repositories.Count % 30 == 0 ? Visibility.Visible : Visibility.Collapsed;
 				}
 		}
+
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedFrom(e);
@@ -62,31 +68,32 @@ namespace GithubX.UWP.Views
 			Frame.BackStack.RemoveAt(Frame.BackStack.Count - 1);
 		}
 
-		private void tabList_ItemClick(object sender, ItemClickEventArgs e)
+		private async void tabList_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var item = e.ClickedItem as CategoryModel;
 			new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", item.Color);
-			LoadingRepos(item);
+			await LoadingRepos(item);
 		}
 		#endregion
 
-		private void LoadingRepos(CategoryModel cat, int page = 0)
+		private async Task LoadingRepos(CategoryModel cat, int page = 0)
 		{
 			try
 			{
-				gridView.ItemsSource = Services.Api.ApiHandler.GetReposAsync(User.login, cat, page);
-				LoadMoreButton.Visibility = (cat.Id == 0 && gridView.Items.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
+				var ls = await Services.Api.ApiHandler.GetReposAsync(User.login, cat, page);
+				if (page == 0) Repositories = new ObservableCollection<RepoModel>(ls);
+				else ls.ForEach(Repositories.Add);
+
+				LoadMoreButton.Visibility = (cat.Id == 0 && ls.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
 			}
 			catch (Exception ex)
 			{
-				MainPage.NotifyElement.Content = ex.Message;
-				MainPage.NotifyElement.Show();
+				MainPage.NotifyElement.Show(ex.Message, 2000);
 			}
 		}
-
-		private void LoadMoreButton_Click(object sender, RoutedEventArgs e)
+		private async void LoadMoreButton_Click(object sender, RoutedEventArgs e)
 		{
-			LoadingRepos(Categories[0], ++currentPageInAllCat);
+			await LoadingRepos(Categories[0], ++currentPageInAllCat);
 		}
 
 		#region GridView Events

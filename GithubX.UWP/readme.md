@@ -12,29 +12,33 @@
 
 - [ ] Find a better HTML2Markdown Lib
 - [ ] Try https://github.com/lunet-io/markdig + if good : replace Html2Markdown Lib
-- [ ] Items Width in Stars_GridView have problems
 - [ ] Push to Store
 - [ ] Use Error Msg in better ways
 - [ ] Unit Test
 - [ ] Test By Hand
-- [ ] Test Login Speed Again
 - [ ] Change Saving Model for Categories from ID to Name (this way it will be easier to track MoveTo later)
+- [ ] `Api` How does UserAgent Works properly!
+- [ ] Make LoginAnimation UnStatic and Local to LoginFrame
 
 ## Critical
 - [ ] `Bug` CategoryDialog Manager Save process, not working!!!
-- [ ] Fix loadMore30 button or replace it with sth else
-- [ ] Complete About_Page
 - [ ] CategoryDialog Move Repo
+- [ ] Cover UWPCommunityToolkit.Markdown Parser
 
 ## Features
+- [ ] Add animations
 - [ ] Backup
 - [ ] Live Tile Maybe?
 - [ ] Pocket.Api https://getpocket.com/developer/docs/authentication
 - [ ] MD2Html and show it Webview
 
 ## Done
+- [x]  Items Width in Stars_GridView have problems
+- [x] Fix loadMore30 button or replace it with sth else
+- [x] Complete About_Page
 - [x] Compressed UI Images  
 - [x] CategoryDialog List Handler
+- [x] Test Login Speed Again
 - [x] Page Save State
 - [x] Set Icon
 - [x] Context Menu for StarItem in MainPage

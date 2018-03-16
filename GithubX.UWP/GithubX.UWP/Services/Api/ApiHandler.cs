@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using GithubX.UWP.Models;
@@ -57,7 +56,7 @@ namespace GithubX.UWP.Services.Api
 			{
 				var json = await HttpHandler.Get(Api.AccountStarsUrl(userAcc, page));
 				if (json == null)
-					throw new System.Exception("Oops!🤨🤔");
+					throw new Exception("Oops!🤨🤔");
 				cat.RepoList = JsonConvert.DeserializeObject<List<RepoModel>>(json);
 				if (page == 0)
 					await lCache.SaveAsync(CacheKeys.CategoryKey(cat.Id), JsonConvert.SerializeObject(cat)).ConfigureAwait(false);

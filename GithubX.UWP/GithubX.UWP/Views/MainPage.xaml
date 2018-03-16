@@ -24,7 +24,9 @@
         <Grid Background="{ThemeResource HeaderAcrylic}" x:Name="myTitleBar" VerticalAlignment="Top" Height="92" >
             <TextBlock Text="Github✘" FontSize="16" Margin="32 8" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </Grid>
-        <controls:InAppNotification x:Name="Notif"
+        
+        <Frame x:Name="iframe" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+<controls:InAppNotification x:Name="Notif"
                                     Content="Error!"
                                     AnimationDuration="00:00:00.1000000"
                                     VerticalOffset="100" BorderThickness="0"
@@ -36,8 +38,6 @@
                 </LinearGradientBrush>
             </controls:InAppNotification.Background>
         </controls:InAppNotification>
-        <Frame x:Name="iframe" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
         <controls:Loading x:Name="LoadingControl" IsLoading="False">
             <controls:Loading.Background>
                 <SolidColorBrush Color="Black" Opacity="0.7"/>
