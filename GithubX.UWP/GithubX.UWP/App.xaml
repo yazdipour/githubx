@@ -17,7 +17,7 @@
         <media:AcrylicBrush x:Key="DialogBoxAcrylicBrush" 
                             BackgroundSource="Backdrop" 
                             TintOpacity="0.1" 
-                            TintColor="#55FFFFFF" 
+                            TintColor="#19FFFFFF" 
                             FallbackColor="#FFF" />
 
     </Application.Resources>

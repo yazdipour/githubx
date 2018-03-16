@@ -11,7 +11,7 @@
         <MediaElement Source="ms-appx:///Assets/Video/err.mp4" 
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
-                      AutoPlay="True"
+                      AutoPlay="True" IsMuted="True"
                       Opacity="0.4"/>
         <StackPanel 
             HorizontalAlignment="Center"

@@ -114,7 +114,7 @@
     <Compile Include="Views\Dialogs\CategoryPanel.xaml.cs">
       <DependentUpon>CategoryPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorPage.xaml.cs">
+    <Compile Include="Views\Dialogs\ErrorPage.xaml.cs">
       <DependentUpon>ErrorPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
@@ -200,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ErrorPage.xaml">
+    <Page Include="Views\Dialogs\ErrorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

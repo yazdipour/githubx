@@ -63,7 +63,7 @@
                         Source="{x:Bind repo.owner.avatar_url, Mode=OneWay}"
                         Height="92" Width="92"
                         PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-                        Stretch="UniformToFill"
+                        Stretch="UniformToFill" PlaceholderStretch="UniformToFill"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center" Grid.RowSpan="2"/>
                     <TextBlock Margin="8 0 0 0" FontWeight="Bold" FontSize="18"
