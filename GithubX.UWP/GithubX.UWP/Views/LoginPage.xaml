@@ -5,6 +5,8 @@
     xmlns:local="using:GithubX.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:lottieUwp="using:LottieUWP"
     mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="TextBlock">
@@ -30,5 +32,20 @@
                     Width="180"/>
         </StackPanel>
         <TextBlock VerticalAlignment="Bottom" Text="GithubX is a place to review and manage your starred repos readme (even offline)" Margin="8"/>
+
+        <controls:Loading x:Name="LoadingControl" IsLoading="False">
+            <controls:Loading.Background>
+                <SolidColorBrush Color="Black" Opacity="0.7"/>
+            </controls:Loading.Background>
+            <StackPanel>
+                <lottieUwp:LottieAnimationView 
+                    FileName="Assets/Files/loading.json"
+                    RepeatCount="-1"
+                    AutoPlay="{x:Bind LoadingControl.IsLoading,Mode=OneWay}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"/>
+                <TextBlock Foreground="White" Text="Gadering Data ..." HorizontalAlignment="Center"/>
+            </StackPanel>
+        </controls:Loading>
     </Grid>
 </Page>

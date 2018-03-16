@@ -15,50 +15,51 @@
             <Setter Property="Margin" Value="4 8"/>
         </Style>
         <DataTemplate x:Key="StarBoxTemplate" x:DataType="m:RepoModel">
-                <controls:DropShadowPanel HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
-                    <Grid Height="125" Background="White" HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="125"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="18"/>
-                        </Grid.ColumnDefinitions>
-                        <controls:ImageEx
+            <controls:DropShadowPanel HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                <Grid Height="125" Background="White" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="125"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="18"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:ImageEx
                         x:Phase="2"
                         IsCacheEnabled="True"
                         Source="{x:Bind owner.avatar_url}"
                         Height="125"
-                        Width="125"
+                        Width="125"                                       
+                        PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
                         Stretch="UniformToFill"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center" PlaceholderStretch="UniformToFill" />
 
-                        <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
-                            <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
-                            <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap"
+                    <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
+                        <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap"
                                    Text="{x:Bind description}" FontSize="14" FontWeight="SemiLight"/>
-                        </StackPanel>
+                    </StackPanel>
 
-                        <Border Height="125" 
+                    <Border Height="125" 
                             Width="18"
                             Grid.Column="2" 
                             Grid.RowSpan="2">
-                            <Border Background="{x:Bind Color}"
+                        <Border Background="{x:Bind Color}"
                                 HorizontalAlignment="Center" 
                                 Height="125" 
                                 Width="125">
-                                <TextBlock Text="{x:Bind language}" 
+                            <TextBlock Text="{x:Bind language}" 
                                    HorizontalAlignment="Center"
                                    TextAlignment="Center"
                                    Height="20" Foreground="White"
                                    RenderTransformOrigin="0.5,0.5">
-                                    <TextBlock.RenderTransform>
-                                        <RotateTransform Angle="90" />
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
-                            </Border>
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
                         </Border>
-                    </Grid>
-                </controls:DropShadowPanel>
+                    </Border>
+                </Grid>
+            </controls:DropShadowPanel>
         </DataTemplate>
     </Page.Resources>
     <Grid Margin="0 42 0 0">
@@ -78,7 +79,7 @@
                 FontFamily="Segoe UI Symbol" 
                     Height="48" RequestedTheme="Light"
                     Foreground="Black" Click="CategorySetting_Click"
-                    FontSize="20" Background="Transparent" Margin="48,0,0,0"/>
+                    FontSize="20" Background="Transparent" Margin="28,0,0,0"/>
         <ListView x:Name="tabList" 
                   ItemsSource="{x:Bind Categories,Mode=OneWay}"
                   Height="48"
@@ -104,7 +105,7 @@
             <Button.Flyout>
                 <MenuFlyout>
                     <MenuFlyoutItem Tag="0" Text="Refresh" Click="AvatarBtn_Click"/>
-                    <MenuFlyoutItem Tag="1" Text="Backup all Categories" Click="AvatarBtn_Click"/>
+                    <!--<MenuFlyoutItem Tag="1" Text="Backup all Categories" Click="AvatarBtn_Click"/>-->
                     <MenuFlyoutItem Tag="2" Text="Switch Account" Click="AvatarBtn_Click"/>
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem Tag="-1" Text="About" Click="AvatarBtn_Click"/>
@@ -114,9 +115,10 @@
                 <TextBlock Text="{x:Bind User.name}" VerticalAlignment="Center" Foreground="Black"/>
                 <controls:RoundImageEx Height="42" Width="42"
                                        IsCacheEnabled="True"
+                                        PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
                                        CornerRadius="99"
-                                       Source="{x:Bind User.avatar_url}" 
-                                       VerticalAlignment="Center" Margin="4 -4"/>
+                                       Source="{x:Bind User.avatar_url,Mode=OneWay}" 
+                                       VerticalAlignment="Center" Margin="4 -4" PlaceholderStretch="UniformToFill"/>
             </StackPanel>
         </Button>
         <!--#endregion-->
@@ -141,10 +143,6 @@
                     VerticalAlignment="Bottom"/>
             </controls:AdaptiveGridView.Footer>
         </controls:AdaptiveGridView>
-
-
-
-
         <!--#endregion-->
     </Grid>
 </Page>

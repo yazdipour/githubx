@@ -32,10 +32,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="m:CategoryModel">
                     <StackPanel Orientation="Horizontal" Height="48">
-                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="" VerticalAlignment="Center" Height="48"/>
+                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="𝄗" VerticalAlignment="Center" Height="48"/>
                         <Ellipse Margin="16 0" Tag="{x:Bind Id,Mode=OneWay}" 
                                  Fill="{x:Bind Color,Mode=OneWay}" 
                                  VerticalAlignment="Center" 
+                                 Tapped="Ellipse_Tapped"
                                  Height="26" Width="26">
                             <Ellipse.ContextFlyout>
                                 <Flyout Closed="Flyout_Closed">
@@ -53,9 +54,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <AppBarButton Icon="Add" VerticalAlignment="Top"
+        <AppBarButton Icon="Add" VerticalAlignment="Top" Label="Add"
                       AllowFocusOnInteraction="True"
-                      HorizontalAlignment="Right" Width="36" Height="48" Margin="0,-42,0,0">
+                      HorizontalAlignment="Right" Width="36" Margin="0,-46,0,0">
             <AppBarButton.Flyout>
                 <Flyout x:Name="fl">
                     <StackPanel Orientation="Horizontal">

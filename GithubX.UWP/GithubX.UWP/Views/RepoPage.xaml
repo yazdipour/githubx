@@ -23,7 +23,7 @@
                 <Button Style="{StaticResource ButtonBar}" Tag="0" Click="ButtonBar_Click" Content=" Share"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="4" Click="ButtonBar_Click" Content=" Refresh"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open in Browser" />
-                <Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>
+                <!--<Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>-->
                 <!--<Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content=" Save in Pocket"/>-->
             </StackPanel>
             <controls:DropShadowPanel 
@@ -59,24 +59,22 @@
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
                     <controls:ImageEx
-                         IsCacheEnabled="True"
-                    Source="{x:Bind repo.owner.avatar_url, Mode=OneWay}"
-                    Height="92"
-                    Width="92"
-                    Stretch="UniformToFill"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Grid.RowSpan="2"/>
+                        IsCacheEnabled="True"
+                        Source="{x:Bind repo.owner.avatar_url, Mode=OneWay}"
+                        Height="92" Width="92"
+                        PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
+                        Stretch="UniformToFill"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" Grid.RowSpan="2"/>
+                    <TextBlock Margin="8 0 0 0" FontWeight="Bold" FontSize="18"
+                           Text="{x:Bind repo.full_name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Bottom" />
                     <TextBlock 
-                    Margin="8 0 0 0"
-                    Text="{x:Bind repo.full_name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Bottom" 
-                           FontWeight="Bold" FontSize="18"/>
-                    <TextBlock 
-                    Margin="8 4 4 0"
-                    MaxLines="2"
-                    TextWrapping="Wrap"
-                    Text="{x:Bind repo.description, Mode=OneWay}" 
-                    Grid.Row="1" 
-                    Grid.Column="1" VerticalAlignment="Top" FontSize="14" FontWeight="SemiLight"/>
+                        Margin="8 4 4 0"
+                        MaxLines="2"
+                        TextWrapping="Wrap"
+                        Text="{x:Bind repo.description, Mode=OneWay}" 
+                        Grid.Row="1" 
+                        Grid.Column="1" VerticalAlignment="Top" FontSize="14" FontWeight="SemiLight"/>
                     <StackPanel Grid.Column="2" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Right" Margin="8">
                         <TextBlock Text="{x:Bind repo.stars_label, Mode=OneWay}" FontFamily="Segoe UI Emoji" TextAlignment="Right"/>
                         <TextBlock Text="{x:Bind repo.forks_label, Mode=OneWay}" FontFamily="Segoe UI Emoji" TextAlignment="Right"/>

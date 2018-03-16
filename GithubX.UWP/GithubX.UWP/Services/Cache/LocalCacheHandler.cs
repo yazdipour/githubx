@@ -4,7 +4,7 @@ using Windows.Storage;
 
 namespace GithubX.UWP.Services.Cache
 {
-	class LocalCacheHandler
+	class LocalCacheHandler : ICache
 	{
 		StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 
@@ -49,12 +49,8 @@ namespace GithubX.UWP.Services.Cache
 
 		private async Task<string> ReadFile(string fileName)
 		{
-			try
-			{
-				StorageFile sampleFile = await localFolder.GetFileAsync(fileName);
-				return await FileIO.ReadTextAsync(sampleFile);
-			}
-			catch { return null; }
+			StorageFile sampleFile = await localFolder.GetFileAsync(fileName);
+			return await FileIO.ReadTextAsync(sampleFile);
 		}
 	}
 }

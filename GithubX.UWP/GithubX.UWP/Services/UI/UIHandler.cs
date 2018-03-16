@@ -32,6 +32,11 @@ namespace GithubX.UWP.Services.UI
 			var cl = (AcrylicBrush)App.Current.Resources[resourceKey];
 			cl.TintColor = cl.FallbackColor = GetSolidColorBrush(HexColor).Color;
 		}
+		public void ChangeHeaderTheme(string resourceKey, Color color)
+		{
+			var cl = (AcrylicBrush)App.Current.Resources[resourceKey];
+			cl.TintColor = cl.FallbackColor = color;
+		}
 		public SolidColorBrush GetSolidColorBrush(string hex)
 		{
 			hex = hex.Replace("#", string.Empty);

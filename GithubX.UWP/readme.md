@@ -9,30 +9,36 @@
 # First Release Tasks
 
 ## Todo
-
 - [ ] Find a better HTML2Markdown Lib
 - [ ] Try https://github.com/lunet-io/markdig + if good : replace Html2Markdown Lib
 - [ ] Push to Store
 - [ ] Use Error Msg in better ways
-- [ ] Unit Test
-- [ ] Test By Hand
-- [ ] Change Saving Model for Categories from ID to Name (this way it will be easier to track MoveTo later)
-- [ ] `Api` How does UserAgent Works properly!
-- [ ] Make LoginAnimation UnStatic and Local to LoginFrame
+- [ ] `Api` How UserAgent has effect and is it important?!
 
 ## Critical
-- [ ] `Bug` CategoryDialog Manager Save process, not working!!!
-- [ ] CategoryDialog Move Repo
-- [ ] Cover UWPCommunityToolkit.Markdown Parser
+- [ ] Why Login is Sooo Slow
+- [ ] Do not Reload whole Page for refreshing! > When Chaning Categories Also it Goes Back to Tab[0]
+- [ ] `Bug` When UnToggle a Repo from Its Category it does not update automaticly
+- [ ] Cover UWPCommunityToolkit.Markdown Parser Failiers
 
-## Features
+## Future
 - [ ] Add animations
-- [ ] Backup
+- [ ] Backup online
+- [ ] Backup offline
 - [ ] Live Tile Maybe?
 - [ ] Pocket.Api https://getpocket.com/developer/docs/authentication
-- [ ] MD2Html and show it Webview
+- [ ] MD2Html and show it Webview / OR Webview beside MDView
+- [ ] MoveTo Button inside RepoPage
+- [ ] Extract Private Repo and never request them
+- [ ] Unit Test
 
 ## Done
+- [x] Push to AppCenter
+- [x] After categoryDialog opened> if no change : no refresh
+- [x] Make LoginAnimation UnStatic and Local to LoginFrame
+- [x] `Bug` CategoryDialog Manager Save process, not working!!!
+- [x] CategoryDialog Move Repo
+- [x] Change Saving Model for Categories from ID to Name (this way it will be easier to track MoveTo later)
 - [x]  Items Width in Stars_GridView have problems
 - [x] Fix loadMore30 button or replace it with sth else
 - [x] Complete About_Page

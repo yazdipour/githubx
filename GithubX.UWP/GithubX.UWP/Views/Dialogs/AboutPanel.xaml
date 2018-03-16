@@ -6,12 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="About GithubX"
+    Title="Github✘ v1.0"
     SecondaryButtonText="Close">
 
     <StackPanel>
         <Image Source="ms-appx:///Assets/LargeTile.png" Width="78" Height="78" />
-
         <RichTextBlock>
             <Paragraph>
                 <Bold>
@@ -20,17 +19,17 @@
                 <LineBreak/>
                 <LineBreak/>
                 <Run>
-                    This app is an Open Source Project Licensed by Apache and right now it is
-                    under-construction and you can follow this project at Github in this address - Pull request and Submit Issues:
+                    This app is an Open Source Project Licensed under Apache and right now it is
+                    under-construction and you can follow -Pull request and Submit Issues- this project at Github in this address:
                 </Run>
                 <LineBreak/>
                 <Hyperlink NavigateUri="https://github.com/yazdipour/githubx">https://github.com/yazdipour/githubx</Hyperlink>
                 <LineBreak/>
-                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Do not forget to ⭐Star Github✘</Run>
+                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Do not forget to ⭐Star GithubX</Run>
             </Paragraph>
             <Paragraph>
-            <LineBreak/>
-                <Run FontFamily="Segoe UI Emoji" FontSize="16" >👦 Developed and Designed by:</Run>
+                <LineBreak/>
+                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Developed and Designed by: 👦</Run>
                 <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="16"
                            NavigateUri="https://yazdipour.github.io">Shahriar Yazdipour</Hyperlink>
 

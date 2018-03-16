@@ -3,7 +3,7 @@ using Windows.Storage;
 
 namespace GithubX.UWP.Services.Cache
 {
-	internal class WindowsCacheHandler:ICache
+	internal class WindowsCacheHandler
 	{
 		ApplicationDataContainer ls = ApplicationData.Current.LocalSettings;
 

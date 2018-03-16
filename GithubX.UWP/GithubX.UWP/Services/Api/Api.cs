@@ -18,7 +18,7 @@ namespace GithubX.UWP.Services.Api
 		{
 			return "https://raw.githubusercontent.com/" + fullName + "/master/README.md";
 		}
-		public static string HttpUserAgent = "Test";
+		public static string HttpUserAgent = "XGithub";
 
 		public static int UnixTimestamp => (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 

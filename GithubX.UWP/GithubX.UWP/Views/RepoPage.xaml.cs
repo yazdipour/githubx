@@ -1,6 +1,7 @@
 ﻿using System;
 using GithubX.UWP.Models;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -27,7 +28,9 @@ namespace GithubX.UWP.Views
 			Loaded += async (sender, args) =>
 			{
 				string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
-				MarkdownText.Text = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, true);
+				var res = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, true);
+				MarkdownText.Text = res.Item2;
+				if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached",3000);
 			};
 		}
 
@@ -42,23 +45,19 @@ namespace GithubX.UWP.Views
 			if (Frame.CanGoBack) Frame.GoBack();
 		}
 
-		private async void ButtonBar_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		private async void ButtonBar_Click(object sender, RoutedEventArgs e)
 		{
 			var btn = e.OriginalSource as Button;
 			switch (btn.Tag.ToString())
 			{
 				case "0":
-					//share
 					DataTransferManager.ShowShareUI();
 					break;
 				case "1":
-					//browser
 					await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url));
 					break;
-				case "2":
-					//move
-					await new CategoryPanel(repo.id).ShowAsync();
-					break;
+				//case "2":
+				//	break;
 				//case "3":
 				//	//TODO :save pocket
 				//	break;
@@ -68,7 +67,8 @@ namespace GithubX.UWP.Views
 					{
 						MarkdownText.Text = "...";
 						string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
-						MarkdownText.Text = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, false);
+						var res = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, false);
+						MarkdownText.Text = res.Item2;
 					}
 					catch { }
 					break;

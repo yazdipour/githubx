@@ -11,21 +11,19 @@ namespace GithubX.UWP.Views
 			this.InitializeComponent();
 		}
 
-		private void Login_Click(object sender, RoutedEventArgs e)
+		private async void Login_Click(object sender, RoutedEventArgs e)
 		{
-			Login(accTextBox.Text.Trim());
-			async void Login(string acc)
+			if (!Services.Api.HttpHandler.CheckConnection) Frame.Navigate(typeof(ErrorPage));
+			LoadingControl.IsLoading = true;
+			await Login(accTextBox.Text.Trim());
+			LoadingControl.IsLoading = false;
+			async System.Threading.Tasks.Task Login(string acc)
 			{
-				MainPage.LoadingLottie.IsLoading = true;
 				var user = await Services.Api.ApiHandler.LoginAsync(acc);
-				MainPage.LoadingLottie.IsLoading = false;
 				if (user != null)
 					Frame.Navigate(typeof(StarListPage), user);
 				else
-				{
-					MainPage.NotifyElement.Content = "Error! Try Again";
-					MainPage.NotifyElement.Show();
-				}
+					MainPage.NotifyElement.Show("Error! Try Again", 2000);
 			}
 		}
 	}

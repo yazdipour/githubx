@@ -4,31 +4,6 @@ namespace GithubX.UWP.Models
 {
 	class RepoModel
 	{
-		private string color = "#e67e22";
-
-		public string Color
-		{
-			get
-			{
-				if (color == null || color == "#e67e22")
-					color = FindColor();
-				return color;
-			}
-			set { color = value; }
-		}
-
-
-		public string forks_label
-		{
-			get { return forks + " ⭐"; }
-		}
-
-		public string stars_label
-		{
-			get { return stargazers_count + " 🍴"; }
-		}
-
-
 		//api
 		public int id { get; set; }
 		public string name { get; set; }
@@ -39,22 +14,40 @@ namespace GithubX.UWP.Models
 		public string description { get; set; }
 		public bool fork { get; set; }
 		public string url { get; set; }
-		public string homepage { get; set; }
 		public int stargazers_count { get; set; }
-		public int watchers_count { get; set; }
 		public string language { get; set; }
-		public bool has_downloads { get; set; }
 		public bool has_wiki { get; set; }
 		public bool has_pages { get; set; }
 		public int forks { get; set; }
 		public string default_branch { get; set; }
 
-		public string FindColor()
+		// inapp
+
+		public int[] CategoriesId = { 0 };
+
+		private string color = "#3c6382";
+
+		public string Color
+		{
+			get
+			{
+				if (color == null || color == "#3c6382") color = FindColor();
+				return color;
+			}
+			set { color = value; }
+		}
+
+		public string forks_label => forks + " ⭐";
+
+		public string stars_label => stargazers_count + " 🍴";
+
+		private string FindColor()
 		{
 			//REF https://github.com/doda/github-language-colors/blob/master/colors.json
+			if (language == "") return "#ffffff";
 			var key = "," + language + ":";
 			var a = Api.colors.IndexOf(key);
-			if (a == -1) return "#ffffff";
+			if (a == -1) return "#3c6382";
 			a += key.Length;
 			return Api.colors.Substring(a, 7);
 		}

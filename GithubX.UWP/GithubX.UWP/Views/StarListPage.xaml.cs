@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using GithubX.UWP.Models;
+using GithubX.UWP.Services.Api;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,8 +16,8 @@ namespace GithubX.UWP.Views
 		OwnerModel User = new OwnerModel();
 		ObservableCollection<CategoryModel> Categories { get; set; }
 		ObservableCollection<RepoModel> Repositories { get; set; }
-
-		private int currentPageInAllCat = 0;
+		private string SharingUrl = null;
+		private int currentPageInAllCat = 0, currentTabId = 0;
 
 		#region OnLoad
 		public StarListPage()
@@ -25,31 +27,37 @@ namespace GithubX.UWP.Views
 			{
 				gridView.Height = ActualHeight - 92;
 			};
-
+			DataTransferManager.GetForCurrentView().DataRequested += (sen, args) =>
+			{
+				if (SharingUrl == null) return;
+				DataRequest request = args.Request;
+				request.Data.SetText(SharingUrl);
+				request.Data.Properties.Title = "Github Repo, Shared by GithubX";
+			};
 		}
 
-		async void LoadCategories()
-		{
-			var ls = await Services.Api.ApiHandler.GetCategoriesAsync(User.login);
-			Categories = new ObservableCollection<CategoryModel>(ls);
-			if (Categories != null)
-				if (Categories.Count > 0)
-				{
-					Repositories = new ObservableCollection<RepoModel>(Categories[0].RepoList);
-					Bindings.Update();
-					tabList.SelectedIndex = 0;
-					LoadMoreButton.Visibility = Repositories.Count % 30 == 0 ? Visibility.Visible : Visibility.Collapsed;
-				}
-		}
-
-		protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedFrom(e);
 			User = e.Parameter as OwnerModel;
 			App.UserLoginAccountName = User.login;
-			if (gridView.Items.Count == 0) LoadCategories();
+			if (gridView.Items.Count == 0) await LoadCategories();
 		}
 
+		async Task LoadCategories()
+		{
+			var ls = await ApiHandler.GetCategoriesAsync(User.login);
+			Categories = new ObservableCollection<CategoryModel>(ls);
+			if (Categories != null)
+				if (Categories.Count > 0)
+				{
+					await ApiHandler.PrepareAllRepos(User.login);
+					Repositories = new ObservableCollection<RepoModel>(ApiHandler.GetRepoOfCategory(0));
+					if (Repositories.Count >= 30) LoadMoreButton.Visibility = Visibility.Visible;
+					new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", Categories[0].Color);
+					Bindings.Update();
+				}
+		}
 		#endregion
 
 		#region Events in Tab
@@ -57,7 +65,7 @@ namespace GithubX.UWP.Views
 		{
 			var p = new CategoryPanel();
 			await p.ShowAsync();
-			RefreshPage();
+			if (p.NeedRefresh) RefreshPage();
 		}
 
 		private void RefreshPage()
@@ -68,33 +76,38 @@ namespace GithubX.UWP.Views
 			Frame.BackStack.RemoveAt(Frame.BackStack.Count - 1);
 		}
 
-		private async void tabList_ItemClick(object sender, ItemClickEventArgs e)
+		private void tabList_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var item = e.ClickedItem as CategoryModel;
-			new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", item.Color);
-			await LoadingRepos(item);
-		}
-		#endregion
-
-		private async Task LoadingRepos(CategoryModel cat, int page = 0)
-		{
+			if (item.Id == currentTabId) return;
 			try
 			{
-				var ls = await Services.Api.ApiHandler.GetReposAsync(User.login, cat, page);
-				if (page == 0) Repositories = new ObservableCollection<RepoModel>(ls);
-				else ls.ForEach(Repositories.Add);
-
-				LoadMoreButton.Visibility = (cat.Id == 0 && ls.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
+				currentTabId = item.Id;
+				new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", item.Color);
+				Repositories = new ObservableCollection<RepoModel>(ApiHandler.GetRepoOfCategory(item.Id));
+				LoadMoreButton.Visibility = (currentTabId == 0 && Repositories.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
+				Bindings.Update();
 			}
 			catch (Exception ex)
 			{
-				MainPage.NotifyElement.Show(ex.Message, 2000);
+				MainPage.NotifyElement.Show(ex.Message, 4000);
 			}
 		}
+
 		private async void LoadMoreButton_Click(object sender, RoutedEventArgs e)
 		{
-			await LoadingRepos(Categories[0], ++currentPageInAllCat);
+			try
+			{
+				var res = await ApiHandler.GetNextPageReposAsync(User.login, ++currentPageInAllCat);
+				res.ForEach(Repositories.Add);
+				LoadMoreButton.Visibility = (res.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
+			}
+			catch (Exception ex)
+			{
+				MainPage.NotifyElement.Show(ex.Message, 4000);
+			}
 		}
+		#endregion
 
 		#region GridView Events
 		private void AdaptiveGridViewControl_ItemClick(object sender, ItemClickEventArgs e)
@@ -106,40 +119,59 @@ namespace GithubX.UWP.Views
 		{
 			var senderElement = sender as GridView;
 			var repo = ((FrameworkElement)e.OriginalSource).DataContext as RepoModel;
-
+			if (senderElement == null || repo == null) return;
 			MenuFlyout myFlyout = new MenuFlyout();
 			Style s = new Style { TargetType = typeof(MenuFlyoutPresenter) };
 			s.Setters.Add(new Setter(RequestedThemeProperty, ElementTheme.Dark));
 			myFlyout.MenuFlyoutPresenterStyle = s;
 
-			MenuFlyoutItem el1 = new MenuFlyoutItem { Text = "Open in browser" };
-			MenuFlyoutItem el2 = new MenuFlyoutItem { Text = "Move to" };
-			MenuFlyoutItem el3 = new MenuFlyoutItem { Text = "Share" };
-			el1.Click += async (sen, ee) =>
+			var el = new MenuFlyoutItem { Text = "Share", Icon = new SymbolIcon(Symbol.Share) };
+			el.Click += (sen, ee) => { SharingUrl = repo.html_url; DataTransferManager.ShowShareUI(); };
+			myFlyout.Items.Add(el);
+			el = new MenuFlyoutItem { Text = "Open in browser", Icon = new SymbolIcon(Symbol.World) };
+			el.Click += async (sen, ee) => { await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url)); };
+			myFlyout.Items.Add(el);
+
+			if (Categories.Count == 1)
 			{
-				await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url));
-			};
-			el2.Click += async (sen, ee) =>
+				myFlyout.ShowAt(senderElement, e.GetPosition(senderElement));
+				return;
+			}
+
+			#region MoveTo Flyout
+			var tempCategoriesId = new System.Collections.Generic.List<int>(repo.CategoriesId);
+			var menu = new MenuFlyoutSubItem { Text = "Move to" };
+			foreach (var item in Categories)
 			{
-				//todo : to sth
-				await new CategoryPanel(repo.id).ShowAsync();
-			};
-			el3.Click += (sen, ee) =>
+				if (item.Id == 0) continue;
+				el = new ToggleMenuFlyoutItem { Text = item.Text, Tag = item.Id.ToString(), IsChecked = tempCategoriesId.Contains(item.Id) };
+				el.Click += El_Click;
+				menu.Items.Add(el);
+			}
+			myFlyout.Items.Add(menu);
+
+			async void El_Click(object sen, RoutedEventArgs ee)
 			{
-				DataTransferManager.ShowShareUI();
-			};
-			DataTransferManager.GetForCurrentView().DataRequested += (sen, args) =>
-			{
-				DataRequest request = args.Request;
-				request.Data.SetText(repo.html_url);
-				request.Data.Properties.Title = "Github Repo, Shared by GithubX";
-			};
-			myFlyout.Items.Add(el1);
-			myFlyout.Items.Add(el2);
-			myFlyout.Items.Add(el3);
-			//myFlyout.Placement = FlyoutPlacementMode.Left;
+				var tag = (sen as FrameworkElement).Tag;
+				try
+				{
+					if (tag == null) throw new Exception();
+					var inx = Convert.ToInt32(tag.ToString());
+					if (tempCategoriesId.Contains(inx)) tempCategoriesId.Remove(inx);
+					else tempCategoriesId.Add(inx);
+					repo.CategoriesId = tempCategoriesId.ToArray();
+					MainPage.NotifyElement.Show("✔ Categories Updated", 3000);
+					await ApiHandler.SaveCategoryReposAsync(User.login, Repositories.ToList());
+					//
+					//TODO maybe Need Refresh after Adding or removing
+					//
+				}
+				catch { MainPage.NotifyElement.Show("Something is not right!!", 2000); }
+			}
 			myFlyout.ShowAt(senderElement, e.GetPosition(senderElement));
+			#endregion
 		}
+
 		#endregion
 
 		private async void AvatarBtn_Click(object sender, RoutedEventArgs e)
@@ -152,6 +184,7 @@ namespace GithubX.UWP.Views
 					await new AboutPanel().ShowAsync();
 					break;
 				case "0":
+					// load with cache disable
 					RefreshPage();
 					break;
 				case "1":
@@ -160,8 +193,9 @@ namespace GithubX.UWP.Views
 					break;
 				case "2":
 					//logout
-					Services.Api.ApiHandler.LogOut();
+					ApiHandler.LogOut();
 					Frame.BackStack.Clear();
+					new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", Windows.UI.Colors.WhiteSmoke);
 					Frame.Navigate(typeof(LoginPage));
 					break;
 			}
