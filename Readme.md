@@ -23,9 +23,9 @@
 
 
 | Store    | AppCenter (Preview)
-| ------------- |:-------------:
-| Version1.0    | V1.0
-| [![Get](https://assets.windowsphone.com/13484911-a6ab-4170-8b7e-795c1e8b4165/English_get_L_InvariantCulture_Default.png)](https://www.microsoft.com/store/apps/9P7D7PD6FBCV?ocid=badge) | [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms) 
+| :-------------: |:-------------:
+| Version1.0    | V1.0 [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
+| [![Get](https://assets.windowsphone.com/13484911-a6ab-4170-8b7e-795c1e8b4165/English_get_L_InvariantCulture_Default.png)](https://www.microsoft.com/store/apps/9P7D7PD6FBCV?ocid=badge) | [Want to Test Preview Releases?](https://install.appcenter.ms/users/yazdipour/apps/githubx/distribution_groups/publicbetatesters)
 
 * [Project Directory](/GithubX.UWP/readme.md)
 * Can show Github Starred Repos and Categorize them
@@ -35,7 +35,7 @@
 
 
 | ScreenShot    | Sketch
-| ------------- |:-------------:
+| :-------------: |:-------------:
 | [>More Screenshots<](/UI/Screenshots.UWP/)      | [>See all sketch pages for UWP<](/UI/Sketch.UWP/)
 | ![Sketch](/UI/Screenshots.UWP/MainPage.png)     | ![Sketch](/UI/Sketch.UWP/ContenxMenu.jpg)
 
