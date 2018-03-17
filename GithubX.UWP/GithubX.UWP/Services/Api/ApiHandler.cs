@@ -13,14 +13,16 @@ namespace GithubX.UWP.Services.Api
 	{
 		static WindowsCacheHandler wCache = new WindowsCacheHandler();
 		static LocalCacheHandler lCache = new LocalCacheHandler();
+		internal static List<RepoModel> AllRepos { get; set; }
+		internal static ObservableCollection<CategoryModel> AllCategories { get; set; }
 
 		#region Category
-		internal static async Task SaveCategoriesAsync(string userLoginAccountName, List<CategoryModel> categories)
+		internal static async Task SaveCategoriesAsync(string userLoginAccountName)
 		{
-			await lCache.SaveAsync(CacheKeys.CategoriesKey(userLoginAccountName), JsonConvert.SerializeObject(categories)).ConfigureAwait(false);
+			await lCache.SaveAsync(CacheKeys.CategoriesKey(userLoginAccountName), JsonConvert.SerializeObject(AllCategories)).ConfigureAwait(false);
 		}
 
-		internal static async Task<List<CategoryModel>> GetCategoriesAsync(string userId)
+		internal static async Task PrepareAllCategories(string userId)
 		{
 			var cats = new List<CategoryModel>();
 			var keys = CacheKeys.CategoriesKey(userId);
@@ -28,19 +30,18 @@ namespace GithubX.UWP.Services.Api
 			{
 				var json = await lCache.ReadAsync(keys); // if does not exist will return null and 
 				cats = JsonConvert.DeserializeObject<List<CategoryModel>>(json); //then throw exception
-				return cats.OrderBy(o => o.OrderId).ToList();
+				AllCategories = new ObservableCollection<CategoryModel>(cats.OrderBy(o => o.OrderId).ToList());
 			}
 			catch (Exception)
 			{
 				cats.Add(new CategoryModel { Id = 0, Text = "All" });
-				await SaveCategoriesAsync(userId, cats);
-				return cats;
+				await SaveCategoriesAsync(userId);
+				AllCategories = new ObservableCollection<CategoryModel>(cats);
 			}
 		}
 		#endregion
 
 		#region Repositories
-		internal static List<RepoModel> AllRepos { get; set; }
 
 		internal static List<RepoModel> GetRepoOfCategory(int catId) => AllRepos.FindAll(obj => obj.CategoriesId.Contains(catId));
 
@@ -68,7 +69,7 @@ namespace GithubX.UWP.Services.Api
 						AllRepos = MergeOldAndNew(cacheList, freshList);
 					}
 					catch { AllRepos = freshList; }
-					await SaveCategoryReposAsync(userAcc, AllRepos);
+					await SaveCategoryReposAsync(userAcc);
 					return;
 				}
 				catch { }
@@ -108,9 +109,16 @@ namespace GithubX.UWP.Services.Api
 			}
 		}
 
-		internal static async Task SaveCategoryReposAsync(string user, List<RepoModel> cat)
+		internal static async Task UpdateRepoAsync(string login, RepoModel repo)
 		{
-			var temp = cat.FindAll(x => x.CategoriesId != new int[] { });
+			var item = AllRepos.Find(o => o.id == repo.id);
+			if (item == null) AllRepos.Add(repo);
+			item = repo;
+			await SaveCategoryReposAsync(login);
+		}
+		internal static async Task SaveCategoryReposAsync(string user)
+		{
+			var temp = AllRepos.FindAll(x => x.CategoriesId.Length != 0);
 			await lCache.SaveAsync(CacheKeys.RepositoriesKey(user), JsonConvert.SerializeObject(temp)).ConfigureAwait(false);
 		}
 		#endregion

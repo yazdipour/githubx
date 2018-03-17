@@ -7,12 +7,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Loaded="ContentDialog_Loaded"
     Title="Categories"
-    PrimaryButtonText="Save"
-    SecondaryButtonText="Close" Background="{ThemeResource DialogBoxAcrylicBrush}"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    PrimaryButtonText="Close" 
+    Background="{ThemeResource DialogBoxAcrylicBrush}"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
     <ContentDialog.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -26,7 +24,6 @@
               DragItemsStarting="ListView1_OnDragItemsStarting"
               AllowDrop="True" CanReorderItems="True" CanDragItems="True"
               x:Name="CatList"
-              ItemsSource="{x:Bind categories, Mode=TwoWay}"
               SelectionMode="Single"
               IsItemClickEnabled="False">
             <ListView.ItemTemplate>

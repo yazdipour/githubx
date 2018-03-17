@@ -81,7 +81,6 @@
                     Foreground="Black" Click="CategorySetting_Click"
                     FontSize="20" Background="Transparent" Margin="28,0,0,0"/>
         <ListView x:Name="tabList" 
-                  ItemsSource="{x:Bind Categories,Mode=OneWay}"
                   Height="48"
                   VerticalAlignment="Bottom"
                       IsItemClickEnabled="True"

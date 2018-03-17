@@ -23,8 +23,8 @@
                 <Button Style="{StaticResource ButtonBar}" Tag="0" Click="ButtonBar_Click" Content=" Share"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="4" Click="ButtonBar_Click" Content=" Refresh"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open in Browser" />
-                <!--<Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>-->
-                <!--<Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content=" Save in Pocket"/>-->
+                <Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>
+                <Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content="💾 Save in Pocket"/>
             </StackPanel>
             <controls:DropShadowPanel 
                 Margin="32 0 32 32" OffsetY="3" 

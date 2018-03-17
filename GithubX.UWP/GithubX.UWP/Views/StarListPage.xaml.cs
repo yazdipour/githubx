@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using GithubX.UWP.Models;
 using GithubX.UWP.Services.Api;
@@ -14,7 +13,6 @@ namespace GithubX.UWP.Views
 	public sealed partial class StarListPage : Page
 	{
 		OwnerModel User = new OwnerModel();
-		ObservableCollection<CategoryModel> Categories { get; set; }
 		ObservableCollection<RepoModel> Repositories { get; set; }
 		private string SharingUrl = null;
 		private int currentPageInAllCat = 0, currentTabId = 0;
@@ -41,22 +39,20 @@ namespace GithubX.UWP.Views
 			base.OnNavigatedFrom(e);
 			User = e.Parameter as OwnerModel;
 			App.UserLoginAccountName = User.login;
-			if (gridView.Items.Count == 0) await LoadCategories();
-		}
-
-		async Task LoadCategories()
-		{
-			var ls = await ApiHandler.GetCategoriesAsync(User.login);
-			Categories = new ObservableCollection<CategoryModel>(ls);
-			if (Categories != null)
-				if (Categories.Count > 0)
-				{
-					await ApiHandler.PrepareAllRepos(User.login);
-					Repositories = new ObservableCollection<RepoModel>(ApiHandler.GetRepoOfCategory(0));
-					if (Repositories.Count >= 30) LoadMoreButton.Visibility = Visibility.Visible;
-					new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", Categories[0].Color);
-					Bindings.Update();
-				}
+			if (gridView.Items.Count == 0)
+			{
+				await ApiHandler.PrepareAllCategories(User.login);
+				tabList.ItemsSource = ApiHandler.AllCategories;
+				if (ApiHandler.AllCategories != null)
+					if (ApiHandler.AllCategories.Count > 0)
+					{
+						await ApiHandler.PrepareAllRepos(User.login);
+						Repositories = new ObservableCollection<RepoModel>(ApiHandler.GetRepoOfCategory(0));
+						if (Repositories.Count >= 30) LoadMoreButton.Visibility = Visibility.Visible;
+						new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", ApiHandler.AllCategories[0].Color);
+						Bindings.Update();
+					}
+			}
 		}
 		#endregion
 
@@ -65,7 +61,6 @@ namespace GithubX.UWP.Views
 		{
 			var p = new CategoryPanel();
 			await p.ShowAsync();
-			if (p.NeedRefresh) RefreshPage();
 		}
 
 		private void RefreshPage()
@@ -132,7 +127,7 @@ namespace GithubX.UWP.Views
 			el.Click += async (sen, ee) => { await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url)); };
 			myFlyout.Items.Add(el);
 
-			if (Categories.Count == 1)
+			if (ApiHandler.AllCategories.Count == 1)
 			{
 				myFlyout.ShowAt(senderElement, e.GetPosition(senderElement));
 				return;
@@ -141,7 +136,7 @@ namespace GithubX.UWP.Views
 			#region MoveTo Flyout
 			var tempCategoriesId = new System.Collections.Generic.List<int>(repo.CategoriesId);
 			var menu = new MenuFlyoutSubItem { Text = "Move to" };
-			foreach (var item in Categories)
+			foreach (var item in ApiHandler.AllCategories)
 			{
 				if (item.Id == 0) continue;
 				el = new ToggleMenuFlyoutItem { Text = item.Text, Tag = item.Id.ToString(), IsChecked = tempCategoriesId.Contains(item.Id) };
@@ -157,14 +152,18 @@ namespace GithubX.UWP.Views
 				{
 					if (tag == null) throw new Exception();
 					var inx = Convert.ToInt32(tag.ToString());
-					if (tempCategoriesId.Contains(inx)) tempCategoriesId.Remove(inx);
-					else tempCategoriesId.Add(inx);
+					if (tempCategoriesId.Contains(inx))
+					{
+						//toggle off
+						if (currentTabId == inx) Repositories.Remove(repo);
+						tempCategoriesId.Remove(inx);
+					}
+					else
+						//toggle on
+						tempCategoriesId.Add(inx);
 					repo.CategoriesId = tempCategoriesId.ToArray();
+					await ApiHandler.UpdateRepoAsync(User.login,repo);
 					MainPage.NotifyElement.Show("✔ Categories Updated", 3000);
-					await ApiHandler.SaveCategoryReposAsync(User.login, Repositories.ToList());
-					//
-					//TODO maybe Need Refresh after Adding or removing
-					//
 				}
 				catch { MainPage.NotifyElement.Show("Something is not right!!", 2000); }
 			}

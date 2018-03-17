@@ -1,4 +1,5 @@
 ﻿using GithubX.UWP.Services.Api;
+using Newtonsoft.Json;
 
 namespace GithubX.UWP.Models
 {
@@ -20,13 +21,12 @@ namespace GithubX.UWP.Models
 		public bool has_pages { get; set; }
 		public int forks { get; set; }
 		public string default_branch { get; set; }
-
+		
 		// inapp
-
 		public int[] CategoriesId = { 0 };
-
 		private string color = "#3c6382";
 
+		[JsonIgnore]
 		public string Color
 		{
 			get
@@ -37,9 +37,11 @@ namespace GithubX.UWP.Models
 			set { color = value; }
 		}
 
+		[JsonIgnore]
 		public string forks_label => forks + " ⭐";
 
-		public string stars_label => stargazers_count + " 🍴";
+		[JsonIgnore]
+		public string stars_label => stargazers_count + " 🔱";
 
 		private string FindColor()
 		{

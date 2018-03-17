@@ -9,15 +9,12 @@ namespace GithubX.UWP.Services.Api
 			return "https://api.github.com/users/" + acc;
 		}
 
-		public static string AccountStarsUrl(string acc, int page = 0)
-		{
-			return "https://api.github.com/users/" + acc + "/starred?page=" + (++page);
-		}
+		public static string AccountStarsUrl(string acc, int page = 0) => string.Format("https://api.github.com/users/{0}/starred?page={1}", acc, (++page));
 
-		public static string RepoReadMeUrl(string fullName)
-		{
-			return "https://raw.githubusercontent.com/" + fullName + "/master/README.md";
-		}
+		public static string RepoReadMeUrl(string fullName) => string.Format("https://raw.githubusercontent.com/{0}/master/README.md", fullName);
+
+		public static string Contents(string fullName) => string.Format("https://api.github.com/repos/{0}/contents/", fullName);
+
 		public static string HttpUserAgent = "XGithub";
 
 		public static int UnixTimestamp => (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;

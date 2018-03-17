@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using GithubX.UWP.Models;
+using GithubX.UWP.Services.Api;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -30,7 +32,7 @@ namespace GithubX.UWP.Views
 				string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
 				var res = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, true);
 				MarkdownText.Text = res.Item2;
-				if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached",3000);
+				if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached", 3000);
 			};
 		}
 
@@ -56,8 +58,37 @@ namespace GithubX.UWP.Views
 				case "1":
 					await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url));
 					break;
-				//case "2":
-				//	break;
+				case "2":
+					MenuFlyout menu = new MenuFlyout();
+					var tempCategoriesId = new List<int>(repo.CategoriesId);
+					foreach (var item in ApiHandler.AllCategories)
+					{
+						if (item.Id == 0) continue;
+						var el = new ToggleMenuFlyoutItem { Text = item.Text, Tag = item.Id.ToString(), IsChecked = tempCategoriesId.Contains(item.Id) };
+						el.Click += El_Click;
+						menu.Items.Add(el);
+					}
+					async void El_Click(object sen, RoutedEventArgs ee)
+					{
+						var tag = (sen as FrameworkElement).Tag;
+						try
+						{
+							if (tag == null) throw new Exception();
+							var inx = Convert.ToInt32(tag.ToString());
+							if (tempCategoriesId.Contains(inx))
+								//toggle off
+								tempCategoriesId.Remove(inx);
+							else
+								//toggle on
+								tempCategoriesId.Add(inx);
+							repo.CategoriesId = tempCategoriesId.ToArray();
+							await ApiHandler.UpdateRepoAsync(App.UserLoginAccountName, repo);
+							MainPage.NotifyElement.Show("✔ Categories Updated", 3000);
+						}
+						catch { MainPage.NotifyElement.Show("Something is not right!!", 2000); }
+					}
+					menu.ShowAt(btn);
+					break;
 				//case "3":
 				//	//TODO :save pocket
 				//	break;

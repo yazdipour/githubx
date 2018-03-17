@@ -2,7 +2,7 @@
 
 ![GithubX](/Icon/Octocat.png)
 
-* Goal: Make Categorizing Starred Github Repositories Easier
+* Main Goal: Make Categorizing Starred Github Repositories Easier and Enjoyable 🤗
 
 # Tasks
 
@@ -10,38 +10,42 @@
 - [x] Windows.UWP.Sketch
 - [ ] Website.Sketch
 - [ ] Website.Code
+- [ ] Android.Sketch
+- [ ] Android.Code
+- [ ] Server Side Strategy
+- [ ] Get Domain Name!
 
-* Planning
-    - [ ] Online Backup 
-    - [ ] Server Side Strategy
-    - [ ] Site Domain Name
+# Api
+
+* [What we need from Github_Api](/Api/readme.md)
 
 # UWP
 
 [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
+
 * [Project](/GithubX.UWP/readme.md)
 * Can show Github Starred Repos and Categorize them
 * Can show README_MD 
 * Can Cache Repositories List and README files
 * Most importantly: A Beautiful UI 
 
-### [>More Screenshots<](/Screenshots.UWP/)
-![Sketch](/Screenshots.UWP/MainPage.png)
+### [>More Screenshots<](/UI/Screenshots.UWP/)
+![Sketch](/UI/Screenshots.UWP/MainPage.png)
 
 # Website
 
 * Store Categories for each User (I am thinking for the best and inexpensive cenario)
-* Can show Github Starred Repos and Categorize them
-* Good looking UI
+* No Sketch no plan right now!
 
-# Api
 
-* [What I need from Github_Api](/Api/readme.md)
+# Android
 
-# UI
+* No Sketch no plan right now!
 
-### Designed by Adobe Xd]
+# UI Sketch
 
-### [>See all sketch pages<](/UI.UWP/)
+### Designed by Adobe Xd
 
-![Sketch](/UI.UWP/ContenxMenu.jpg)
+### [>See all sketch pages for UWP<](/UI/Sketch.UWP/)
+
+![Sketch](/UI/Sketch.UWP/ContenxMenu.jpg)
