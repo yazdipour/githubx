@@ -11,6 +11,9 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
     <Page.Resources>
+        <Style TargetType="MenuFlyoutPresenter">
+            <Setter Property="RequestedTheme" Value="Dark" />
+        </Style>
         <Style TargetType="GridViewItem">
             <Setter Property="Margin" Value="4 8"/>
         </Style>
@@ -70,22 +73,25 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <!--#region tab-->
         <Button Content=""
                 VerticalAlignment="Bottom"
                 FontFamily="Segoe UI Symbol" 
-                    Height="48" RequestedTheme="Light"
-                    Foreground="Black" Click="CategorySetting_Click"
-                    FontSize="20" Background="Transparent" Margin="28,0,0,0"/>
+                Height="48" RequestedTheme="Light"
+                Foreground="Black" Click="CategorySetting_Click"
+                FontSize="20" Background="Transparent" Margin="28,0,0,0"/>
         <ListView x:Name="tabList" 
                   Height="48"
+                  ScrollViewer.HorizontalScrollMode="Auto"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   VerticalAlignment="Bottom"
-                      IsItemClickEnabled="True"
-                      ItemClick="tabList_ItemClick" 
-                      FontFamily="Segoe UI Emoji" Grid.Column="1">
+                  IsItemClickEnabled="True"
+                  ItemClick="tabList_ItemClick" 
+                  FontFamily="Segoe UI Emoji" 
+                  Grid.Column="1">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal" />
@@ -99,8 +105,10 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button VerticalAlignment="Bottom"
-                RequestedTheme="Dark" HorizontalAlignment="Right" 
-                Background="Transparent" Grid.Column="3">
+                RequestedTheme="Dark"
+                HorizontalAlignment="Right" 
+                Background="Transparent" 
+                Grid.Column="2">
             <Button.Flyout>
                 <MenuFlyout>
                     <MenuFlyoutItem Tag="0" Text="Refresh" Click="AvatarBtn_Click"/>
@@ -123,7 +131,7 @@
         <!--#endregion-->
 
         <!--#region body-->
-        <controls:AdaptiveGridView Name="gridView"
+        <controls:AdaptiveGridView x:Name="gridView"
                                    ItemsSource="{x:Bind Repositories,Mode=OneWay}"
                                    OneRowModeEnabled="False"
                                    ItemHeight="125"
@@ -136,7 +144,8 @@
                                    RightTapped="gridView_RightTapped">
             <controls:AdaptiveGridView.Footer>
                 <Button x:Name="LoadMoreButton"
-                    Click="LoadMoreButton_Click" Content="Load More"
+                    Click="LoadMoreButton_Click"
+                    Content="Load More" Visibility="Collapsed"
                     Width="260" Height="36" Margin=" 0 8 0 0"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Bottom"/>

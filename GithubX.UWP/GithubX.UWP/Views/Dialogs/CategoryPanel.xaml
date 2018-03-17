@@ -6,6 +6,7 @@
     xmlns:m="using:GithubX.UWP.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Title="Categories"
     PrimaryButtonText="Close" 
@@ -20,16 +21,17 @@
     </ContentDialog.Resources>
     <Grid>
         <ListView VerticalAlignment="Stretch" 
-              HorizontalAlignment="Stretch" 
-              DragItemsStarting="ListView1_OnDragItemsStarting"
-              AllowDrop="True" CanReorderItems="True" CanDragItems="True"
+              HorizontalAlignment="Stretch"
+              AllowDrop="True"
+              CanReorderItems="True"
               x:Name="CatList"
               SelectionMode="Single"
               IsItemClickEnabled="False">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="m:CategoryModel">
                     <StackPanel Orientation="Horizontal" Height="48">
-                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="𝄗" VerticalAlignment="Center" Height="48"/>
+                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="𝄗" 
+                                      VerticalAlignment="Center" Height="48"/>
                         <Ellipse Margin="16 0" Tag="{x:Bind Id,Mode=OneWay}" 
                                  Fill="{x:Bind Color,Mode=OneWay}" 
                                  VerticalAlignment="Center" 
@@ -46,19 +48,29 @@
                                 </Flyout>
                             </Ellipse.ContextFlyout>
                         </Ellipse>
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind Text,Mode=OneWay}" VerticalAlignment="Center" />
+                        <TextBlock FontWeight="SemiBold" Text="{x:Bind Text,Mode=OneWay}" VerticalAlignment="Center" Width="160"/>
+                        <AppBarButton Icon="Edit" Width="36" AllowFocusOnInteraction="True">
+                            <AppBarButton.Flyout>
+                                <Flyout x:Name="fl2" Closed="Flyout_Closed_1">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Text="{x:Bind Text,Mode=TwoWay}" Width="160" />
+                                        <Button Click="Del_Click" Content="" FontFamily="Segoe UI Symbol" />
+                                    </StackPanel>
+                                </Flyout>
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <AppBarButton Icon="Add" VerticalAlignment="Top" Label="Add"
-                      AllowFocusOnInteraction="True"
+        <AppBarButton Icon="Add" VerticalAlignment="Top"
+                      AllowFocusOnInteraction="True" Height="42"
                       HorizontalAlignment="Right" Width="36" Margin="0,-46,0,0">
             <AppBarButton.Flyout>
                 <Flyout x:Name="fl">
                     <StackPanel Orientation="Horizontal">
                         <TextBox x:Name="flyoutTextBox" Text="Fav😍" Width="160" Margin="0 0 8 0"/>
-                        <Button Click="Add_Click" Content="Create" />
+                        <Button Click="Create_Click" Content="Create" />
                     </StackPanel>
                 </Flyout>
             </AppBarButton.Flyout>

@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x86\Release\GithubX.UWP_1.0.2.0_x86.appx
+SymbolPackage=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\AppPackages\GithubX.UWP_1.0.2.0_Test\GithubX.UWP_1.0.2.0_x86.appxsym

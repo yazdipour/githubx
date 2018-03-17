@@ -8,6 +8,7 @@ namespace GithubX.UWP.Views
 		public ErrorPage()
 		{
 			this.InitializeComponent();
+			if(App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Visit ErrorPage");
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)

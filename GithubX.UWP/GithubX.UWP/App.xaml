@@ -19,7 +19,6 @@
                             TintOpacity="0.1" 
                             TintColor="#19FFFFFF" 
                             FallbackColor="#FFF" />
-
     </Application.Resources>
-
+    
 </Application>

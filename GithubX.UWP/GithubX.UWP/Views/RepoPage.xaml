@@ -24,17 +24,32 @@
                 <Button Style="{StaticResource ButtonBar}" Tag="4" Click="ButtonBar_Click" Content=" Refresh"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open in Browser" />
                 <Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>
-                <Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content="💾 Save in Pocket"/>
+                <!--<Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content="💾 Save in Pocket"/>-->
             </StackPanel>
-            <controls:DropShadowPanel 
+            <controls:DropShadowPanel
+                VerticalContentAlignment="Stretch"
+                HorizontalContentAlignment="Stretch" 
+                HorizontalAlignment="Stretch"
                 Margin="32 0 32 32" OffsetY="3" 
-                BlurRadius="6" ShadowOpacity=".6" Color="#28000000">
-                <ScrollViewer x:Name="MarkdownScrollViewer" BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
-                  BorderThickness="2" VerticalScrollMode="Enabled"
-                  HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Visible">
-                    <controls:MarkdownTextBlock x:Name="MarkdownText" Text="## . . ." 
-                                                Background="White" Padding="16 8"
+                BlurRadius="6" 
+                ShadowOpacity=".6"
+                Color="#28000000">
+                <ScrollViewer x:Name="MarkdownScrollViewer" 
+                              BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
+                              BorderThickness="2"
+                              VerticalScrollMode="Enabled" 
+                              HorizontalScrollMode="Enabled" 
+                              HorizontalScrollBarVisibility="Auto" 
+                              VerticalScrollBarVisibility="Visible">
+                    <controls:MarkdownTextBlock x:Name="MarkdownText" 
+                                                LinkClicked="MarkdownText_LinkClicked"
+                                                Text="## . . ." 
+                                                WrapCodeBlock="True" 
+                                                TextWrapping="Wrap"
+                                                UriPrefix="{x:Bind repo.html_url}"
+                                                VerticalContentAlignment="Stretch"
+                                                Background="White" 
+                                                Padding="16 8"
                                                 LinkForeground="{x:Bind repo.Color}"/>
                 </ScrollViewer>
             </controls:DropShadowPanel>
@@ -46,7 +61,9 @@
                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE239;" FontSize="20"/>
                 </Border>
             </controls:DropShadowPanel>
-            <controls:DropShadowPanel HorizontalAlignment="Left" Margin="32 42" OffsetY="3" BlurRadius="6" ShadowOpacity=".6" Color="#28000000">
+            <controls:DropShadowPanel Margin="32 42"
+                                      HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+                                      OffsetY="3" BlurRadius="6" ShadowOpacity=".6" Color="#28000000">
                 <Grid x:Name="headerGrid" Background="White" Height="92">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

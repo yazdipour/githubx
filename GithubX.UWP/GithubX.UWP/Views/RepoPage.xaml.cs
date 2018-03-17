@@ -12,6 +12,8 @@ namespace GithubX.UWP.Views
 	public sealed partial class RepoPage : Page
 	{
 		RepoModel repo { get; set; }
+		List<ContentModel> ContentFiles { get; set; }
+		string readmeUrl;
 
 		public RepoPage()
 		{
@@ -24,15 +26,20 @@ namespace GithubX.UWP.Views
 			};
 			SizeChanged += (sender, args) =>
 			{
-				headerGrid.Width = MarkdownText.Width = ActualWidth - buttonPanel.Margin.Left * 2;
+				// todo better way?!
 				MarkdownScrollViewer.Height = ActualHeight - 92 - buttonPanel.ActualHeight - buttonPanel.Margin.Top - 32;
 			};
 			Loaded += async (sender, args) =>
 			{
-				string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
-				var res = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, true);
-				MarkdownText.Text = res.Item2;
-				if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached", 3000);
+				ContentFiles = await ApiHandler.GetContentsAsync(repo.full_name);
+				var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
+				if (readme != null)
+				{
+					readmeUrl = readme.download_url;
+					var res = await ApiHandler.GetReadMeMdAsync(repo.id, readmeUrl, true);
+					MarkdownText.Text = res.Item2;
+					if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached", 3000);
+				}
 			};
 		}
 
@@ -53,13 +60,20 @@ namespace GithubX.UWP.Views
 			switch (btn.Tag.ToString())
 			{
 				case "0":
+					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Share");
 					DataTransferManager.ShowShareUI();
 					break;
 				case "1":
+					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.OpenBrowser");
 					await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url));
 					break;
 				case "2":
+					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.ChangeCategory");
 					MenuFlyout menu = new MenuFlyout();
+					Style s = new Style { TargetType = typeof(MenuFlyoutPresenter) };
+					s.Setters.Add(new Setter(RequestedThemeProperty, ElementTheme.Dark));
+					menu.MenuFlyoutPresenterStyle = s;
+
 					var tempCategoriesId = new List<int>(repo.CategoriesId);
 					foreach (var item in ApiHandler.AllCategories)
 					{
@@ -94,15 +108,41 @@ namespace GithubX.UWP.Views
 				//	break;
 				case "4":
 					//MD reload
+					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
 					try
 					{
 						MarkdownText.Text = "...";
-						string path = Services.Api.Api.RepoReadMeUrl(repo.full_name);
-						var res = await Services.Api.ApiHandler.GetReadMeMdAsync(repo.id, path, false);
+						var res = await ApiHandler.GetReadMeMdAsync(repo.id, readmeUrl, false);
 						MarkdownText.Text = res.Item2;
 					}
 					catch { }
 					break;
+			}
+		}
+
+		private async void MarkdownText_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
+		{
+			if (e.Link != null)
+			{
+				try
+				{
+					await Windows.System.Launcher.LaunchUriAsync(new Uri(e.Link));
+				}
+				catch
+				{
+					try
+					{
+						var url = e.Link;
+						if (url[0] != '/') url = '/' + e.Link;
+						await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url + "/tree/master" + url));
+					}
+					catch
+					{
+						if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Error OpeningUrlInReadMe " + e.Link);
+
+						MainPage.NotifyElement.Show("Error in opening:" + e.Link, 3000);
+					}
+				}
 			}
 		}
 	}

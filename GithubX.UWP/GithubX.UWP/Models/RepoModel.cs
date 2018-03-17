@@ -24,34 +24,34 @@ namespace GithubX.UWP.Models
 		
 		// inapp
 		public int[] CategoriesId = { 0 };
-		private string color = "#3c6382";
+		private string color = "#ffffff";
 
 		[JsonIgnore]
 		public string Color
 		{
 			get
 			{
-				if (color == null || color == "#3c6382") color = FindColor();
+				if (color == null || color == "#ffffff") color = FindColor();
 				return color;
 			}
 			set { color = value; }
 		}
 
 		[JsonIgnore]
-		public string forks_label => forks + " ⭐";
+		public string forks_label => forks + " 🔱";
 
 		[JsonIgnore]
-		public string stars_label => stargazers_count + " 🔱";
+		public string stars_label => stargazers_count + " ⭐";
 
 		private string FindColor()
 		{
 			//REF https://github.com/doda/github-language-colors/blob/master/colors.json
 			if (language == "") return "#ffffff";
 			var key = "," + language + ":";
-			var a = Api.colors.IndexOf(key);
+			var a = Api.LanguagesColors.IndexOf(key);
 			if (a == -1) return "#3c6382";
 			a += key.Length;
-			return Api.colors.Substring(a, 7);
+			return Api.LanguagesColors.Substring(a, 7);
 		}
 	}
 }

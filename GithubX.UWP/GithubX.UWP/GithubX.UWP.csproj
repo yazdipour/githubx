@@ -17,7 +17,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>GithubX.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>GithubX.UWP_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>11BB1EBB40372E1F58FEAC975D239BEBA396A899</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -96,10 +100,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\ContentModel.cs" />
     <Compile Include="Models\OwnerModel.cs" />
     <Compile Include="Models\RepoModel.cs" />
     <Compile Include="Services\Api\Api.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
+    <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\HttpHandler.cs" />
     <Compile Include="Services\Api\Pocket\PocketApi.cs" />
     <Compile Include="Services\Cache\CacheKeys.cs" />
@@ -141,6 +147,7 @@
     <Content Include="Assets\Files\loading.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="GithubX.UWP_StoreKey.pfx" />
     <None Include="GithubX.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +186,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

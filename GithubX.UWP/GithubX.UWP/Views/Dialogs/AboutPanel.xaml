@@ -29,11 +29,19 @@
             </Paragraph>
             <Paragraph>
                 <LineBreak/>
-                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Developed and Designed by: 👦</Run>
+                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Developed+Designed by 👦</Run>
                 <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="16"
                            NavigateUri="https://yazdipour.github.io">Shahriar Yazdipour</Hyperlink>
+                <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="13" UnderlineStyle="None"
+                           NavigateUri="https://www.payping.ir/yazdipour">(دونیت)</Hyperlink>
 
             </Paragraph>
         </RichTextBlock>
+        <TextBlock Text="Rate GithubX in Store" 
+                   HorizontalAlignment="Center" 
+                   Margin="0 16 0 0"/>
+        <RatingControl PlaceholderValue="4.5" 
+                       IsReadOnly="True"
+                       Tapped="RatingControl_Tapped"/>
     </StackPanel>
 </ContentDialog>

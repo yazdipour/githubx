@@ -16,6 +16,15 @@ namespace GithubX.UWP.Services.Api
 		internal static List<RepoModel> AllRepos { get; set; }
 		internal static ObservableCollection<CategoryModel> AllCategories { get; set; }
 
+		#region GetContent
+		internal static async Task<List<ContentModel>> GetContentsAsync(string fullName)
+		{
+			var json = await HttpHandler.Get(Api.Contents(fullName));
+			if (json == null) throw new Exception();
+			return JsonConvert.DeserializeObject<List<ContentModel>>(json);
+		}
+		#endregion
+
 		#region Category
 		internal static async Task SaveCategoriesAsync(string userLoginAccountName)
 		{
@@ -178,7 +187,7 @@ namespace GithubX.UWP.Services.Api
 				try
 				{
 					md = await HttpHandler.GetString(url);
-					if (md == null) return (false, "> Nothing");
+					if (md == null) return (false, "> No README.MD 🤔");
 					md = new Html2Markdown.Converter().Convert(md);
 					removeUnSupported();
 					await lCache.SaveAsync(key, md).ConfigureAwait(false);

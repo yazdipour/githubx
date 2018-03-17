@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Linq;
 using GithubX.UWP.Models;
 using GithubX.UWP.Services.Api;
 using Windows.ApplicationModel.DataTransfer;
@@ -15,7 +15,7 @@ namespace GithubX.UWP.Views
 		OwnerModel User = new OwnerModel();
 		ObservableCollection<RepoModel> Repositories { get; set; }
 		private string SharingUrl = null;
-		private int currentPageInAllCat = 0, currentTabId = 0;
+		private int pageInOnlineMode = 0, currentTabId = 0;
 
 		#region OnLoad
 		public StarListPage()
@@ -59,8 +59,10 @@ namespace GithubX.UWP.Views
 		#region Events in Tab
 		private async void CategorySetting_Click(object sender, RoutedEventArgs e)
 		{
-			var p = new CategoryPanel();
+			var p = new CategoryPanel(currentTabId);
 			await p.ShowAsync();
+			//refresh if current category does not exist anymore
+			if (!ApiHandler.AllCategories.ToList().Any(o=>o.Id== currentTabId)) RefreshPage();
 		}
 
 		private void RefreshPage()
@@ -73,6 +75,8 @@ namespace GithubX.UWP.Views
 
 		private void tabList_ItemClick(object sender, ItemClickEventArgs e)
 		{
+			if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap CategoriesTab");
+
 			var item = e.ClickedItem as CategoryModel;
 			if (item.Id == currentTabId) return;
 			try
@@ -93,7 +97,7 @@ namespace GithubX.UWP.Views
 		{
 			try
 			{
-				var res = await ApiHandler.GetNextPageReposAsync(User.login, ++currentPageInAllCat);
+				var res = await ApiHandler.GetNextPageReposAsync(User.login, ++pageInOnlineMode);
 				res.ForEach(Repositories.Add);
 				LoadMoreButton.Visibility = (res.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
 			}
@@ -112,6 +116,8 @@ namespace GithubX.UWP.Views
 
 		private void gridView_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
 		{
+			if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("RightClick Repo");
+
 			var senderElement = sender as GridView;
 			var repo = ((FrameworkElement)e.OriginalSource).DataContext as RepoModel;
 			if (senderElement == null || repo == null) return;
@@ -162,7 +168,7 @@ namespace GithubX.UWP.Views
 						//toggle on
 						tempCategoriesId.Add(inx);
 					repo.CategoriesId = tempCategoriesId.ToArray();
-					await ApiHandler.UpdateRepoAsync(User.login,repo);
+					await ApiHandler.UpdateRepoAsync(User.login, repo);
 					MainPage.NotifyElement.Show("✔ Categories Updated", 3000);
 				}
 				catch { MainPage.NotifyElement.Show("Something is not right!!", 2000); }
@@ -175,6 +181,8 @@ namespace GithubX.UWP.Views
 
 		private async void AvatarBtn_Click(object sender, RoutedEventArgs e)
 		{
+			if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap Avatar.FlyoutButton");
+
 			var el = sender as FrameworkElement;
 			if (el == null) return;
 			switch (el.Tag.ToString())

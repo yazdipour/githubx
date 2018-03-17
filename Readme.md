@@ -21,16 +21,23 @@
 
 # UWP
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
 
-* [Project](/GithubX.UWP/readme.md)
+| Store    | AppCenter (Preview)
+| ------------- |:-------------:
+| Version1.0    | V1.0
+| [![Get](https://assets.windowsphone.com/13484911-a6ab-4170-8b7e-795c1e8b4165/English_get_L_InvariantCulture_Default.png)](https://www.microsoft.com/store/apps/9P7D7PD6FBCV?ocid=badge) | [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms) 
+
+* [Project Directory](/GithubX.UWP/readme.md)
 * Can show Github Starred Repos and Categorize them
 * Can show README_MD 
 * Can Cache Repositories List and README files
 * Most importantly: A Beautiful UI 
 
-### [>More Screenshots<](/UI/Screenshots.UWP/)
-![Sketch](/UI/Screenshots.UWP/MainPage.png)
+
+| ScreenShot    | Sketch
+| ------------- |:-------------:
+| [>More Screenshots<](/UI/Screenshots.UWP/)      | [>See all sketch pages for UWP<](/UI/Sketch.UWP/)
+| ![Sketch](/UI/Screenshots.UWP/MainPage.png)     | ![Sketch](/UI/Sketch.UWP/ContenxMenu.jpg)
 
 # Website
 
@@ -44,8 +51,4 @@
 
 # UI Sketch
 
-### Designed by Adobe Xd
-
-### [>See all sketch pages for UWP<](/UI/Sketch.UWP/)
-
-![Sketch](/UI/Sketch.UWP/ContenxMenu.jpg)
+### Designed with Adobe Xd

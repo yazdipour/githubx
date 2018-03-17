@@ -2,18 +2,33 @@
 
 # Github Api
 
-### Get Readme
+### Readme
 
 ** Attention: Sometimes dev use html tags
 
-https://raw.githubusercontent.com/{user}/{repo}/master/README.md
+Dir > https://api.github.com/repos/{user}/{repo}/contents/
 
-### Get Readme.Base64 (Forget it)
+Raw > https://raw.githubusercontent.com/{user}/{repo}/master/README.md
 
-https://api.github.com/repos/yazdipour/dm17/contents/README.md
+    {
+    "name": "README.md",
+    "path": "README.md",
+    "sha": "c8cfde2e782d4aef736203b0d374af084de2d5aa",
+    "size": 1113,
+    "url": "https://api.github.com/repos/yazdipour/DM17/contents/README.md?ref=master",
+    "html_url": "https://github.com/yazdipour/DM17/blob/master/README.md",
+    "git_url": "https://api.github.com/repos/yazdipour/DM17/git/blobs/c8cfde2e782d4aef736203b0d374af084de2d5aa",
+    "download_url": "https://raw.githubusercontent.com/yazdipour/DM17/master/README.md",
+    "type": "file",
+    "_links": {
+                "self": "https://api.github.com/repos/yazdipour/DM17/contents/README.md?ref=master",
+                "git": "https://api.github.com/repos/yazdipour/DM17/git/blobs/c8cfde2e782d4aef736203b0d374af084de2d5aa",
+                "html": "https://github.com/yazdipour/DM17/blob/master/README.md"
+            }
+    }
 
 
-## Api.StarList
+## StarList
 
 https://api.github.com/users/yazdipour/starred
 
@@ -46,7 +61,7 @@ https://api.github.com/users/yazdipour/starred
     }
     ]
 
-## Api.UserInfo
+## UserInfo
 https://api.github.com/users/{user}
 
     {
