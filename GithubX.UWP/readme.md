@@ -7,6 +7,7 @@ https://github.com/yazdipour/githubx/projects/1
 
 ## Libs
 
-* Json.NET
+* [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/)
 * [HTML2Markdown](https://github.com/baynezy/Html2Markdown): Some readmes also have html tags
-* UWPCommunityToolkit 2.2
+* [UWPCommunityToolkit 2.2](https://github.com/Microsoft/UWPCommunityToolkit)
+* [PocketSharp](https://github.com/ceee/PocketSharp)
