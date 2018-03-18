@@ -8,7 +8,7 @@ namespace GithubX.UWP.Views
 		public AboutPanel()
 		{
 			this.InitializeComponent();
-			if(App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Visit AboutPage");
+			if(Services.Api.ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Visit AboutPage");
 		}
 		
 

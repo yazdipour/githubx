@@ -15,12 +15,7 @@ namespace GithubX.UWP
 			h.TitleBarButton_TranparentBackground(false);
 			var acc = Services.Api.ApiHandler.LoginFromCache();
 			if (acc == null)
-			{
-				if(Services.Api.HttpHandler.CheckConnection)
-					iframe.Navigate(typeof(Views.LoginPage));
-				else
-					iframe.Navigate(typeof(Views.ErrorPage));
-			}
+				iframe.Navigate(typeof(Views.LoginPage));
 			else
 				iframe.Navigate(typeof(Views.StarListPage), acc);
 		}

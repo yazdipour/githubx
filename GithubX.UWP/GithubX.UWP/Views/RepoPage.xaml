@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:media="using:Windows.UI.Xaml.Media"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -18,50 +19,80 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
+        <!--#region btnBar + body-->
         <StackPanel Margin="0 92 0 0">
             <StackPanel x:Name="buttonPanel" Margin="32 42 32 0" Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonBar}" Tag="0" Click="ButtonBar_Click" Content=" Share"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="4" Click="ButtonBar_Click" Content=" Refresh"/>
-                <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open in Browser" />
-                <Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move to"/>
-                <!--<Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content="💾 Save in Pocket"/>-->
+                <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open Browser" />
+                <Button Style="{StaticResource ButtonBar}" Tag="2" Click="ButtonBar_Click" Content=" Move"/>
+                <Button Style="{StaticResource ButtonBar}" Tag="5" Content="🌜 Theme">
+                    <Button.Flyout>
+                        <Flyout Closed="Flyout_Closed">
+                            <StackPanel>
+                                <TextBlock Text="Text Theme:" />
+                                <ToggleSwitch OnContent="White" OffContent="Black" IsOn="{x:Bind md.DarkThemeBool, Mode=TwoWay}"/>
+                                <TextBlock Text="Background Color:"/>
+                                <ColorPicker 
+                                        Color="{x:Bind md.BgColor,Mode=TwoWay}"
+                                        IsColorSliderVisible="True"
+                                        IsColorChannelTextInputVisible="False"
+                                        IsColorPreviewVisible="True"
+                                        IsHexInputVisible="True"
+                                        IsAlphaEnabled="False" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+                <!--<Button Tag="3" Content="💾 Save in Pocket"/>-->
             </StackPanel>
-            <controls:DropShadowPanel
+            <controls:DropShadowPanel 
                 VerticalContentAlignment="Stretch"
                 HorizontalContentAlignment="Stretch" 
                 HorizontalAlignment="Stretch"
                 Margin="32 0 32 32" OffsetY="3" 
                 BlurRadius="6" 
+                ScrollViewer.HorizontalScrollMode="Auto"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                ScrollViewer.VerticalScrollMode="Enabled" 
                 ShadowOpacity=".6"
                 Color="#28000000">
                 <ScrollViewer x:Name="MarkdownScrollViewer" 
+                              ZoomMode="Enabled"
                               BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
-                              BorderThickness="2"
                               VerticalScrollMode="Enabled" 
-                              HorizontalScrollMode="Enabled" 
+                              HorizontalScrollMode="Auto" 
                               HorizontalScrollBarVisibility="Auto" 
                               VerticalScrollBarVisibility="Visible">
                     <controls:MarkdownTextBlock x:Name="MarkdownText" 
                                                 LinkClicked="MarkdownText_LinkClicked"
-                                                Text="## . . ." 
+                                                Text="## Loading ...." HorizontalAlignment="Stretch"
                                                 WrapCodeBlock="True" 
                                                 TextWrapping="Wrap"
-                                                UriPrefix="{x:Bind repo.html_url}"
                                                 VerticalContentAlignment="Stretch"
-                                                Background="White" 
-                                                Padding="16 8"
-                                                LinkForeground="{x:Bind repo.Color}"/>
+                                                Padding="16"
+                                                ImageStretch="None"
+                                                Background="{x:Bind md.BgColor,Mode=OneWay}"
+                                                RequestedTheme="{x:Bind md.Theme,Mode=OneWay}"
+                                                LinkForeground="{x:Bind repo.Color}"
+                                                UseSyntaxHighlighting="True"
+                                                UriPrefix="{x:Bind PFix,Mode=OneWay}"/>
                 </ScrollViewer>
             </controls:DropShadowPanel>
         </StackPanel>
+        <!--#endregion-->
 
+        <!--#region Header-->
         <Grid VerticalAlignment="Top">
+            <!--Back Btn-->
             <controls:DropShadowPanel Height="92" BlurRadius="6" ShadowOpacity="1" OffsetY="1" OffsetX="1"  Color="#55000000">
                 <Border Width="28" Height="92"  Opacity="0.7" Background="{x:Bind repo.Color, Mode=OneWay}" Tapped="Border_Tapped">
                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE239;" FontSize="20"/>
                 </Border>
             </controls:DropShadowPanel>
-            <controls:DropShadowPanel Margin="32 42"
+            <!--Header-->
+            <controls:DropShadowPanel Margin="32 42" animations:Connected.Key="listItem"
                                       HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
                                       OffsetY="3" BlurRadius="6" ShadowOpacity=".6" Color="#28000000">
                 <Grid x:Name="headerGrid" Background="White" Height="92">
@@ -75,14 +106,16 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
-                    <controls:ImageEx
+                    <controls:ImageEx Grid.RowSpan="2"
+                        animations:Connected.AnchorElement="{x:Bind}"
                         IsCacheEnabled="True"
                         Source="{x:Bind repo.owner.avatar_url, Mode=OneWay}"
                         Height="92" Width="92"
                         PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-                        Stretch="UniformToFill" PlaceholderStretch="UniformToFill"
+                        Stretch="UniformToFill" 
+                        PlaceholderStretch="UniformToFill"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center" Grid.RowSpan="2"/>
+                        VerticalAlignment="Center"/>
                     <TextBlock Margin="8 0 0 0" FontWeight="Bold" FontSize="18"
                            Text="{x:Bind repo.full_name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Bottom" />
                     <TextBlock 
@@ -114,5 +147,6 @@
                 </Grid>
             </controls:DropShadowPanel>
         </Grid>
+        <!--#endregion-->
     </Grid>
 </Page>

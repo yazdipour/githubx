@@ -21,7 +21,7 @@ namespace GithubX.UWP.Services.Cache
 			catch (Exception) { return null; }
 		}
 
-		public bool Save(string address, string setting)
+		public bool Write(string address, string setting)
 		{
 			try
 			{
@@ -39,6 +39,5 @@ namespace GithubX.UWP.Services.Cache
 			}
 			catch (Exception) { }
 		}
-
 	}
 }

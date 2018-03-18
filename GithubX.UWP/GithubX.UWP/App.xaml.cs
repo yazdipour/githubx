@@ -1,4 +1,5 @@
 ﻿using System;
+using GithubX.UWP.Services.Api;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Windows.ApplicationModel;
@@ -11,14 +12,12 @@ namespace GithubX.UWP
 {
 	sealed partial class App : Application
 	{
-		public static bool Releasing = false;
-
 		public static string UserLoginAccountName { get; set; }
 		public App()
 		{
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
-			if (Releasing) AppCenter.Start(Services.Api.ApiKeys.AppCenter, typeof(Analytics));
+			if (ApiKeys.Releasing) AppCenter.Start(ApiKeys.AppCenter, typeof(Analytics));
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)

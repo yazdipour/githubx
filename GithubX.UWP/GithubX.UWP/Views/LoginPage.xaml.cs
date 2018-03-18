@@ -19,7 +19,6 @@ namespace GithubX.UWP.Views
 				var user = await Services.Api.ApiHandler.LoginAsync(accTextBox.Text.Trim());
 				if (user != null)
 					Frame.Navigate(typeof(StarListPage), user);
-				else if (!Services.Api.HttpHandler.CheckConnection) Frame.Navigate(typeof(ErrorPage));
 				else MainPage.NotifyElement.Show("Error! Try Again", 2000);
 			}
 			catch { }

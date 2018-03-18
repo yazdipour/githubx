@@ -1,4 +1,5 @@
-﻿using GithubX.UWP.Services.Api;
+﻿using System;
+using GithubX.UWP.Services.Api;
 using Newtonsoft.Json;
 
 namespace GithubX.UWP.Models
@@ -10,19 +11,32 @@ namespace GithubX.UWP.Models
 		public string name { get; set; }
 		public string full_name { get; set; }
 		public OwnerModel owner { get; set; }
-		public bool _private { get; set; }
 		public string html_url { get; set; }
-		public string description { get; set; }
-		public bool fork { get; set; }
 		public string url { get; set; }
+		public bool _private { get; set; }
+		public string description { get; set; }
+		public string homepage { get; set; }
 		public int stargazers_count { get; set; }
 		public string language { get; set; }
 		public bool has_wiki { get; set; }
 		public bool has_pages { get; set; }
 		public int forks { get; set; }
 		public string default_branch { get; set; }
-		
-		// inapp
+		public int size { get; set; }
+		public bool has_issues { get; set; }
+		public bool has_projects { get; set; }
+		public bool has_downloads { get; set; }
+		public int open_issues_count { get; set; }
+		public DateTime created_at { get; set; }
+		public DateTime updated_at { get; set; }
+		public DateTime pushed_at { get; set; }
+
+		[JsonIgnore]
+		public string clone_url => html_url + ".git";
+		[JsonIgnore]
+		public string contents_url => url + "/contents";
+
+		#region  inapp
 		public int[] CategoriesId = { 0 };
 		private string color = "#ffffff";
 
@@ -53,5 +67,6 @@ namespace GithubX.UWP.Models
 			a += key.Length;
 			return Api.LanguagesColors.Substring(a, 7);
 		}
+		#endregion
 	}
 }

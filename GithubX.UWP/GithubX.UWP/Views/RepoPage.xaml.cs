@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GithubX.UWP.Models;
 using GithubX.UWP.Services.Api;
+using GithubX.UWP.Services.Cache;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,7 +14,43 @@ namespace GithubX.UWP.Views
 	{
 		RepoModel repo { get; set; }
 		List<ContentModel> ContentFiles { get; set; }
-		string readmeUrl;
+		private Style DarkFlyoutStyle
+		{
+			get
+			{
+				Style s = new Style { TargetType = typeof(MenuFlyoutPresenter) };
+				s.Setters.Add(new Setter(RequestedThemeProperty, ElementTheme.Dark));
+				return s;
+			}
+		}
+		string Url { get; set; }
+		string PFix { get; set; }
+		MarkdownSetting md { get; set; }
+
+		#region Markdown Setting
+		private void SaveTheme(MarkdownSetting setting)
+		{
+			var wCache = new WindowsCacheHandler();
+			wCache.Write(CacheKeys.ReadmeTheme, Newtonsoft.Json.JsonConvert.SerializeObject(setting));
+		}
+		private MarkdownSetting LoadTheme()
+		{
+			var wCache = new WindowsCacheHandler();
+			try
+			{
+				var json = wCache.Read(CacheKeys.ReadmeTheme);
+				return Newtonsoft.Json.JsonConvert.DeserializeObject<MarkdownSetting>(json);
+			}
+			catch
+			{
+				return new MarkdownSetting
+				{
+					BgColor = "#ffffff",
+					Theme = ElementTheme.Light
+				};
+			}
+		}
+		#endregion
 
 		public RepoPage()
 		{
@@ -26,20 +63,24 @@ namespace GithubX.UWP.Views
 			};
 			SizeChanged += (sender, args) =>
 			{
-				// todo better way?!
 				MarkdownScrollViewer.Height = ActualHeight - 92 - buttonPanel.ActualHeight - buttonPanel.Margin.Top - 32;
+				MarkdownText.Width = MarkdownScrollViewer.ActualWidth;
 			};
 			Loaded += async (sender, args) =>
 			{
-				ContentFiles = await ApiHandler.GetContentsAsync(repo.full_name);
+				PFix = string.Format("https://github.com/{0}/raw/master", repo.full_name);
+				md = LoadTheme();
+				ContentFiles = await ApiHandler.GetContentsAsync(repo.contents_url);
 				var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
 				if (readme != null)
 				{
-					readmeUrl = readme.download_url;
-					var res = await ApiHandler.GetReadMeMdAsync(repo.id, readmeUrl, true);
+					if (md == null) md = new MarkdownSetting();
+					Url = readme.download_url;
+					var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, true);
 					MarkdownText.Text = res.Item2;
 					if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached", 3000);
 				}
+				Bindings.Update();
 			};
 		}
 
@@ -60,20 +101,17 @@ namespace GithubX.UWP.Views
 			switch (btn.Tag.ToString())
 			{
 				case "0":
-					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Share");
+					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Share");
 					DataTransferManager.ShowShareUI();
 					break;
 				case "1":
-					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.OpenBrowser");
+					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.OpenBrowser");
 					await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url));
 					break;
 				case "2":
-					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.ChangeCategory");
-					MenuFlyout menu = new MenuFlyout();
-					Style s = new Style { TargetType = typeof(MenuFlyoutPresenter) };
-					s.Setters.Add(new Setter(RequestedThemeProperty, ElementTheme.Dark));
-					menu.MenuFlyoutPresenterStyle = s;
-
+					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.ChangeCategory");
+					#region Flyout
+					MenuFlyout menu = new MenuFlyout { MenuFlyoutPresenterStyle = DarkFlyoutStyle };
 					var tempCategoriesId = new List<int>(repo.CategoriesId);
 					foreach (var item in ApiHandler.AllCategories)
 					{
@@ -102,17 +140,15 @@ namespace GithubX.UWP.Views
 						catch { MainPage.NotifyElement.Show("Something is not right!!", 2000); }
 					}
 					menu.ShowAt(btn);
+					#endregion
 					break;
-				//case "3":
-				//	//TODO :save pocket
-				//	break;
 				case "4":
 					//MD reload
-					if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
+					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
 					try
 					{
 						MarkdownText.Text = "...";
-						var res = await ApiHandler.GetReadMeMdAsync(repo.id, readmeUrl, false);
+						var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, false);
 						MarkdownText.Text = res.Item2;
 					}
 					catch { }
@@ -138,12 +174,30 @@ namespace GithubX.UWP.Views
 					}
 					catch
 					{
-						if (App.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Error OpeningUrlInReadMe " + e.Link);
+						if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Error OpeningUrlInReadMe " + e.Link);
 
 						MainPage.NotifyElement.Show("Error in opening:" + e.Link, 3000);
 					}
 				}
 			}
+		}
+
+		private void Flyout_Closed(object sender, object e)
+		{
+			SaveTheme(md);
+			Bindings.Update();
+		}
+	}
+
+	internal class MarkdownSetting
+	{
+		public string BgColor { get; set; }
+		public ElementTheme Theme { get; set; }
+		[Newtonsoft.Json.JsonIgnore]
+		public bool DarkThemeBool
+		{
+			get => Theme == ElementTheme.Dark;
+			set { Theme = value ? ElementTheme.Dark : ElementTheme.Light; }
 		}
 	}
 }

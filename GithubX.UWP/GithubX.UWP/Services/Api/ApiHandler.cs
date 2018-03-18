@@ -17,9 +17,9 @@ namespace GithubX.UWP.Services.Api
 		internal static ObservableCollection<CategoryModel> AllCategories { get; set; }
 
 		#region GetContent
-		internal static async Task<List<ContentModel>> GetContentsAsync(string fullName)
+		internal static async Task<List<ContentModel>> GetContentsAsync(string contentUrl)
 		{
-			var json = await HttpHandler.Get(Api.Contents(fullName));
+			var json = await HttpHandler.Get(contentUrl);
 			if (json == null) throw new Exception();
 			return JsonConvert.DeserializeObject<List<ContentModel>>(json);
 		}
@@ -151,7 +151,7 @@ namespace GithubX.UWP.Services.Api
 			var json = await HttpHandler.Get(Api.AccountInfoUrl(account));
 			if (json == null || json.Length < 4) return null;
 			var user = JsonConvert.DeserializeObject<OwnerModel>(json);
-			wCache.Save(key, json);
+			wCache.Write(key, json);
 			return user;
 		}
 
@@ -197,12 +197,8 @@ namespace GithubX.UWP.Services.Api
 			}
 			void removeUnSupported()
 			{
-				//md = md.Replace("- [ ]", "*");
-				//md = md.Replace("- [*]", "*");
 				md = md.Replace("[`", "[");
 				md = md.Replace("`]", "]");
-				//md = md.Replace("[x]", "*");
-				//md = md.Replace("[ ]", "*");
 			}
 		}
 		#endregion

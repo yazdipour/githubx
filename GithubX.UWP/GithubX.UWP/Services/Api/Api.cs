@@ -4,16 +4,9 @@ namespace GithubX.UWP.Services.Api
 {
 	static class Api
 	{
-		public static string AccountInfoUrl(string acc)
-		{
-			return "https://api.github.com/users/" + acc;
-		}
+		public static string AccountInfoUrl(string acc)=> "https://api.github.com/users/" + acc;
 
 		public static string AccountStarsUrl(string acc, int page = 0) => string.Format("https://api.github.com/users/{0}/starred?page={1}", acc, (++page));
-
-		//public static string RepoReadMeUrl(string fullName) => string.Format("https://raw.githubusercontent.com/{0}/master/README.md", fullName);
-
-		public static string Contents(string fullName) => string.Format("https://api.github.com/repos/{0}/contents/", fullName);
 
 		public static string HttpUserAgent = "XGithub";
 

@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:media="using:Windows.UI.Xaml.Media"
-    NavigationCacheMode="Enabled"
+    NavigationCacheMode="Enabled"  xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="MenuFlyoutPresenter">
@@ -17,55 +17,9 @@
         <Style TargetType="GridViewItem">
             <Setter Property="Margin" Value="4 8"/>
         </Style>
-        <DataTemplate x:Key="StarBoxTemplate" x:DataType="m:RepoModel">
-            <controls:DropShadowPanel HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
-                <Grid Height="125" Background="White" HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="125"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="18"/>
-                    </Grid.ColumnDefinitions>
-                    <controls:ImageEx
-                        x:Phase="2"
-                        IsCacheEnabled="True"
-                        Source="{x:Bind owner.avatar_url}"
-                        Height="125"
-                        Width="125"                                       
-                        PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-                        Stretch="UniformToFill"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center" PlaceholderStretch="UniformToFill" />
-
-                    <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
-                        <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap"
-                                   Text="{x:Bind description}" FontSize="14" FontWeight="SemiLight"/>
-                    </StackPanel>
-
-                    <Border Height="125" 
-                            Width="18"
-                            Grid.Column="2" 
-                            Grid.RowSpan="2">
-                        <Border Background="{x:Bind Color}"
-                                HorizontalAlignment="Center" 
-                                Height="125" 
-                                Width="125">
-                            <TextBlock Text="{x:Bind language}" 
-                                   HorizontalAlignment="Center"
-                                   TextAlignment="Center"
-                                   Height="20" Foreground="White"
-                                   RenderTransformOrigin="0.5,0.5">
-                                <TextBlock.RenderTransform>
-                                    <RotateTransform Angle="90" />
-                                </TextBlock.RenderTransform>
-                            </TextBlock>
-                        </Border>
-                    </Border>
-                </Grid>
-            </controls:DropShadowPanel>
-        </DataTemplate>
     </Page.Resources>
     <Grid Margin="0 42 0 0">
+        <!--#region Grid.Definitions-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
@@ -75,7 +29,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-
+        <!--#endregion-->
+        
         <!--#region tab-->
         <Button Content=""
                 VerticalAlignment="Bottom"
@@ -140,7 +95,8 @@
                                    SelectionMode="None"
                                    IsItemClickEnabled="True"
                                    ItemClick="AdaptiveGridViewControl_ItemClick"
-                                   ItemTemplate="{StaticResource StarBoxTemplate}" 
+                                   animations:Connected.ListItemElementName="ItemThumbnail"
+                                   animations:Connected.ListItemKey="listItem"
                                    RightTapped="gridView_RightTapped">
             <controls:AdaptiveGridView.Footer>
                 <Button x:Name="LoadMoreButton"
@@ -150,6 +106,44 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Bottom"/>
             </controls:AdaptiveGridView.Footer>
+            <controls:AdaptiveGridView.ItemTemplate>
+                <DataTemplate x:DataType="m:RepoModel">
+                    <controls:DropShadowPanel HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                        <Grid Height="125" Background="White" HorizontalAlignment="Stretch" x:Name="ItemThumbnail">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="125"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="18"/>
+                            </Grid.ColumnDefinitions>
+                            <controls:ImageEx x:Phase="2"
+                                    IsCacheEnabled="True"
+                                    Source="{x:Bind owner.avatar_url}"
+                                    Height="125" Width="125"                                       
+                                    PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
+                                    Stretch="UniformToFill"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" 
+                                    PlaceholderStretch="UniformToFill" />
+
+                            <StackPanel Grid.Column="1" Margin="8 0" VerticalAlignment="Center">
+                                <TextBlock Text="{x:Bind full_name}" FontWeight="Bold" FontSize="18"/>
+                                <TextBlock Margin="0 4" MaxLines="2" TextWrapping="Wrap"
+                                   Text="{x:Bind description}" FontSize="14" FontWeight="SemiLight"/>
+                            </StackPanel>
+
+                            <Border Height="125" Width="18" Grid.Column="2" Grid.RowSpan="2">
+                                <Border Background="{x:Bind Color}" HorizontalAlignment="Center" Height="125" Width="125">
+                                    <TextBlock Text="{x:Bind language}" HorizontalAlignment="Center" TextAlignment="Center" Height="20" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                                        <TextBlock.RenderTransform>
+                                            <RotateTransform Angle="90" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </controls:DropShadowPanel>
+                </DataTemplate>
+            </controls:AdaptiveGridView.ItemTemplate>
         </controls:AdaptiveGridView>
         <!--#endregion-->
     </Grid>
