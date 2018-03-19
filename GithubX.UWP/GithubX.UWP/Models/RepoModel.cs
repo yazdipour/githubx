@@ -63,7 +63,7 @@ namespace GithubX.UWP.Models
 			if (language == "") return "#ffffff";
 			var key = "," + language + ":";
 			var a = Api.LanguagesColors.IndexOf(key);
-			if (a == -1) return "#3c6382";
+			if (a == -1) return "#ffffff";
 			a += key.Length;
 			return Api.LanguagesColors.Substring(a, 7);
 		}

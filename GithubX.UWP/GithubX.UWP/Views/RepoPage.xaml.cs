@@ -4,6 +4,7 @@ using GithubX.UWP.Models;
 using GithubX.UWP.Services.Api;
 using GithubX.UWP.Services.Cache;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -101,15 +102,15 @@ namespace GithubX.UWP.Views
 			switch (btn.Tag.ToString())
 			{
 				case "0":
-					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Share");
+					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Share");
 					DataTransferManager.ShowShareUI();
 					break;
 				case "1":
-					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.OpenBrowser");
+					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.OpenBrowser");
 					await Windows.System.Launcher.LaunchUriAsync(new Uri(repo.html_url));
 					break;
 				case "2":
-					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.ChangeCategory");
+					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.ChangeCategory");
 					#region Flyout
 					MenuFlyout menu = new MenuFlyout { MenuFlyoutPresenterStyle = DarkFlyoutStyle };
 					var tempCategoriesId = new List<int>(repo.CategoriesId);
@@ -142,9 +143,31 @@ namespace GithubX.UWP.Views
 					menu.ShowAt(btn);
 					#endregion
 					break;
+				case "3":
+					if (!HttpHandler.CheckConnection) MainPage.NotifyElement.Show("Error! No internet", 3000);
+					var pocket = new Services.Api.Pocket.PocketApi();
+					if (pocket.CheckLogin())
+					{
+						var item = await pocket.Post(repo.html_url, new[] { "github", "github" });
+						if (item == null) MainPage.NotifyElement.Show("Error! Something with the Pocket", 3000);
+						else MainPage.NotifyElement.Show("Saved to Pocket", 3000);
+					}
+					else
+					{
+						var dialog = new MessageDialog("Login to Pocket then try Again");
+						dialog.Commands.Add(new UICommand("OK", (IUICommand command) =>
+						{
+							//var uri = pocket.LoginUriAsync();
+							//new WebAuthenticationBroker();
+							//todo
+						}));
+						dialog.Commands.Add(new UICommand("Cancel"));
+						await dialog.ShowAsync();
+					}
+					break;
 				case "4":
 					//MD reload
-					if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
+					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
 					try
 					{
 						MarkdownText.Text = "...";
@@ -155,6 +178,7 @@ namespace GithubX.UWP.Views
 					break;
 			}
 		}
+
 
 		private async void MarkdownText_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
 		{
@@ -174,7 +198,7 @@ namespace GithubX.UWP.Views
 					}
 					catch
 					{
-						if (ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Error OpeningUrlInReadMe " + e.Link);
+						if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Error OpeningUrlInReadMe " + e.Link);
 
 						MainPage.NotifyElement.Show("Error in opening:" + e.Link, 3000);
 					}

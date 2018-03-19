@@ -44,7 +44,7 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-                <!--<Button Tag="3" Content="💾 Save in Pocket"/>-->
+                <Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content="💾 Pocket"/>
             </StackPanel>
             <controls:DropShadowPanel 
                 VerticalContentAlignment="Stretch"

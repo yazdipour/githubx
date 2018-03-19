@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using GithubX.UWP.Services.Api;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -13,11 +14,12 @@ namespace GithubX.UWP
 	sealed partial class App : Application
 	{
 		public static string UserLoginAccountName { get; set; }
+		public static string PocketProtocol = "githubx://pocket";
 		public App()
 		{
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
-			if (ApiKeys.Releasing) AppCenter.Start(ApiKeys.AppCenter, typeof(Analytics));
+			if (ApiKeys.AppCenter != null) AppCenter.Start(ApiKeys.AppCenter, typeof(Analytics));
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -76,6 +78,21 @@ namespace GithubX.UWP
 			var deferral = e.SuspendingOperation.GetDeferral();
 			//TODO: Save application state and stop any background activity
 			deferral.Complete();
+		}
+
+		protected async override void OnActivated(IActivatedEventArgs args)
+		{
+			if (args.Kind == ActivationKind.Protocol)
+			{
+				ProtocolActivatedEventArgs protocolArgs = (ProtocolActivatedEventArgs)args;
+				string uri = protocolArgs.Uri.ToString();
+
+				if (uri == App.PocketProtocol)
+				{
+					var user = await Services.Api.Pocket.PocketApi.client.GetUser();
+					new Services.Cache.WindowsCacheHandler().Write(Services.Cache.CacheKeys.Pocket, user.Code);
+				}
+			}
 		}
 	}
 }

@@ -8,12 +8,7 @@ namespace GithubX.UWP.Views
 		public AboutPanel()
 		{
 			this.InitializeComponent();
-			if(Services.Api.ApiKeys.Releasing) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Visit AboutPage");
-		}
-		
-
-		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-		{
+			if(Services.Api.ApiKeys.AppCenter!=null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Visit AboutPage");
 		}
 
 		private async void RatingControl_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

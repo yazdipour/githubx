@@ -13,11 +13,11 @@ namespace GithubX.UWP.Services.Api
 	{
 		static WindowsCacheHandler wCache = new WindowsCacheHandler();
 		static LocalCacheHandler lCache = new LocalCacheHandler();
-		internal static List<RepoModel> AllRepos { get; set; }
-		internal static ObservableCollection<CategoryModel> AllCategories { get; set; }
+		public static List<RepoModel> AllRepos { get; set; }
+		public static ObservableCollection<CategoryModel> AllCategories { get; set; }
 
 		#region GetContent
-		internal static async Task<List<ContentModel>> GetContentsAsync(string contentUrl)
+		public static async Task<List<ContentModel>> GetContentsAsync(string contentUrl)
 		{
 			var json = await HttpHandler.Get(contentUrl);
 			if (json == null) throw new Exception();
@@ -26,23 +26,24 @@ namespace GithubX.UWP.Services.Api
 		#endregion
 
 		#region Category
-		internal static async Task SaveCategoriesAsync(string userLoginAccountName)
+		public static async Task SaveCategoriesAsync(string userLoginAccountName)
 		{
 			await lCache.SaveAsync(CacheKeys.CategoriesKey(userLoginAccountName), JsonConvert.SerializeObject(AllCategories)).ConfigureAwait(false);
 		}
 
-		internal static async Task PrepareAllCategories(string userId)
+		public static async Task PrepareAllCategories(string userId)
 		{
-			var cats = new List<CategoryModel>();
 			var keys = CacheKeys.CategoriesKey(userId);
 			try
 			{
+				var cats = new List<CategoryModel>();
 				var json = await lCache.ReadAsync(keys); // if does not exist will return null and 
 				cats = JsonConvert.DeserializeObject<List<CategoryModel>>(json); //then throw exception
 				AllCategories = new ObservableCollection<CategoryModel>(cats.OrderBy(o => o.OrderId).ToList());
 			}
 			catch (Exception)
 			{
+				var cats = new List<CategoryModel>();
 				cats.Add(new CategoryModel { Id = 0, Text = "All" });
 				await SaveCategoriesAsync(userId);
 				AllCategories = new ObservableCollection<CategoryModel>(cats);
@@ -52,9 +53,9 @@ namespace GithubX.UWP.Services.Api
 
 		#region Repositories
 
-		internal static List<RepoModel> GetRepoOfCategory(int catId) => AllRepos.FindAll(obj => obj.CategoriesId.Contains(catId));
+		public static List<RepoModel> GetRepoOfCategory(int catId) => AllRepos.FindAll(obj => obj.CategoriesId.Contains(catId));
 
-		internal static async Task<List<RepoModel>> GetNextPageReposAsync(string userAcc, int page)
+		public static async Task<List<RepoModel>> GetNextPageReposAsync(string userAcc, int page)
 		{
 			if (!HttpHandler.CheckConnection) throw new Exception("No internet, no candy for you!🤬");
 			var json = await HttpHandler.Get(Api.AccountStarsUrl(userAcc, page));
@@ -64,7 +65,7 @@ namespace GithubX.UWP.Services.Api
 			return freshList;
 		}
 
-		internal static async Task PrepareAllRepos(string userAcc, bool cacheEnable = true)
+		public static async Task PrepareAllRepos(string userAcc, bool cacheEnable = true)
 		{
 			if (!HttpHandler.CheckConnection && !cacheEnable) throw new Exception("No internet, no candy for you!🤬");
 			if (HttpHandler.CheckConnection)
@@ -118,14 +119,14 @@ namespace GithubX.UWP.Services.Api
 			}
 		}
 
-		internal static async Task UpdateRepoAsync(string login, RepoModel repo)
+		public static async Task UpdateRepoAsync(string login, RepoModel repo)
 		{
 			var item = AllRepos.Find(o => o.id == repo.id);
 			if (item == null) AllRepos.Add(repo);
 			item = repo;
 			await SaveCategoryReposAsync(login);
 		}
-		internal static async Task SaveCategoryReposAsync(string user)
+		public static async Task SaveCategoryReposAsync(string user)
 		{
 			var temp = AllRepos.FindAll(x => x.CategoriesId.Length != 0);
 			await lCache.SaveAsync(CacheKeys.RepositoriesKey(user), JsonConvert.SerializeObject(temp)).ConfigureAwait(false);
@@ -133,7 +134,7 @@ namespace GithubX.UWP.Services.Api
 		#endregion
 
 		#region Login
-		internal static OwnerModel LoginFromCache()
+		public static OwnerModel LoginFromCache()
 		{
 			var key = CacheKeys.UserKey;
 			if (wCache.Exists(key))
@@ -145,7 +146,7 @@ namespace GithubX.UWP.Services.Api
 			else return null;
 		}
 
-		internal static async Task<OwnerModel> LoginAsync(string account)
+		public static async Task<OwnerModel> LoginAsync(string account)
 		{
 			var key = CacheKeys.UserKey;
 			var json = await HttpHandler.Get(Api.AccountInfoUrl(account));
@@ -155,7 +156,7 @@ namespace GithubX.UWP.Services.Api
 			return user;
 		}
 
-		internal static void LogOut()
+		public static void LogOut()
 		{
 			wCache.Remove(CacheKeys.UserKey);
 		}
