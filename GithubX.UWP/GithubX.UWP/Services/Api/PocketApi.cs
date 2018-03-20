@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using PocketSharp;
 using PocketSharp.Models;
 
-namespace GithubX.UWP.Services.Api.Pocket
+namespace GithubX.UWP.Services.Api
 {
 	class PocketApi
 	{

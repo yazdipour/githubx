@@ -145,9 +145,10 @@ namespace GithubX.UWP.Views
 					#endregion
 					break;
 				case "3":
+					if (ApiKeys.Pocket==null)return;
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
 					if (!HttpHandler.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
-					var pocket = new Services.Api.Pocket.PocketApi();
+					var pocket = new Services.Api.PocketApi();
 					if (pocket.CheckLogin())
 					{
 						var item = await pocket.Post(repo.html_url, new[] { "github", "github" });

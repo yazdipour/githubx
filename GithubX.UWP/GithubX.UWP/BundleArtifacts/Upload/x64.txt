@@ -1,6 +1,0 @@
-MainPackage=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x64\Release\Upload\GithubX.UWP_1.0.2.0_x64.appx
-SymbolPackage=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x64\Release\Upload\GithubX.UWP_1.0.2.0\GithubX.UWP_1.0.2.0_x64.appxsym
-ResourcePack=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x64\Release\GithubX.UWP_1.0.2.0_scale-100.appx
-ResourcePack=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x64\Release\GithubX.UWP_1.0.2.0_scale-125.appx
-ResourcePack=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x64\Release\GithubX.UWP_1.0.2.0_scale-150.appx
-ResourcePack=C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\x64\Release\GithubX.UWP_1.0.2.0_scale-400.appx

@@ -1,1 +1,1 @@
-C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\ARM\Release\Upload\GithubX.UWP_1.0.3.0\GithubX.UWP_1.0.3.0_arm.appxbundle
+C:\Users\Master\source\repos\GithubX\GithubX.UWP\GithubX.UWP\bin\ARM\Release\Upload\GithubX.UWP_1.1.2.0\GithubX.UWP_1.1.2.0_x86_x64_arm.appxbundle
