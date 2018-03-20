@@ -1,4 +1,4 @@
-# GithubX.UWP  `BetaVersion`
+# GithubX.UWP
 
 [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
 
