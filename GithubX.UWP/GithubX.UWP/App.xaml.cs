@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using GithubX.UWP.Services.Api;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
