@@ -4,6 +4,7 @@ using GithubX.UWP.Models;
 using GithubX.UWP.Services.Api;
 using GithubX.UWP.Services.Cache;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Security.Authentication.Web;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -144,7 +145,8 @@ namespace GithubX.UWP.Views
 					#endregion
 					break;
 				case "3":
-					if (!HttpHandler.CheckConnection) MainPage.NotifyElement.Show("Error! No internet", 3000);
+					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
+					if (!HttpHandler.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
 					var pocket = new Services.Api.Pocket.PocketApi();
 					if (pocket.CheckLogin())
 					{
@@ -154,12 +156,19 @@ namespace GithubX.UWP.Views
 					}
 					else
 					{
-						var dialog = new MessageDialog("Login to Pocket then try Again");
-						dialog.Commands.Add(new UICommand("OK", (IUICommand command) =>
+						var dialog = new MessageDialog("✔ Login to Pocket then try Again");
+						dialog.Commands.Add(new UICommand("OK", async (IUICommand command) =>
 						{
-							//var uri = pocket.LoginUriAsync();
-							//new WebAuthenticationBroker();
-							//todo
+							var uri = await pocket.LoginUriAsync();
+							WebAuthenticationResult auth =
+							await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None,uri,new Uri(App.PocketProtocol));
+							if(auth.ResponseStatus == WebAuthenticationStatus.Success)
+							{
+								if(await pocket.LoginUser())
+									MainPage.NotifyElement.Show("✔ Logged in Pocket", 3000);
+								else
+									MainPage.NotifyElement.Show("✖ Failed to login", 3000);
+							}
 						}));
 						dialog.Commands.Add(new UICommand("Cancel"));
 						await dialog.ShowAsync();

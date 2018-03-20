@@ -31,7 +31,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <!--#endregion-->
-        
+
         <!--#region tab-->
         <Button Content=""
                 VerticalAlignment="Bottom"
@@ -40,9 +40,9 @@
                 Foreground="Black" Click="CategorySetting_Click"
                 FontSize="20" Background="Transparent" Margin="28,0,0,0"/>
         <ListView x:Name="tabList" 
-                  Height="48"
+                  Height="48" 
                   ScrollViewer.HorizontalScrollMode="Auto"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                   VerticalAlignment="Bottom"
                   IsItemClickEnabled="True"
                   ItemClick="tabList_ItemClick" 
@@ -54,9 +54,11 @@
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="m:CategoryModel">
-                    <TextBlock Text="{x:Bind Text,Mode=OneTime}" 
-                                   FontSize="24" FontWeight="SemiLight"/>
+                <DataTemplate x:DataType="m:CategoryModel" >
+                    <TextBlock Text="{x:Bind Text}" 
+                               Tag="{x:Bind Id}"
+                               FontSize="24" FontWeight="SemiLight" 
+                               AllowDrop="True" Drop="TextBlock_Drop" DragOver="TextBlock_DragOver"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -87,13 +89,14 @@
         <!--#endregion-->
 
         <!--#region body-->
-        <controls:AdaptiveGridView x:Name="gridView"
+        <controls:AdaptiveGridView x:Name="gridView" 
+                                   CanDragItems="True"
+                                   DragItemsStarting="gridView_DragItemsStarting"
                                    ItemsSource="{x:Bind Repositories,Mode=OneWay}"
                                    OneRowModeEnabled="False"
                                    ItemHeight="125"
                                    DesiredWidth="400" Grid.Row="1" Grid.ColumnSpan="3"
                                    Padding="16"
-                                   SelectionMode="None"
                                    IsItemClickEnabled="True"
                                    ItemClick="AdaptiveGridViewControl_ItemClick"
                                    animations:Connected.ListItemElementName="ItemThumbnail"

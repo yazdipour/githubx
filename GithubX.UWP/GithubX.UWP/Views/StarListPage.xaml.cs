@@ -51,6 +51,7 @@ namespace GithubX.UWP.Views
 						if (Repositories.Count >= 30) LoadMoreButton.Visibility = Visibility.Visible;
 						new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", ApiHandler.AllCategories[0].Color);
 						Bindings.Update();
+						if (tabList.Items.Count > 0) tabList.SelectedIndex = 0;
 					}
 			}
 		}
@@ -62,7 +63,7 @@ namespace GithubX.UWP.Views
 			var p = new CategoryPanel(currentTabId);
 			await p.ShowAsync();
 			//refresh if current category does not exist anymore
-			if (!ApiHandler.AllCategories.ToList().Any(o=>o.Id== currentTabId)) RefreshPage();
+			if (!ApiHandler.AllCategories.ToList().Any(o => o.Id == currentTabId)) RefreshPage();
 		}
 
 		private void RefreshPage()
@@ -104,6 +105,34 @@ namespace GithubX.UWP.Views
 			catch (Exception ex)
 			{
 				MainPage.NotifyElement.Show(ex.Message, 4000);
+			}
+		}
+		private async void AvatarBtn_Click(object sender, RoutedEventArgs e)
+		{
+			if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap Avatar.FlyoutButton");
+
+			var el = sender as FrameworkElement;
+			if (el == null) return;
+			switch (el.Tag.ToString())
+			{
+				case "-1":
+					await new AboutPanel().ShowAsync();
+					break;
+				case "0":
+					// load with cache disable
+					RefreshPage();
+					break;
+				case "1":
+					//back
+					//todo: get categories with repo id or all repo.json
+					break;
+				case "2":
+					//logout
+					ApiHandler.LogOut();
+					Frame.BackStack.Clear();
+					new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", Windows.UI.Colors.WhiteSmoke);
+					Frame.Navigate(typeof(LoginPage));
+					break;
 			}
 		}
 		#endregion
@@ -177,36 +206,42 @@ namespace GithubX.UWP.Views
 			#endregion
 		}
 
+
+		#endregion
+
+		#region Draging
+		private async void TextBlock_Drop(object sender, DragEventArgs e)
+		{
+			if (e.DataView.Contains(StandardDataFormats.Text))
+			{
+				var idRepo = await e.DataView.GetTextAsync();
+				if (idRepo == null) return;
+				var destRepo = ApiHandler.AllRepos.First(i => i.id.ToString() == idRepo);
+				if (destRepo == null) return;
+				var idCat = (sender as TextBlock).Tag.ToString();
+				if (idCat == null) return;
+				var temp = destRepo.CategoriesId.ToList();
+				int idCatInt = Convert.ToInt32(idCat);
+				if (temp.Contains(idCatInt)) return;
+				temp.Add(idCatInt);
+				destRepo.CategoriesId = temp.ToArray();
+				await ApiHandler.SaveCategoryReposAsync(App.UserLoginAccountName);
+			}
+		}
+
+		private void TextBlock_DragOver(object sender, DragEventArgs e)
+		{
+			if (e.DataView.Contains(StandardDataFormats.Text)) e.AcceptedOperation = DataPackageOperation.Move;
+		}
+
+		private void gridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+		{
+			e.Data.RequestedOperation = DataPackageOperation.Move;
+			var item = e.Items[0] as RepoModel;
+			e.Data.SetText(item.id.ToString());
+		}
 		#endregion
 
 
-		private async void AvatarBtn_Click(object sender, RoutedEventArgs e)
-		{
-			if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap Avatar.FlyoutButton");
-
-			var el = sender as FrameworkElement;
-			if (el == null) return;
-			switch (el.Tag.ToString())
-			{
-				case "-1":
-					await new AboutPanel().ShowAsync();
-					break;
-				case "0":
-					// load with cache disable
-					RefreshPage();
-					break;
-				case "1":
-					//back
-					//todo: get categories with repo id or all repo.json
-					break;
-				case "2":
-					//logout
-					ApiHandler.LogOut();
-					Frame.BackStack.Clear();
-					new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", Windows.UI.Colors.WhiteSmoke);
-					Frame.Navigate(typeof(LoginPage));
-					break;
-			}
-		}
 	}
 }

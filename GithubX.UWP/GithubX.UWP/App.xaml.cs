@@ -80,18 +80,13 @@ namespace GithubX.UWP
 			deferral.Complete();
 		}
 
-		protected async override void OnActivated(IActivatedEventArgs args)
+		protected override void OnActivated(IActivatedEventArgs args)
 		{
 			if (args.Kind == ActivationKind.Protocol)
 			{
 				ProtocolActivatedEventArgs protocolArgs = (ProtocolActivatedEventArgs)args;
 				string uri = protocolArgs.Uri.ToString();
 
-				if (uri == App.PocketProtocol)
-				{
-					var user = await Services.Api.Pocket.PocketApi.client.GetUser();
-					new Services.Cache.WindowsCacheHandler().Write(Services.Cache.CacheKeys.Pocket, user.Code);
-				}
 			}
 		}
 	}

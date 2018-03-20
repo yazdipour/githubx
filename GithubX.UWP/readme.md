@@ -5,6 +5,14 @@
 ## Tasks
 https://github.com/yazdipour/githubx/projects/1
 
+
+## Release Note
+
+
+* V1.1 : Markdown Theme Setting + Pocket Api + Drag n drop + Bug Fixes
+* v1.0 : UI + Github Api
+
+
 ## Libs
 
 * [Json.NET](https://www.nuget.org/packages/Newtonsoft.Json/)

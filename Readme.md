@@ -12,6 +12,10 @@
 - [ ] Website.Code
 - [ ] Android.Sketch
 - [ ] Android.Code
+- [ ] iOS.Sketch
+- [ ] iOS.Code
+- [ ] Mac.Sketch
+- [ ] Mac.Code
 - [ ] Server Side Strategy
 - [ ] Get Domain Name!
 
@@ -39,15 +43,6 @@
 | [>More Screenshots<](/UI/Screenshots.UWP/)      | [>See all sketch pages for UWP<](/UI/Sketch.UWP/)
 | <img src="/UI/Screenshots.UWP/MainPage.png" width="400"/>   | <img src="/UI/Sketch.UWP/ContextMenu.jpg" width="400"/>
 
-# Website
-
-* Store Categories for each User (I am thinking for the best and inexpensive cenario)
-* No Sketch no plan right now!
-
-
-# Android
-
-* No Sketch no plan right now!
 
 # UI Sketch
 

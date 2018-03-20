@@ -18,6 +18,7 @@
             </Style>
         </ResourceDictionary>
     </Page.Resources>
+  
     <Grid>
         <!--#region btnBar + body-->
         <StackPanel Margin="0 92 0 0">
