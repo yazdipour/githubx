@@ -4,12 +4,15 @@
 
 * Main Goal: Make Categorizing Starred Github Repositories Easier and Enjoyable 🤗
 
+[![Donate](https://img.shields.io/badge/donate-IRAN-blue.svg)](https://www.payping.ir/yazdipour)
+
 # Tasks
 
 - [x] Windows.UWP.Code
 - [x] Windows.UWP.Sketch
 - [ ] Website.Sketch
-- [ ] Website.Code
+- [ ] Website.FrontEnd
+- [ ] Website.BackEnd
 - [ ] Android.Sketch
 - [ ] Android.Code
 - [ ] iOS.Sketch
@@ -19,12 +22,11 @@
 - [ ] Server Side Strategy
 - [ ] Get Domain Name!
 
-# Api
 
+# Api
 * [What we need from Github_Api](/Api/readme.md)
 
 # UWP
-
 
 | Store    | AppCenter (Preview)
 | :-------------: |:-------------:
