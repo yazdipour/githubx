@@ -8,7 +8,7 @@ https://github.com/yazdipour/githubx/projects/1
 
 ## Release Note
 
-* V1.1.x : Bug fixes
+* V1.1.x : Fixes bug in CacheLoading 
 * V1.1 : Markdown Theme Setting + Pocket Api + Drag n drop + Bug Fixes
 * v1.0 : UI + Github Api
 
