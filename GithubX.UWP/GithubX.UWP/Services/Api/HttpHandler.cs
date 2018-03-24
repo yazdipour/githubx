@@ -32,7 +32,7 @@ namespace GithubX.UWP.Services.Api
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message);
+				throw new Exception();
 			}
 			return httpResponseBody;
 		}

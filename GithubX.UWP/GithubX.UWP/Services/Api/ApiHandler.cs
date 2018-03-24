@@ -17,23 +17,42 @@ namespace GithubX.UWP.Services.Api
 		public static ObservableCollection<CategoryModel> AllCategories { get; set; }
 
 		#region GetContent
-		public static async Task<List<ContentModel>> GetContentsAsync(string contentUrl)
+		private static async Task<List<ContentModel>> GetContentsAsync(string contentUrl, string key)
 		{
-			var json = await HttpHandler.Get(contentUrl);
-			if (json == null) throw new Exception();
-			return JsonConvert.DeserializeObject<List<ContentModel>>(json);
+			try
+			{
+				var json = await HttpHandler.Get(contentUrl);
+				if (json == null) throw new Exception();
+				await lCache.SaveAsync(key, json);
+				return JsonConvert.DeserializeObject<List<ContentModel>>(json);
+			}
+			catch { return null; }
+		}
+		public static async Task<List<ContentModel>> LoadContent(RepoModel repo, bool cache = true)
+		{
+			var key = CacheKeys.ContentsKey(repo.id);
+			if (!HttpHandler.CheckConnection && !cache)
+				throw new Exception("No internet, no candy for you!🤬");
+			else if (cache)
+				try { return JsonConvert.DeserializeObject<List<ContentModel>>(await lCache.ReadAsync(key)); }
+				catch { return await GetContentsAsync(repo.contents_url, key); }
+			else if (HttpHandler.CheckConnection)
+			{
+				return await GetContentsAsync(repo.contents_url, key);
+			}
+			else throw new Exception("No Cache, no Internet!!!🤬");
 		}
 		#endregion
 
 		#region Category
-		public static async Task SaveCategoriesAsync(string userLoginAccountName)
+		public static async Task SaveCategoriesAsync()
 		{
-			await lCache.SaveAsync(CacheKeys.CategoriesKey(userLoginAccountName), JsonConvert.SerializeObject(AllCategories)).ConfigureAwait(false);
+			await lCache.SaveAsync(CacheKeys.CategoriesKey, JsonConvert.SerializeObject(AllCategories)).ConfigureAwait(false);
 		}
 
 		public static async Task PrepareAllCategories(string userId)
 		{
-			var keys = CacheKeys.CategoriesKey(userId);
+			var keys = CacheKeys.CategoriesKey;
 			try
 			{
 				var cats = new List<CategoryModel>();
@@ -45,7 +64,7 @@ namespace GithubX.UWP.Services.Api
 			{
 				var cats = new List<CategoryModel>();
 				cats.Add(new CategoryModel { Id = 0, Text = "All" });
-				await SaveCategoriesAsync(userId);
+				await SaveCategoriesAsync();
 				AllCategories = new ObservableCollection<CategoryModel>(cats);
 			}
 		}
@@ -113,7 +132,7 @@ namespace GithubX.UWP.Services.Api
 			}
 			async Task<List<RepoModel>> LoadFromCache()
 			{
-				var json = await lCache.ReadAsync(CacheKeys.RepositoriesKey(userAcc)).ConfigureAwait(false);
+				var json = await lCache.ReadAsync(CacheKeys.RepositoriesKey).ConfigureAwait(false);
 				if (json == null) throw new Exception("Oops!🤨🤔");
 				return JsonConvert.DeserializeObject<List<RepoModel>>(json);
 			}
@@ -129,7 +148,7 @@ namespace GithubX.UWP.Services.Api
 		public static async Task SaveCategoryReposAsync(string user)
 		{
 			var temp = AllRepos.FindAll(x => x.CategoriesId.Length != 0);
-			await lCache.SaveAsync(CacheKeys.RepositoriesKey(user), JsonConvert.SerializeObject(temp)).ConfigureAwait(false);
+			await lCache.SaveAsync(CacheKeys.RepositoriesKey, JsonConvert.SerializeObject(temp)).ConfigureAwait(false);
 		}
 		#endregion
 

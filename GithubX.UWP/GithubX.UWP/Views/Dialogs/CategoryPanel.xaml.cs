@@ -29,8 +29,9 @@ namespace GithubX.UWP.Views
 		private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 			for (int i = 0; i < ApiHandler.AllCategories.Count; i++)
-				if (ApiHandler.AllCategories[i].Id != 0) ApiHandler.AllCategories[i].OrderId = i + 1; // +1 just to be sure never others can get 0
-			await ApiHandler.SaveCategoriesAsync(App.UserLoginAccountName);
+				if (ApiHandler.AllCategories[i].Id != 0)
+					ApiHandler.AllCategories[i].OrderId = i + 1; // +1 just to be sure never others can get 0
+			await ApiHandler.SaveCategoriesAsync();
 		}
 
 		private void Ellipse_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

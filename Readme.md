@@ -28,7 +28,7 @@
 
 | Store    | AppCenter (Preview)
 | :-------------: |:-------------:
-| ![Store Version](https://img.shields.io/badge/store-ver1.0-brightgreen.svg)   | ![Preview Version](https://img.shields.io/badge/version-v1.1-green.svg) [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
+| ![Store Version](https://img.shields.io/badge/store-ver1.1-brightgreen.svg)   | ![Preview Version](https://img.shields.io/badge/version-v1.1.3-green.svg) [![Build status](https://build.appcenter.ms/v0.1/apps/dd05cbde-11b6-45db-8d2f-f65b1791e4a1/branches/master/badge)](https://appcenter.ms)
 | <a href="https://www.microsoft.com/store/apps/9P7D7PD6FBCV?ocid=badge"><img src="https://assets.windowsphone.com/13484911-a6ab-4170-8b7e-795c1e8b4165/English_get_L_InvariantCulture_Default.png" width="150"/></a> | [Want to Test Preview Releases?](https://install.appcenter.ms/users/yazdipour/apps/githubx/distribution_groups/publicbetatesters)
 
 * [Project Directory](/GithubX.UWP/readme.md)

@@ -72,16 +72,17 @@ namespace GithubX.UWP.Views
 			{
 				PFix = string.Format("https://github.com/{0}/raw/master", repo.full_name);
 				md = LoadTheme();
-				ContentFiles = await ApiHandler.GetContentsAsync(repo.contents_url);
-				var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
-				if (readme != null)
+				if (md == null) md = new MarkdownSetting();
+				try
 				{
-					if (md == null) md = new MarkdownSetting();
+					ContentFiles = await ApiHandler.LoadContent(repo);
+					var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
 					Url = readme.download_url;
 					var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, true);
 					MarkdownText.Text = res.Item2;
 					if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached", 3000);
 				}
+				catch { MarkdownText.Text = "> Nothing 😣"; }
 				Bindings.Update();
 			};
 		}
@@ -145,10 +146,10 @@ namespace GithubX.UWP.Views
 					#endregion
 					break;
 				case "3":
-					if (ApiKeys.Pocket==null)return;
+					if (ApiKeys.Pocket == null) return;
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
 					if (!HttpHandler.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
-					var pocket = new Services.Api.PocketApi();
+					var pocket = new PocketApi();
 					if (pocket.CheckLogin())
 					{
 						var item = await pocket.Post(repo.html_url, new[] { "github", "github" });
@@ -162,10 +163,10 @@ namespace GithubX.UWP.Views
 						{
 							var uri = await pocket.LoginUriAsync();
 							WebAuthenticationResult auth =
-							await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None,uri,new Uri(App.PocketProtocol));
-							if(auth.ResponseStatus == WebAuthenticationStatus.Success)
+							await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, uri, new Uri(App.PocketProtocol));
+							if (auth.ResponseStatus == WebAuthenticationStatus.Success)
 							{
-								if(await pocket.LoginUser())
+								if (await pocket.LoginUser())
 									MainPage.NotifyElement.Show("✔ Logged in Pocket", 3000);
 								else
 									MainPage.NotifyElement.Show("✖ Failed to login", 3000);
@@ -176,11 +177,12 @@ namespace GithubX.UWP.Views
 					}
 					break;
 				case "4":
-					//MD reload
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
 					try
 					{
-						MarkdownText.Text = "...";
+						ContentFiles = await ApiHandler.LoadContent(repo);
+						var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
+						Url = readme.download_url;
 						var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, false);
 						MarkdownText.Text = res.Item2;
 					}

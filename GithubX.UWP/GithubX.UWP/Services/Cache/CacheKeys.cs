@@ -8,12 +8,12 @@
 
 		internal static string Pocket = "pocket-user";
 
-		internal static string CategoriesKey(string user) => "cat-" + user;
+		internal static string CategoriesKey => "cat-" + App.UserLoginAccountName;
 
-		internal static string RepositoriesKey(string user) => "repo-" + user;
+		internal static string RepositoriesKey => "repo-" + App.UserLoginAccountName;
+
+		internal static string ContentsKey(int id) => "content-repo-" + id;
 
 		internal static string Readme(int id) => "md-" + id;
-
-		//public static string LastUpdate = "last-update";
 	}
 }

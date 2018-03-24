@@ -107,7 +107,7 @@
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\HttpHandler.cs" />
-    <Compile Include="Services\Api\Pocket\PocketApi.cs" />
+    <Compile Include="Services\Api\PocketApi.cs" />
     <Compile Include="Services\Cache\CacheKeys.cs" />
     <Compile Include="Services\Cache\ICache.cs" />
     <Compile Include="Services\Cache\LocalCacheHandler.cs" />
