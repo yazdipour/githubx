@@ -23,5 +23,9 @@
 			public string html { get; set; }
 		}
 
+		[Newtonsoft.Json.JsonIgnore]
+		public string Icon => type == "dir" ? "" : "";
+
+
 	}
 }

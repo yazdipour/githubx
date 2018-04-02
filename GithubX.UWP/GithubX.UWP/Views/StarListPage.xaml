@@ -119,7 +119,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="18"/>
                             </Grid.ColumnDefinitions>
-                            <controls:ImageEx x:Phase="2"
+                            <controls:ImageEx x:Phase="3"
                                     IsCacheEnabled="True"
                                     Source="{x:Bind owner.avatar_url}"
                                     Height="125" Width="125"                                       

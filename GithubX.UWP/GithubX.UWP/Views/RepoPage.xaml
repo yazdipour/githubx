@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GithubX.UWP.Views"
+    xmlns:m="using:GithubX.UWP.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -18,11 +19,12 @@
             </Style>
         </ResourceDictionary>
     </Page.Resources>
-  
+
     <Grid>
         <!--#region btnBar + body-->
-        <StackPanel Margin="0 92 0 0">
-            <StackPanel x:Name="buttonPanel" Margin="32 42 32 0" Orientation="Horizontal">
+        <StackPanel Margin="32 92 32 32">
+            <!--Appbar_btn-->
+            <StackPanel x:Name="buttonPanel" Margin="0 42 0 0" Orientation="Horizontal">
                 <Button Style="{StaticResource ButtonBar}" Tag="0" Click="ButtonBar_Click" Content=" Share"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="4" Click="ButtonBar_Click" Content=" Refresh"/>
                 <Button Style="{StaticResource ButtonBar}" Tag="1" Click="ButtonBar_Click" Content=" Open Browser" />
@@ -47,26 +49,49 @@
                 </Button>
                 <Button Style="{StaticResource ButtonBar}" Tag="3" Click="ButtonBar_Click" Content="💾 Pocket"/>
             </StackPanel>
-            <controls:DropShadowPanel 
-                VerticalContentAlignment="Stretch"
-                HorizontalContentAlignment="Stretch" 
-                HorizontalAlignment="Stretch"
-                Margin="32 0 32 32" OffsetY="3" 
-                BlurRadius="6" 
-                ScrollViewer.HorizontalScrollMode="Auto"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                ScrollViewer.VerticalScrollBarVisibility="Visible"
-                ScrollViewer.VerticalScrollMode="Enabled" 
-                ShadowOpacity=".6"
-                Color="#28000000">
-                <ScrollViewer x:Name="MarkdownScrollViewer" 
+            <!--MoreDetails-->
+            <controls:Expander x:Name="Expander" VerticalAlignment="Top"
+                          Header="GIT / Content" RequestedTheme="Dark"
+                          HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top"
+                          Foreground="White" Background="#222"
+                          IsExpanded="False" ExpandDirection="Down">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Click="CopyGitLink_BtnClick" Content="Copy" FontFamily="Segoe UI Symbol" Foreground="Black" Background="White" />
+                    <TextBox Grid.Column="1" HorizontalAlignment="Stretch" Text="{x:Bind repo.clone_url}" IsReadOnly="True"/>
+                    <ListView Grid.Row="1" Grid.ColumnSpan="2" 
+                              ScrollViewer.VerticalScrollMode="Enabled" 
+                              IsItemClickEnabled="True"
+                              ItemClick="FilesList_ItemClick"
+                              x:Name="FilesList"
+                              ItemsSource="{x:Bind ContentFiles,Mode=OneWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="m:ContentModel">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Bind Icon,Mode=OneWay}" FontFamily="Segoe UI Symbol" FontSize="18"/>
+                                    <TextBlock Text="{x:Bind name,Mode=OneWay}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+                <controls:Expander.ContentOverlay>
+                    <ScrollViewer x:Name="MarkdownScrollViewer" 
                               ZoomMode="Enabled"
                               BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
                               VerticalScrollMode="Enabled" 
                               HorizontalScrollMode="Auto" 
                               HorizontalScrollBarVisibility="Auto" 
                               VerticalScrollBarVisibility="Visible">
-                    <controls:MarkdownTextBlock x:Name="MarkdownText" 
+                        <controls:MarkdownTextBlock x:Name="MarkdownText" 
                                                 LinkClicked="MarkdownText_LinkClicked"
                                                 Text="## Loading ...." HorizontalAlignment="Stretch"
                                                 WrapCodeBlock="True" 
@@ -76,17 +101,20 @@
                                                 ImageStretch="None"
                                                 Background="{x:Bind md.BgColor,Mode=OneWay}"
                                                 RequestedTheme="{x:Bind md.Theme,Mode=OneWay}"
-                                                LinkForeground="{x:Bind repo.Color}"
+                                                LinkForeground="{x:Bind repo.Color,Mode=OneWay}"
                                                 UseSyntaxHighlighting="True"
                                                 UriPrefix="{x:Bind PFix,Mode=OneWay}"/>
-                </ScrollViewer>
-            </controls:DropShadowPanel>
+                    </ScrollViewer>
+                </controls:Expander.ContentOverlay>
+            </controls:Expander>
+            <!--Content-->
+
         </StackPanel>
         <!--#endregion-->
 
         <!--#region Header-->
         <Grid VerticalAlignment="Top">
-            <!--Back Btn-->
+            <!--BackBtn-->
             <controls:DropShadowPanel Height="92" BlurRadius="6" ShadowOpacity="1" OffsetY="1" OffsetX="1"  Color="#55000000">
                 <Border Width="28" Height="92"  Opacity="0.7" Background="{x:Bind repo.Color, Mode=OneWay}" Tapped="Border_Tapped">
                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#xE239;" FontSize="20"/>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GithubX.UWP.Models;
 using GithubX.UWP.Services.Api;
 using GithubX.UWP.Services.Cache;
@@ -16,6 +17,7 @@ namespace GithubX.UWP.Views
 	{
 		RepoModel repo { get; set; }
 		List<ContentModel> ContentFiles { get; set; }
+
 		private Style DarkFlyoutStyle
 		{
 			get
@@ -65,8 +67,17 @@ namespace GithubX.UWP.Views
 			};
 			SizeChanged += (sender, args) =>
 			{
-				MarkdownScrollViewer.Height = ActualHeight - 92 - buttonPanel.ActualHeight - buttonPanel.Margin.Top - 32;
+				MarkdownScrollViewer.Height =
+						ActualHeight -
+						92 -
+						buttonPanel.ActualHeight -
+						buttonPanel.Margin.Top -
+						32 -
+						48;
+				//48 for expander
+				//92 for header
 				MarkdownText.Width = MarkdownScrollViewer.ActualWidth;
+				FilesList.Height = MarkdownScrollViewer.Height - 32;
 			};
 			Loaded += async (sender, args) =>
 			{
@@ -76,6 +87,7 @@ namespace GithubX.UWP.Views
 				try
 				{
 					ContentFiles = await ApiHandler.LoadContent(repo);
+					ContentFiles = ContentFiles.OrderBy(s => s.name).OrderBy(o => o.type).ToList();
 					var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
 					Url = readme.download_url;
 					var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, true);
@@ -84,6 +96,8 @@ namespace GithubX.UWP.Views
 				}
 				catch { MarkdownText.Text = "> Nothing 😣"; }
 				Bindings.Update();
+				if (repo.Color == "#ffffff")
+					MarkdownText.LinkForeground = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.LightBlue);
 			};
 		}
 
@@ -222,6 +236,19 @@ namespace GithubX.UWP.Views
 		{
 			SaveTheme(md);
 			Bindings.Update();
+		}
+
+		private void CopyGitLink_BtnClick(object sender, RoutedEventArgs e)
+		{
+			var pkg = new DataPackage();
+			pkg.SetText(repo.clone_url);
+			Clipboard.SetContent(pkg);
+			MainPage.NotifyElement.Show("Copied", 2000);
+		}
+
+		private void FilesList_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			//TODO
 		}
 	}
 
