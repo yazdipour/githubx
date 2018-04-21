@@ -14,7 +14,6 @@ namespace GithubX.UWP.Services.Api
 	static class ApiHandler
 	{
 		static OSCache wCache = new OSCache();
-		static FileCache lCache = new FileCache();
 		public static List<RepoModel> AllRepos { get; set; }
 		public static ObservableCollection<CategoryModel> AllCategories { get; set; }
 
@@ -25,8 +24,9 @@ namespace GithubX.UWP.Services.Api
 			{
 				var json = await HttpHandler.Get(contentUrl);
 				if (json == null) throw new Exception();
-				await lCache.SaveAsync(key, json);
-				return JsonConvert.DeserializeObject<List<ContentModel>>(json);
+				var temp = JsonConvert.DeserializeObject<List<ContentModel>>(json);
+				await BlobCache.LocalMachine.InsertObject(key, temp);
+				return temp;
 			}
 			catch { return null; }
 		}
@@ -36,7 +36,10 @@ namespace GithubX.UWP.Services.Api
 			if (!HttpHandler.CheckConnection && !cache)
 				throw new Exception("No internet, no candy for you!🤬");
 			else if (cache)
-				try { return JsonConvert.DeserializeObject<List<ContentModel>>(await lCache.ReadAsync(key)); }
+				try
+				{
+					return await BlobCache.LocalMachine.GetObject<List<ContentModel>>(key);
+				}
 				catch { return await GetContentsAsync(repo.contents_url, key); }
 			else if (HttpHandler.CheckConnection)
 			{
@@ -49,7 +52,7 @@ namespace GithubX.UWP.Services.Api
 		#region Category
 		public static async Task SaveCategoriesAsync()
 		{
-			await lCache.SaveAsync(CacheKeys.CategoriesKey, JsonConvert.SerializeObject(AllCategories)).ConfigureAwait(false);
+			await BlobCache.LocalMachine.InsertObject(CacheKeys.CategoriesKey, AllCategories);
 		}
 
 		public static async Task PrepareAllCategories(string userId)
@@ -57,15 +60,12 @@ namespace GithubX.UWP.Services.Api
 			var keys = CacheKeys.CategoriesKey;
 			try
 			{
-				var cats = new List<CategoryModel>();
-				var json = await lCache.ReadAsync(keys); // if does not exist will return null and 
-				cats = JsonConvert.DeserializeObject<List<CategoryModel>>(json); //then throw exception
+				var cats = await BlobCache.LocalMachine.GetObject<List<CategoryModel>>(keys);
 				AllCategories = new ObservableCollection<CategoryModel>(cats.OrderBy(o => o.OrderId).ToList());
 			}
 			catch (Exception)
 			{
-				var cats = new List<CategoryModel>();
-				cats.Add(new CategoryModel { Id = 0, Text = "All" });
+				var cats = new List<CategoryModel> { new CategoryModel { Id = 0, Text = "All" } };
 				await SaveCategoriesAsync();
 				AllCategories = new ObservableCollection<CategoryModel>(cats);
 			}
@@ -109,7 +109,6 @@ namespace GithubX.UWP.Services.Api
 
 			List<RepoModel> MergeOldAndNew(List<RepoModel> old, List<RepoModel> fresh)
 			{
-				//TODO: dirty dirty code :( dont like it
 				var temp = new List<RepoModel>();
 				foreach (var item in old)
 				{
@@ -132,12 +131,8 @@ namespace GithubX.UWP.Services.Api
 				fresh.AddRange(temp);
 				return fresh;
 			}
-			async Task<List<RepoModel>> LoadFromCache()
-			{
-				var json = await lCache.ReadAsync(CacheKeys.RepositoriesKey).ConfigureAwait(false);
-				if (json == null) throw new Exception("Oops!🤨🤔");
-				return JsonConvert.DeserializeObject<List<RepoModel>>(json);
-			}
+
+			async Task<List<RepoModel>> LoadFromCache() => await BlobCache.LocalMachine.GetObject<List<RepoModel>>(CacheKeys.RepositoriesKey);
 		}
 
 		public static async Task UpdateRepoAsync(string login, RepoModel repo)
@@ -150,7 +145,7 @@ namespace GithubX.UWP.Services.Api
 		public static async Task SaveCategoryReposAsync(string user)
 		{
 			var temp = AllRepos.FindAll(x => x.CategoriesId.Length != 0);
-			await lCache.SaveAsync(CacheKeys.RepositoriesKey, JsonConvert.SerializeObject(temp)).ConfigureAwait(false);
+			await BlobCache.LocalMachine.InsertObject<List<RepoModel>>(CacheKeys.RepositoriesKey, temp);
 		}
 		#endregion
 
@@ -192,11 +187,11 @@ namespace GithubX.UWP.Services.Api
 			{
 				try
 				{
-					md = await lCache.ReadAsync(key);
+					md = await BlobCache.LocalMachine.GetObject<string>(key);
 					if (md != null)
 					{
 						removeUnSupported();
-						await lCache.SaveAsync(key, md).ConfigureAwait(false);
+						await BlobCache.LocalMachine.InsertObject(key, md);
 						return (true, md);
 					}
 				}
@@ -212,7 +207,7 @@ namespace GithubX.UWP.Services.Api
 					if (md == null) return (false, "> No README.MD 🤔");
 					md = new Html2Markdown.Converter().Convert(md);
 					removeUnSupported();
-					await lCache.SaveAsync(key, md).ConfigureAwait(false);
+					await BlobCache.LocalMachine.InsertObject(key, md);
 				}
 				catch { }
 				return (false, md);
