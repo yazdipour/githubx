@@ -183,15 +183,16 @@ namespace GithubX.UWP.Services.Api
 		{
 			string md = null;
 			var key = CacheKeys.Readme(repoId);
+			var filecache=new FileCache();
 			if (fromCache)
 			{
 				try
 				{
-					md = await BlobCache.LocalMachine.GetObject<string>(key);
+					md = await filecache.ReadAsync(key);
 					if (md != null)
 					{
 						removeUnSupported();
-						await BlobCache.LocalMachine.InsertObject(key, md);
+						await filecache.SaveAsync(key, md);
 						return (true, md);
 					}
 				}
@@ -207,7 +208,7 @@ namespace GithubX.UWP.Services.Api
 					if (md == null) return (false, "> No README.MD 🤔");
 					md = new Html2Markdown.Converter().Convert(md);
 					removeUnSupported();
-					await BlobCache.LocalMachine.InsertObject(key, md);
+					await filecache.SaveAsync(key, md);
 				}
 				catch { }
 				return (false, md);
