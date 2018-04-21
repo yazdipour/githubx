@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Akavache;
 using GithubX.UWP.Models;
 using GithubX.UWP.Services.Cache;
 using Newtonsoft.Json;
+using System.Reactive.Linq;
 
 namespace GithubX.UWP.Services.Api
 {
 	static class ApiHandler
 	{
-		static WindowsCacheHandler wCache = new WindowsCacheHandler();
-		static LocalCacheHandler lCache = new LocalCacheHandler();
+		static OSCache wCache = new OSCache();
+		static FileCache lCache = new FileCache();
 		public static List<RepoModel> AllRepos { get; set; }
 		public static ObservableCollection<CategoryModel> AllCategories { get; set; }
 

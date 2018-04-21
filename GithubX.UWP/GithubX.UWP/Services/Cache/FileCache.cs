@@ -4,7 +4,7 @@ using Windows.Storage;
 
 namespace GithubX.UWP.Services.Cache
 {
-	class LocalCacheHandler : ICache
+	class FileCache : ICache
 	{
 		StorageFolder localFolder = ApplicationData.Current.LocalFolder;
 

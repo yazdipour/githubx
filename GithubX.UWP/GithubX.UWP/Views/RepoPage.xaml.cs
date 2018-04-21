@@ -34,12 +34,12 @@ namespace GithubX.UWP.Views
 		#region Markdown Setting
 		private void SaveTheme(MarkdownSetting setting)
 		{
-			var wCache = new WindowsCacheHandler();
+			var wCache = new OSCache();
 			wCache.Write(CacheKeys.ReadmeTheme, Newtonsoft.Json.JsonConvert.SerializeObject(setting));
 		}
 		private MarkdownSetting LoadTheme()
 		{
-			var wCache = new WindowsCacheHandler();
+			var wCache = new OSCache();
 			try
 			{
 				var json = wCache.Read(CacheKeys.ReadmeTheme);
@@ -67,6 +67,7 @@ namespace GithubX.UWP.Views
 			};
 			SizeChanged += (sender, args) =>
 			{
+				FilesList.Height = 
 				MarkdownScrollViewer.Height =
 						ActualHeight -
 						92 -
@@ -77,7 +78,6 @@ namespace GithubX.UWP.Views
 				//48 for expander
 				//92 for header
 				MarkdownText.Width = MarkdownScrollViewer.ActualWidth;
-				FilesList.Height = MarkdownScrollViewer.Height - 32;
 			};
 			Loaded += async (sender, args) =>
 			{

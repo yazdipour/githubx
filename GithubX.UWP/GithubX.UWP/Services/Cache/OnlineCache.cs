@@ -2,7 +2,7 @@
 
 namespace GithubX.UWP.Services.Cache
 {
-	class ServerCacheHandler : ICache
+	class OnlineCache : ICache
 	{
 		public Task<string> ReadAsync(string address)
 		{

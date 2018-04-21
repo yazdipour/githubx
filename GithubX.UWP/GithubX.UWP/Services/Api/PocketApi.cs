@@ -7,7 +7,7 @@ namespace GithubX.UWP.Services.Api
 {
 	class PocketApi
 	{
-		private Cache.WindowsCacheHandler CacheHandler = new Cache.WindowsCacheHandler();
+		private Cache.OSCache CacheHandler = new Cache.OSCache();
 		private PocketClient client;
 
 		private PocketClient LoadCacheClient()
