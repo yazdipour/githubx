@@ -19,7 +19,6 @@ namespace GithubX.UWP
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
 			if (ApiKeys.AppCenter != null) AppCenter.Start(ApiKeys.AppCenter, typeof(Analytics));
-			Akavache.BlobCache.ApplicationName = "GithubX";
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
