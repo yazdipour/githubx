@@ -87,7 +87,7 @@ namespace GithubX.UWP.Views
 				new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", item.Color);
 				var ls = ApiHandler.GetRepoOfCategory(item.Id);
 				Repositories = new ObservableCollection<RepoModel>(ls);
-				LoadMoreButton.Visibility = (currentTabId == 0 && Repositories.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
+				LoadMoreButton.Visibility = (currentTabId == 0 && Repositories.Count >= 30 ) ? Visibility.Visible : Visibility.Collapsed;
 				Bindings.Update();
 			}
 			catch (Exception ex)
@@ -100,9 +100,9 @@ namespace GithubX.UWP.Views
 		{
 			try
 			{
-				var res = await ApiHandler.GetNextPageReposAsync(User.login, pageInOnlineMode);
+				var res = await ApiHandler.GetReposOfPage(User.login, ++pageInOnlineMode);
 				res.ForEach(Repositories.Add);
-				LoadMoreButton.Visibility = (res.Count % 30 == 0) ? Visibility.Visible : Visibility.Collapsed;
+				LoadMoreButton.Visibility = (res.Count >= 30) ? Visibility.Visible : Visibility.Collapsed;
 			}
 			catch (Exception ex)
 			{

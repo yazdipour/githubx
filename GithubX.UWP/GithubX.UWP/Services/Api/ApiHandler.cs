@@ -78,7 +78,7 @@ namespace GithubX.UWP.Services.Api
 
 		public static List<RepoModel> GetRepoOfCategory(int catId) => AllRepos?.FindAll(obj => obj.CategoriesId.Contains(catId));
 
-		public static async Task<List<RepoModel>> GetNextPageReposAsync(string userAcc, int page)
+		public static async Task<List<RepoModel>> GetReposOfPage(string userAcc, int page)
 		{
 			if (!Utils.CheckConnection) throw new Exception("No internet, nothing for you!🤬");
 			var freshList = await GApi.GetUserStars(userAcc, page + 1);
@@ -93,7 +93,7 @@ namespace GithubX.UWP.Services.Api
 			{
 				try
 				{
-					var freshList = await GetNextPageReposAsync(userAcc, 0);
+					var freshList = await GetReposOfPage(userAcc, 0);
 					try
 					{
 						var cacheList = await LoadFromCache();
@@ -142,6 +142,7 @@ namespace GithubX.UWP.Services.Api
 			item = repo;
 			await SaveCategoryReposAsync(login);
 		}
+
 		public static async Task SaveCategoryReposAsync(string user)
 		{
 			var temp = AllRepos.FindAll(x => x.CategoriesId.Length != 0);
