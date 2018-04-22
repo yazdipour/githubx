@@ -105,7 +105,7 @@
     <Compile Include="Models\RepoModel.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
-    <Compile Include="Services\Api\GithubApi.cs" />
+    <Compile Include="Services\Api\IGithubApi.cs" />
     <Compile Include="Services\Api\PocketApi.cs" />
     <Compile Include="Services\Cache\CacheKeys.cs" />
     <Compile Include="Services\Cache\ICache.cs" />

@@ -6,7 +6,7 @@ using Refit;
 namespace GithubX.UWP.Services.Api
 {
 	[Headers("User-Agent: XGithub")]
-	interface GithubApi
+	interface IGithubApi
 	{
 		[Get("/users/{user}")]
 		Task<OwnerModel> GetUser(string user);
