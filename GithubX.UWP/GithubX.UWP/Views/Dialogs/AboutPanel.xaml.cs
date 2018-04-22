@@ -13,7 +13,7 @@ namespace GithubX.UWP.Views
 
 		private async void RatingControl_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
 		{
-			await Windows.System.Launcher.LaunchUriAsync(new Uri(Services.Api.Api.RateAppUri));
+			await Windows.System.Launcher.LaunchUriAsync(new Uri(Services.Api.ApiHandler.RateAppUri));
 		}
 	}
 }

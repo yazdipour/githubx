@@ -92,7 +92,7 @@ namespace GithubX.UWP.Views
 					Url = readme.download_url;
 					var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, true);
 					MarkdownText.Text = res.Item2;
-					if (res.Item1) MainPage.NotifyElement.Show("Loaded from Cached", 3000);
+					if (!res.Item1) MainPage.NotifyElement.Show("There was a problem in loading README properly!", 2000);
 				}
 				catch { MarkdownText.Text = "> Nothing 😣"; }
 				Bindings.Update();
@@ -162,7 +162,7 @@ namespace GithubX.UWP.Views
 				case "3":
 					if (ApiKeys.Pocket == null) return;
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
-					if (!HttpHandler.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
+					if (!Services.Utils.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
 					var pocket = new PocketApi();
 					if (pocket.CheckLogin())
 					{
