@@ -47,7 +47,7 @@ namespace GithubX.UWP.Views
 			flyoutTextBox.Text = "😍Fav";
 			ApiHandler.AllCategories.Add(new CategoryModel()
 			{
-				Id = Api.UnixTimestamp,
+				Id = ApiHandler.UnixTimestamp,
 				Text = catName,
 				Color = colors[new Random().Next(colors.Length)]
 			});
@@ -61,7 +61,8 @@ namespace GithubX.UWP.Views
 			var el = ApiHandler.AllCategories.ToList().Find(o => o.Id == cont.Id);
 			if (el != null) ApiHandler.AllCategories.Remove(el);
 			//cache still have some repo with ID==del
-			var oldCategoryRepos=ApiHandler.AllRepos.FindAll(o => o.CategoriesId.Contains(cont.Id));
+			//var oldCategoryRepos=ApiHandler.AllRepos.FindAll(o => o.CategoriesId.Contains(cont.Id));
+			var oldCategoryRepos = ApiHandler.GetRepoOfCategory(cont.Id);
 			foreach (var item in oldCategoryRepos)
 			{
 				var ls = item.CategoriesId.ToList();

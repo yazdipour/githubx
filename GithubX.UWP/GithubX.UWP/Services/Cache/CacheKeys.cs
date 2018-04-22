@@ -13,7 +13,5 @@
 		internal static string RepositoriesKey => "repo-" + App.UserLoginAccountName;
 
 		internal static string ContentsKey(int id) => "content-repo-" + id;
-
-		internal static string Readme(int id) => "md-" + id;
 	}
 }

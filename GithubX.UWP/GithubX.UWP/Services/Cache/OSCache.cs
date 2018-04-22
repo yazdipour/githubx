@@ -18,7 +18,7 @@ namespace GithubX.UWP.Services.Cache
 			{
 				return ls.Values[address].ToString();
 			}
-			catch (Exception) { return null; }
+			catch { return null; }
 		}
 
 		public bool Write(string address, string setting)

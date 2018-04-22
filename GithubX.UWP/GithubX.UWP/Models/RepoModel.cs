@@ -33,8 +33,6 @@ namespace GithubX.UWP.Models
 
 		[JsonIgnore]
 		public string clone_url => html_url + ".git";
-		[JsonIgnore]
-		public string contents_url => url + "/contents";
 
 		#region  inapp
 		public int[] CategoriesId = { 0 };
@@ -62,10 +60,10 @@ namespace GithubX.UWP.Models
 			//REF https://github.com/doda/github-language-colors/blob/master/colors.json
 			if (language == "") return "#ffffff";
 			var key = "," + language + ":";
-			var a = Api.LanguagesColors.IndexOf(key);
+			var a = ApiHandler.LanguagesColors.IndexOf(key);
 			if (a == -1) return "#ffffff";
 			a += key.Length;
-			return Api.LanguagesColors.Substring(a, 7);
+			return ApiHandler.LanguagesColors.Substring(a, 7);
 		}
 		#endregion
 	}

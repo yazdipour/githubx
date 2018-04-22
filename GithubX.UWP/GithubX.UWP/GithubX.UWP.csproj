@@ -103,10 +103,9 @@
     <Compile Include="Models\ContentModel.cs" />
     <Compile Include="Models\OwnerModel.cs" />
     <Compile Include="Models\RepoModel.cs" />
-    <Compile Include="Services\Api\Api.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
-    <Compile Include="Services\Api\HttpHandler.cs" />
+    <Compile Include="Services\Api\GithubApi.cs" />
     <Compile Include="Services\Api\PocketApi.cs" />
     <Compile Include="Services\Cache\CacheKeys.cs" />
     <Compile Include="Services\Cache\ICache.cs" />
@@ -114,6 +113,7 @@
     <Compile Include="Services\Cache\OnlineCache.cs" />
     <Compile Include="Services\Cache\OSCache.cs" />
     <Compile Include="Services\UI\UIHandler.cs" />
+    <Compile Include="Services\Utils.cs" />
     <Compile Include="Views\Dialogs\AboutPanel.xaml.cs">
       <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
@@ -228,6 +228,9 @@
     </PackageReference>
     <PackageReference Include="Html2Markdown">
       <Version>3.2.1.341</Version>
+    </PackageReference>
+    <PackageReference Include="HtmlAgilityPack">
+      <Version>1.8.1</Version>
     </PackageReference>
     <PackageReference Include="LottieUWP">
       <Version>2.5.2</Version>
