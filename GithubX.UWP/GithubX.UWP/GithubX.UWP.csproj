@@ -138,6 +138,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Files\d_bitcoin.png" />
+    <Content Include="Assets\Files\d_eth.png" />
+    <Content Include="Assets\Files\d_iran.png" />
     <Content Include="Assets\Files\octopus.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -8,7 +8,12 @@
     mc:Ignorable="d"
     Title="Github✘ v1.2"
     SecondaryButtonText="Close">
-
+    <ContentDialog.Resources>
+        <Style TargetType="Image" x:Key="donateBtn">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+    </ContentDialog.Resources>
     <StackPanel>
         <Image Source="ms-appx:///Assets/LargeTile.png" Width="78" Height="78" />
         <RichTextBlock>
@@ -20,7 +25,7 @@
                 <LineBreak/>
                 <Run>
                     This app is an Open Source Project Licensed under Apache and right now it is
-                    under-construction and you can follow -Pull request and Submit Issues- this project at Github in this address:
+                    under-construction and you may see changes that may break stuff. You can follow submit issues at Github in this address:
                 </Run>
                 <LineBreak/>
                 <Hyperlink NavigateUri="https://github.com/yazdipour/githubx">https://github.com/yazdipour/githubx</Hyperlink>
@@ -32,11 +37,18 @@
                 <Run FontFamily="Segoe UI Emoji" FontSize="16" >Developed+Designed by 👦</Run>
                 <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="16"
                            NavigateUri="https://yazdipour.github.io">Shahriar Yazdipour</Hyperlink>
-                <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="13" UnderlineStyle="None"
-                           NavigateUri="https://www.payping.ir/yazdipour">(دونیت)</Hyperlink>
 
             </Paragraph>
         </RichTextBlock>
+        <HyperlinkButton NavigateUri="https://www.payping.ir/yazdipour" HorizontalAlignment="Center">
+            <Image Source="ms-appx:///Assets/Files/d_iran.png" Style="{StaticResource donateBtn}"/>
+        </HyperlinkButton>
+        <HyperlinkButton NavigateUri="https://en.cryptobadges.io/donate/17BF1jES7ytyKsNHM3rmRZ5n63VSy28gLe" HorizontalAlignment="Center">
+            <Image Source="ms-appx:///Assets/Files/d_bitcoin.png" Style="{StaticResource donateBtn}"/>
+        </HyperlinkButton>
+        <HyperlinkButton NavigateUri="https://en.cryptobadges.io/donate/0x37C14DaF87ba7a680a5B4CfcB7ef52c71A5C7Be4" HorizontalAlignment="Center">
+            <Image Source="ms-appx:///Assets/Files/d_eth.png" Style="{StaticResource donateBtn}"/>
+        </HyperlinkButton>
         <TextBlock Text="Rate GithubX in Store" 
                    HorizontalAlignment="Center" 
                    Margin="0 16 0 0"/>
