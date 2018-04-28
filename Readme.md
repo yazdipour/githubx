@@ -1,4 +1,4 @@
-# GithubX👽
+# GithubX
 
 ![GithubX](/Icon/Octocat.png)
 
