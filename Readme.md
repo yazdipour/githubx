@@ -35,7 +35,7 @@
 
 # UWP
 
-* [Follow UWP Project here 👈🏻](/GithubX.UWP/readme.md)
+* [Follow UWP Project here 👈🏻](https://github.com/yazdipour/githubx.uwp)
 * Can show Github Starred Repos and Categorize them
 * Can show README_MD 
 * Can Cache Repositories List and README files
