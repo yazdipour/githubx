@@ -23,7 +23,7 @@ Main Goal: Make Categorizing Github Repositories Easier and Enjoyable.
 | Released      | ❌ | ❌ | [![-][msstore-img]][msstore-url] | ❌ | ❌ | ❌| ❌
 
 ```emoji
-| 🔗: link | ✔:  Done | ❌: Not Started | ⏹: Stopped | ⏸: Paused | ▶:  Working on it
+🔗: link | ✔:  Done | ❌: Not Started | ⏹: Stopped | ⏸: Paused | ▶:  Working on it
 ```
 
 ## Donate
@@ -37,12 +37,12 @@ Main Goal: Make Categorizing Github Repositories Easier and Enjoyable.
 [xdcli]:assets/WebClient/
 [xdser]:assets/Server/
 [xdios]:assets/iOS/
-[suwp]: src/GithubX.UWP/
-[sand]: src/GithubX.Android/
-[sios]: src/GithubX.iOS/
-[sgtk]: src/
-[scli]: src/
-[sser]: src/
+[suwp]: source/GithubX.UWP/
+[sand]: source/GithubX.Android/
+[sios]: source/GithubX.iOS/
+[sgtk]: source/
+[scli]: source/
+[sser]: source/
 [todo1]: https://github.com/yazdipour/githubx/projects/1
 [todo2]: https://github.com/yazdipour/githubx/projects/2
 [todo3]: https://github.com/yazdipour/githubx/projects/3
