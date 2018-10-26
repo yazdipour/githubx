@@ -6,10 +6,6 @@ Main Goal: Make Categorizing Github Repositories Easier and Enjoyable.
 
 ![screen shot uwp](assets/Uwp/Screenshots/MainPage.png)
 
-## [📃See Docs Here](https://yazdipour.github.io/githubx)
-
-## Platforms
-
 | | Server | WebClient | UWP | Android | iOS | Gtk#
 | :- | :- | :- | :- |:- | :- | :-
 | Plan          | ❌ | ❌ | ✔ | ❌ | ❌ | ❌
@@ -25,10 +21,12 @@ Main Goal: Make Categorizing Github Repositories Easier and Enjoyable.
 ```emoji
 🔗: link | ✔:  Done | ❌: Not Started | ⏹: Stopped | ⏸: Paused | ▶:  Working on it
 ```
+## [📃See Docs Here](https://yazdipour.github.io/githubx/)
 
 ## Donate
 
 [![Donate](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoff.ee/XrTW5YQDy)
+
 [![Donate RIAL.IR](https://img.shields.io/badge/donate-IRAN-blue.svg)](https://www.payping.ir/yazdipour)
 
 [scrnuwp]:assets/Uwp/Screenshots
