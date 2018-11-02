@@ -39,7 +39,14 @@ namespace GithubX.Shared.Services
 		public void SaveCredential(Credentials credentials)
 			=> BlobCache.Secure.SaveLogin(credentials.Login, credentials.GetToken());
 
-		public IObservable<LoginInfo> ReadCredential() => BlobCache.Secure.GetLoginAsync();
+		public Credentials ReadCredential()
+		{
+			//TODO: Check
+			Credentials c = null;
+			var result = BlobCache.Secure.GetLoginAsync()
+				.Subscribe(_ => c = new Credentials(_.UserName, _.Password));
+			return c;
+		}
 
 		public bool IsLoadedIn(GitHubClient client) => client.Credentials != null;
 
