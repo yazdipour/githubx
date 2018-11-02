@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using GithubX.UWP.Models;
+using GithubX.Shared.Models;
 using GithubX.UWP.Services.Api;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

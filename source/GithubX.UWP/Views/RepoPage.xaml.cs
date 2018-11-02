@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GithubX.UWP.Models;
+using GithubX.Shared.Models;
 using GithubX.UWP.Services.Api;
 using GithubX.UWP.Services.Cache;
 using Microsoft.Toolkit.Uwp.Helpers;

@@ -5,8 +5,9 @@
     xmlns:local="using:GithubX.UWP"
     xmlns:media="using:Windows.UI.Xaml.Media"
     RequestedTheme="Light">
-    <Application.Resources>
-        <Color x:Key="AcrylicBrushTintColor1">#eee</Color>
+	<Application.Resources>
+		<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
+		<Color x:Key="AcrylicBrushTintColor1">#eee</Color>
         <Color x:Key="AcrylicBrushFallbackColor1">#eee</Color>
         <media:AcrylicBrush x:Key="HeaderAcrylic" 
                                         BackgroundSource="HostBackdrop" 

@@ -17,7 +17,7 @@ namespace GithubX.UWP
 			if (acc == null)
 				iframe.Navigate(typeof(Views.LoginPage));
 			else
-				iframe.Navigate(typeof(Views.StarListPage), acc);
+				iframe.Navigate(typeof(Views.ListPage), acc);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using GithubX.UWP.Models;
+using GithubX.Shared.Models;
 using Refit;
 
 namespace GithubX.UWP.Services.Api

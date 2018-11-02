@@ -12,9 +12,9 @@ namespace GithubX.UWP
 {
 	sealed partial class App : Application
 	{
-		public static string UserLoginAccountName { get; set; }
-		public static string PocketProtocol = "githubx://pocket";
-		internal static string Version = "1.3";
+		internal static string UserLoginAccountName { get; set; }
+		internal static string PocketProtocol = "githubx://pocket";
+		internal static string Version = $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}";
 
 		public App()
 		{
@@ -22,6 +22,7 @@ namespace GithubX.UWP
 			this.Suspending += OnSuspending;
 			if (ApiKeys.AppCenter != null) AppCenter.Start(ApiKeys.AppCenter, typeof(Analytics));
 			Akavache.BlobCache.ApplicationName = "GithubX";
+			GithubX.Shared.Handlers.CacheHandler.InitCache();
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -35,7 +36,7 @@ namespace GithubX.UWP
 
 				rootFrame.NavigationFailed += OnNavigationFailed;
 
-				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+				if (e?.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
 					//TODO: Load state from previously suspended application
 				}
@@ -44,14 +45,14 @@ namespace GithubX.UWP
 				Window.Current.Content = rootFrame;
 			}
 
-			if (e.PrelaunchActivated == false)
+			if (e?.PrelaunchActivated ?? false == false)
 			{
 				if (rootFrame.Content == null)
 				{
 					// When the navigation stack isn't restored navigate to the first page,
 					// configuring the new page by passing required information as a navigation
 					// parameter
-					rootFrame.Navigate(typeof(MainPage), e.Arguments);
+					rootFrame.Navigate(typeof(MainPage), e?.Arguments);
 				}
 				// Ensure the current window is active
 				Window.Current.Activate();
@@ -88,7 +89,10 @@ namespace GithubX.UWP
 			{
 				ProtocolActivatedEventArgs protocolArgs = (ProtocolActivatedEventArgs)args;
 				string uri = protocolArgs.Uri.ToString();
-
+			}
+			else if (args.Kind == ActivationKind.CommandLineLaunch)
+			{
+				OnLaunched(null);
 			}
 		}
 	}

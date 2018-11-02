@@ -99,10 +99,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\RepoContent.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Repo.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\IGithubApi.cs" />
@@ -127,8 +123,8 @@
     <Compile Include="Views\RepoPage.xaml.cs">
       <DependentUpon>RepoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StarListPage.xaml.cs">
-      <DependentUpon>StarListPage.xaml</DependentUpon>
+    <Compile Include="Views\ListPage.xaml.cs">
+      <DependentUpon>ListPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -138,12 +134,6 @@
     <Content Include="Assets\Files\d_bitcoin.png" />
     <Content Include="Assets\Files\d_eth.png" />
     <Content Include="Assets\Files\d_iran.png" />
-    <Content Include="Assets\Files\octopus.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Files\loading.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="GithubX.UWP_StoreKey.pfx" />
     <None Include="GithubX.UWP_TemporaryKey.pfx" />
   </ItemGroup>
@@ -217,45 +207,44 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StarListPage.xaml">
+    <Page Include="Views\ListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="1.1.10" ExcludeAssets="All" />
     <PackageReference Include="akavache.sqlite3">
-      <Version>5.0.0</Version>
+      <Version>6.0.30</Version>
     </PackageReference>
     <PackageReference Include="Html2Markdown">
       <Version>3.2.1.341</Version>
     </PackageReference>
     <PackageReference Include="HtmlAgilityPack">
-      <Version>1.8.4</Version>
-    </PackageReference>
-    <PackageReference Include="LottieUWP">
-      <Version>2.5.2</Version>
+      <Version>1.8.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter">
-      <Version>1.6.1</Version>
+      <Version>1.10.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>1.6.1</Version>
+      <Version>1.10.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>1.6.1</Version>
+      <Version>1.10.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Push">
-      <Version>1.6.1</Version>
+      <Version>1.10.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.5</Version>
+      <Version>6.1.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>3.0.0</Version>
+      <Version>5.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>3.0.0</Version>
+      <Version>5.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.1.181025003-prerelease</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.2</Version>
@@ -264,7 +253,7 @@
       <Version>4.2.0</Version>
     </PackageReference>
     <PackageReference Include="Refit">
-      <Version>4.5.6</Version>
+      <Version>4.6.48</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
