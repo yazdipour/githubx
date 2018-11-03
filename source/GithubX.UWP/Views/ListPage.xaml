@@ -78,10 +78,9 @@
             </Button.Flyout>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{x:Bind User.name}" VerticalAlignment="Center" Foreground="Black"/>
-                <controls:RoundImageEx Height="42" Width="42"
+                <controls:ImageEx Height="42" Width="42"
                                        IsCacheEnabled="True"
                                        PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-                                       CornerRadius="99"
                                        Source="{x:Bind User.avatar_url,Mode=OneWay}" 
                                        VerticalAlignment="Center" Margin="4 -4" PlaceholderStretch="UniformToFill"/>
             </StackPanel>

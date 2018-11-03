@@ -10,7 +10,7 @@
     Title="Categories"
     PrimaryButtonText="Close" 
     Background="{ThemeResource DialogBoxAcrylicBrush}"
-    xmlns:models="using:GithubX.UWP.Models"
+    xmlns:models="using:GithubX.Shared.Models"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
     <ContentDialog.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}">

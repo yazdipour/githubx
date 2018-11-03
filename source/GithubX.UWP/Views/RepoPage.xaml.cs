@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GithubX.Shared.Models;
+using GithubX.Shared.Services.Pocket;
 using GithubX.UWP.Services.Api;
 using GithubX.UWP.Services.Cache;
 using Microsoft.Toolkit.Uwp.Helpers;
@@ -149,24 +150,34 @@ namespace GithubX.UWP.Views
 					if (ApiKeys.Pocket == null) return;
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
 					if (!Services.Utils.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
-					var pocket = new PocketApi();
-					if (pocket.CheckLogin())
+					var pocket = new PocketService(ApiKeys.Pocket, App.PocketProtocol);
+					pocket.LoadFromCache();
+					if (pocket.IsLoggedIn())
 					{
-						var item = await pocket.Post(repo.html_url, new[] { "github", "github" });
-						if (item == null) MainPage.NotifyElement.Show("Error! Something with the Pocket", 3000);
-						else MainPage.NotifyElement.Show("Saved to Pocket", 3000);
+						try
+						{
+							await pocket.Add(new Uri(repo.html_url));
+							MainPage.NotifyElement.Show("Saved to Pocket", 3000);
+						}
+						catch
+						{
+							MainPage.NotifyElement.Show("Error! Something with the Pocket", 3000);
+						}
 					}
 					else
 					{
 						var dialog = new MessageDialog("✔ Login to Pocket then try Again");
 						dialog.Commands.Add(new UICommand("OK", async (IUICommand command) =>
 						{
-							var uri = await pocket.LoginUriAsync();
+							var (requestCode, uri) = await pocket.GenerateAuthUri();
 							WebAuthenticationResult auth =
-							await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, uri, new Uri(App.PocketProtocol));
+							await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, uri, new Uri(pocket.CallbackUri));
 							if (auth.ResponseStatus == WebAuthenticationStatus.Success)
 							{
-								if (await pocket.LoginUser())
+								var res = auth.ResponseData;
+								var token = await pocket.GetUserToken(requestCode);
+								pocket.SaveInCache();
+								if (token?.Length > 1)
 									MainPage.NotifyElement.Show("✔ Logged in Pocket", 3000);
 								else
 									MainPage.NotifyElement.Show("✖ Failed to login", 3000);
@@ -180,7 +191,7 @@ namespace GithubX.UWP.Views
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Refresh");
 					try
 					{
-						ContentFiles = await ApiHandler.GetContentListAsync(repo,false);
+						ContentFiles = await ApiHandler.GetContentListAsync(repo, false);
 						FilesList.ItemsSource = ContentFiles;
 						var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
 						Url = readme.download_url;
@@ -279,17 +290,17 @@ namespace GithubX.UWP.Views
 
 		private void SaveTheme(MarkdownSetting setting)
 		{
-            var wCache = new LocalObjectStorageHelper();
-            wCache.Save(CacheKeys.ReadmeTheme, Newtonsoft.Json.JsonConvert.SerializeObject(setting));
+			var wCache = new LocalObjectStorageHelper();
+			wCache.Save(CacheKeys.ReadmeTheme, Newtonsoft.Json.JsonConvert.SerializeObject(setting));
 		}
 
 		private MarkdownSetting LoadTheme()
 		{
 			var wCache = new LocalObjectStorageHelper();
 
-            try
+			try
 			{
-				var json = wCache.Read(CacheKeys.ReadmeTheme,"");
+				var json = wCache.Read(CacheKeys.ReadmeTheme, "");
 				return Newtonsoft.Json.JsonConvert.DeserializeObject<MarkdownSetting>(json);
 			}
 			catch
@@ -301,9 +312,9 @@ namespace GithubX.UWP.Views
 				};
 			}
 		}
-    }
+	}
 
-    internal class MarkdownSetting
+	internal class MarkdownSetting
 	{
 		public string BgColor { get; set; }
 		public ElementTheme Theme { get; set; }

@@ -7,7 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
-    xmlns:models="using:GithubX.UWP.Models">
+    xmlns:models="using:GithubX.Shared.Models">
     <Page.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" x:Key="ButtonBar">

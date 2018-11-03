@@ -2,17 +2,16 @@
 using Akavache;
 using Refit;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace GithubX.Shared.Services.Pocket
 {
-	class PocketService
+	public class PocketService
 	{
 		private readonly IPocketApi Api = RestService.For<IPocketApi>("https://getpocket.com/v3/");
 		private string ApiKey { get; } //consumer_key
 		private string AccessToken { get; set; }
-		private string CallbackUri { get; }
+		public string CallbackUri { get; }
 
 		public PocketService(string apiKey, string callbackUri, string accessToken = null)
 		{
@@ -42,5 +41,7 @@ namespace GithubX.Shared.Services.Pocket
 		public async void LoadFromCache() => AccessToken = await BlobCache.UserAccount.GetObject<string>("pocket");
 
 		public async void SaveInCache() => await BlobCache.UserAccount.InsertObject("pocket", AccessToken);
+
+		public bool IsLoggedIn() => AccessToken.Length > 1;
 	}
 }
