@@ -1,16 +1,13 @@
-﻿using System;
+﻿using GithubX.Shared.Services;
 using GithubX.UWP.Services.Api;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace GithubX.UWP
 {
-	sealed partial class App : Application
+	public sealed partial class App : Application
 	{
 		internal static string UserLoginAccountName { get; set; }
 		internal static string PocketProtocol = "githubx://pocket";
@@ -20,28 +17,24 @@ namespace GithubX.UWP
 		{
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
-			if (ApiKeys.AppCenter != null) AppCenter.Start(ApiKeys.AppCenter, typeof(Analytics));
 			Shared.Handlers.CacheHandler.InitCache();
+			Logger.Init(ApiKeys.AppCenter);
 		}
 
-		protected override void OnLaunched(LaunchActivatedEventArgs e)
+		protected override void OnLaunched(LaunchActivatedEventArgs args)
 		{
 #if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
-				this.DebugSettings.EnableFrameRateCounter = true;
+			DebugSettings.EnableFrameRateCounter = System.Diagnostics.Debugger.IsAttached;
 #endif
-
 			if (!(Window.Current.Content is Frame rootFrame))
 			{
 				rootFrame = new Frame();
 				Window.Current.Content = rootFrame;
 			}
-
-			if (e?.PrelaunchActivated != true)
+			if (args?.PrelaunchActivated != true)
 			{
 				if (rootFrame.Content == null)
-					rootFrame.Navigate(typeof(MainPage), e?.Arguments);
-				// Ensure the current window is active
+					rootFrame.Navigate(typeof(MainPage), args?.Arguments);
 				Window.Current.Activate();
 			}
 		}

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using GithubX.Shared.Models;
 using GithubX.Shared.Services.Pocket;
 using GithubX.UWP.Services.Api;
@@ -67,7 +66,7 @@ namespace GithubX.UWP.Views
 				try
 				{
 					ContentFiles = await ApiHandler.GetContentListAsync(repo);
-					var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
+					var readme = ContentFiles.Find(o => o.name.Equals("readme.md", StringComparison.CurrentCultureIgnoreCase));
 					Url = readme.download_url;
 					var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, true);
 					MarkdownText.Text = res.Item2;
@@ -193,7 +192,7 @@ namespace GithubX.UWP.Views
 					{
 						ContentFiles = await ApiHandler.GetContentListAsync(repo, false);
 						FilesList.ItemsSource = ContentFiles;
-						var readme = ContentFiles.Find(o => o.name.ToLower().Equals("readme.md"));
+						var readme = ContentFiles.Find(o => o.name.Equals("readme.md", StringComparison.CurrentCultureIgnoreCase));
 						Url = readme.download_url;
 						var res = await ApiHandler.GetReadMeMdAsync(repo.id, Url, false);
 						MarkdownText.Text = res.Item2;
