@@ -1,12 +1,29 @@
 ﻿using GithubX.Shared.Services;
 using GithubX.UWP.Services.Api;
 using Windows.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GithubX.UWP.Views
 {
 	public sealed partial class MotherPage : Page
 	{
 		public static Microsoft.Toolkit.Uwp.UI.Controls.InAppNotification NotifyElement { get; set; }
+
+		private readonly Dictionary<NavigationViewItem, Type> dFrame = new Dictionary<NavigationViewItem, Type>()
+		{
+			{ new NavigationViewItem(){Content = "Profile"}, typeof(ProfilePage)},
+			{ new NavigationViewItem(){Content = "Activities"}, typeof(ActivitiesPage)},
+			{ new NavigationViewItem(){Content = "Categories"}, typeof(CategoriesPage)},
+			{ new NavigationViewItem(){Content = "Stars"}, typeof(RepositoriesPage)},
+			{ new NavigationViewItem(){Content = "Repositories"}, typeof(RepositoriesPage)},
+			{ new NavigationViewItem(){Content = "Followers"}, typeof(FollowPage)},
+			{ new NavigationViewItem(){Content = "Following"}, typeof(FollowPage)},
+			{ new NavigationViewItem(){Content = "Gists"}, typeof(GistsPage)},
+			{ new NavigationViewItem(){Content = "Help"}, typeof(Controls.MarkdownPage)}
+		};
+
 		public MotherPage()
 		{
 			this.InitializeComponent();
@@ -15,48 +32,34 @@ namespace GithubX.UWP.Views
 
 		private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
+			foreach (var item in dFrame)
+				navigationView.MenuItems.Add(item.Key);
+			navigationView.SelectedItem = dFrame.First().Key;
 			Shared.Handlers.CacheHandler.InitCache();
 			Logger.Init(ApiKeys.AppCenter);
-			navigationView.SelectedItem = navigationView.MenuItems[0] as NavigationViewItem;
 		}
 
-		private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+		private async void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
 		{
-			if (args.IsSettingsSelected)
+			if (!args.IsSettingsSelected)
 			{
-
+				var nav = (args?.SelectedItem as NavigationViewItem);
+				iframe.Navigate(dFrame.GetValueOrDefault(nav, dFrame.First().Value), nav.Content);
+				navigationView.IsBackEnabled = iframe.CanGoBack;
 			}
-			else
+			else await new Dialogs.SettingsDialog().ShowAsync();
+		}
+
+		private void navigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+		{
+			if (!iframe.CanGoBack) return;
+			iframe.GoBack();
+			navigationView.IsBackEnabled = iframe.CanGoBack;
+			if (dFrame.ContainsValue(iframe.SourcePageType))
 			{
-				System.Type pageType = null;
-				string tag = (args?.SelectedItem as NavigationViewItem)?.Tag?.ToString() ?? "";
-				switch (tag)
-				{
-					case "Profile":
-						pageType = typeof(ProfilePage);
-						break;
-					case "Activities":
-						pageType = typeof(ActivitiesPage);
-						break;
-					case "Categories":
-						pageType = typeof(CategoriesPage);
-						break;
-					case "Stars":
-					case "Repositories":
-						pageType = typeof(RepositoriesPage);
-						break;
-					case "Followers":
-					case "Following":
-						pageType = typeof(FollowPage);
-						break;
-					case "Gists":
-						pageType = typeof(GistsPage);
-						break;
-					case "Help":
-						pageType = typeof(Controls.MarkdownPage);
-						break;
-				}
-				if (pageType != null) iframe.Navigate(pageType, tag);
+				navigationView.SelectionChanged -= NavigationView_SelectionChanged;
+				navigationView.SelectedItem = dFrame.FirstOrDefault(x => x.Value == iframe.SourcePageType).Key;
+				navigationView.SelectionChanged += NavigationView_SelectionChanged;
 			}
 		}
 	}

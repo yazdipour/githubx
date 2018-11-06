@@ -9,9 +9,8 @@
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     extensions:TitleBarExtensions.ButtonBackgroundColor="Transparent"
-    extensions:TitleBarExtensions.ButtonForegroundColor="White"
-	Loaded="Page_Loaded" 
-	mc:Ignorable="d">
+    extensions:TitleBarExtensions.ButtonForegroundColor="White" RequestedTheme="Light"
+	Loaded="Page_Loaded" mc:Ignorable="d">
 	<Page.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.ThemeDictionaries>
@@ -30,27 +29,13 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0" Height="32">
-			<TextBlock Text="Github✘" 
-					   FontFamily="Candara"
-					   Foreground="Black"
-					   HorizontalAlignment="Center" 
-					   VerticalAlignment="Center"/>
+			<TextBlock Text="Github✘" FontFamily="Candara" Foreground="Black"
+					   HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</Grid>
 		<Grid Grid.Row="1" Margin="16 0 16 16" CornerRadius="2" Background="{ThemeResource RegionBrush}">
-			<NavigationView x:Name="navigationView" IsSettingsVisible="True" 
+			<NavigationView x:Name="navigationView" IsSettingsVisible="True" BackRequested="navigationView_BackRequested"
 							SelectionChanged="NavigationView_SelectionChanged" 
 							PaneDisplayMode="Top" SelectionFollowsFocus="Enabled">
-				<NavigationView.MenuItems>
-					<NavigationViewItem Content="Profile" Tag="Profile"/>
-					<NavigationViewItem Content="Activities" Tag="Activities" />
-					<NavigationViewItem Content="Categories" Tag="Categories" />
-					<NavigationViewItem Content="Stars" Tag="Stars" />
-					<NavigationViewItem Content="Repositories" Tag="Repositories" />
-					<NavigationViewItem Content="Followers" Tag="Followers" />
-					<NavigationViewItem Content="Following" Tag="Following" />
-					<NavigationViewItem Content="Gists" Tag="Gists" />
-					<NavigationViewItem Content="Help" Tag="Help" />
-				</NavigationView.MenuItems>
 				<Frame x:Name="iframe"/>
 			</NavigationView>
 		</Grid>

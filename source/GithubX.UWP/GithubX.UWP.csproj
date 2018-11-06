@@ -121,6 +121,9 @@
     <Compile Include="Views\Dialogs\CategoryPanel.xaml.cs">
       <DependentUpon>CategoryPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FollowPage.xaml.cs">
       <DependentUpon>FollowPage.xaml</DependentUpon>
     </Compile>
@@ -211,7 +214,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Theme.xaml">
+    <Page Include="Theme\ColorPalette.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\CategoryPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

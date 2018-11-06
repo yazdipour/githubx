@@ -19,7 +19,7 @@ namespace GithubX.UWP.Views
 			Binding assetsVisibilityBinding = new Binding();
 			assetsVisibilityBinding.Source = ApiHandler.AllCategories;
 			assetsVisibilityBinding.Mode = BindingMode.TwoWay;
-			CatList.SetBinding(ListView.ItemsSourceProperty, assetsVisibilityBinding);
+			CatList.SetBinding(ItemsControl.ItemsSourceProperty, assetsVisibilityBinding);
 			
 			// Making ALL invisible > to make ALL immutable :))
 			Loaded += (s, e) =>
