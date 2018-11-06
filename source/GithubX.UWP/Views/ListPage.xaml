@@ -10,7 +10,6 @@
     NavigationCacheMode="Enabled"  
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     xmlns:models="using:GithubX.Shared.Models"
-	xmlns:ui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <Style TargetType="MenuFlyoutPresenter">

@@ -7,7 +7,6 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
-	xmlns:ui="using:Microsoft.UI.Xaml.Controls"
     xmlns:models="using:GithubX.Shared.Models">
     <Page.Resources>
         <ResourceDictionary>

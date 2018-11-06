@@ -16,6 +16,7 @@ namespace GithubX.UWP.Views
 {
 	public sealed partial class RepoPage : Page
 	{
+		private string _pocketProtocol = "githubx://pocket";
 		#region Fields
 		Repo repo { get; set; }
 		List<RepoContent> ContentFiles { get; set; }
@@ -149,7 +150,7 @@ namespace GithubX.UWP.Views
 					if (ApiKeys.Pocket == null) return;
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
 					if (!Services.Utils.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
-					var pocket = new PocketService(ApiKeys.Pocket, App.PocketProtocol);
+					var pocket = new PocketService(ApiKeys.Pocket, _pocketProtocol);
 					pocket.LoadFromCache();
 					if (pocket.IsLoggedIn())
 					{

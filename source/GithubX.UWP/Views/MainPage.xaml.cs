@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace GithubX.UWP
+namespace GithubX.UWP.Views
 {
 	public sealed partial class MainPage : Page
 	{
@@ -15,9 +15,9 @@ namespace GithubX.UWP
 			h.TitleBarButton_TranparentBackground(false);
 			var acc = Services.Api.ApiHandler.LoginFromCache();
 			if (acc == null)
-				iframe.Navigate(typeof(Views.LoginPage));
+				iframe.Navigate(typeof(LoginPage));
 			else
-				iframe.Navigate(typeof(Views.ListPage), acc);
+				iframe.Navigate(typeof(ListPage), acc);
 		}
 	}
 }
