@@ -9,7 +9,8 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<!--<XamlControlsResources  xmlns="using:Microsoft.UI.Xaml.Controls"/>-->
-				<ResourceDictionary Source="Theme.xaml"/>
+				<ResourceDictionary Source="Theme\Theme.xaml"/>
+				<ResourceDictionary Source="Theme\ColorPalette.xaml"/>
 				<!--<ResourceDictionary Source="CompactSize.xaml"/>-->
 			</ResourceDictionary.MergedDictionaries>
 			<Color x:Key="AcrylicBrushTintColor1">#eee</Color>
