@@ -12,6 +12,9 @@
 					<Color x:Key="SystemRevealListLowColor">#FF1D1D1D</Color>
 					<Color x:Key="SystemRevealListMediumColor">#FF333333</Color>
 					<Color x:Key="RegionColor">#FF111111</Color>
+					<Color x:Key="CardColor">#FF1D1D1D</Color>
+					<Color x:Key="BaseColor">#FF000000</Color>
+					<Color x:Key="RBaseColor">#FFFFFFFF</Color>
 					<SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
 				</ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
@@ -26,6 +29,9 @@
 					<Color x:Key="SystemRevealListMediumColor">#FFCCCCCC</Color>
 					<RevealBackgroundBrush x:Key="SystemControlHighlightListLowRevealBackgroundBrush" TargetTheme="Light" Color="{ThemeResource SystemRevealListMediumColor}" FallbackColor="{ StaticResource SystemListMediumColor}" />
 					<Color x:Key="RegionColor">#FFFAFAFA</Color>
+					<Color x:Key="CardColor">#FFFFFFFF</Color>
+					<Color x:Key="BaseColor">#FFFFFFFF</Color>
+					<Color x:Key="RBaseColor">#FF000000</Color>
 					<SolidColorBrush x:Key="RegionBrush" Color="{StaticResource RegionColor}" />
 				</ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>

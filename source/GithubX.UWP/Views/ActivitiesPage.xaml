@@ -5,10 +5,10 @@
     xmlns:local="using:GithubX.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
+	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
+    <ListView Padding="84">
+	</ListView>
 </Page>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -6,7 +7,7 @@ namespace GithubX.UWP.Views
 {
 	public sealed partial class ProfilePage : Page
 	{
-		private readonly List<string> notifications = new List<string> { "Xxx", "Xxx" };
+		private readonly ObservableCollection<string> notifications = new ObservableCollection<string> { "Xxx", "Xxx" };
 
 		public ProfilePage()
 		{
@@ -18,10 +19,60 @@ namespace GithubX.UWP.Views
 		{
 			//get user info
 			//get notification
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
+			notifications.Add("xx");
 		}
 
 		private void Notification_ItemClick(object sender, ItemClickEventArgs e)
 		{
+
 		}
 
 		private void Logout_Clicked(object sender, RoutedEventArgs e)

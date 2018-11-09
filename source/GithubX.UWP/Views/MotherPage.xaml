@@ -9,7 +9,8 @@
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     extensions:TitleBarExtensions.ButtonBackgroundColor="Transparent"
-    extensions:TitleBarExtensions.ButtonForegroundColor="White" RequestedTheme="Light"
+    extensions:TitleBarExtensions.ButtonForegroundColor="White" 
+	RequestedTheme="Light"
 	Loaded="Page_Loaded" mc:Ignorable="d">
 	<Page.Resources>
 		<ResourceDictionary>
@@ -36,7 +37,7 @@
 			<NavigationView x:Name="navigationView" IsSettingsVisible="True" BackRequested="navigationView_BackRequested"
 							SelectionChanged="NavigationView_SelectionChanged" 
 							PaneDisplayMode="Top" SelectionFollowsFocus="Enabled">
-				<Frame x:Name="iframe"/>
+				<Frame x:Name="iframe" Background="{ThemeResource SystemRevealListLowColor}"/>
 			</NavigationView>
 		</Grid>
 		<toolkit:InAppNotification x:Name="Notifer" ShowDismissButton="True"

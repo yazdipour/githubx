@@ -21,7 +21,7 @@ namespace GithubX.UWP.Views
 			{ new NavigationViewItem(){Content = "Followers"}, typeof(FollowPage)},
 			{ new NavigationViewItem(){Content = "Following"}, typeof(FollowPage)},
 			{ new NavigationViewItem(){Content = "Gists"}, typeof(GistsPage)},
-			{ new NavigationViewItem(){Content = "Help"}, typeof(Controls.MarkdownPage)}
+			{ new NavigationViewItem(){Content = "Help"}, typeof(MarkdownPage)}
 		};
 
 		public MotherPage()
@@ -41,13 +41,18 @@ namespace GithubX.UWP.Views
 
 		private async void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
 		{
+			if (args.SelectedItem == null) return;
 			if (!args.IsSettingsSelected)
 			{
 				var nav = (args?.SelectedItem as NavigationViewItem);
 				iframe.Navigate(dFrame.GetValueOrDefault(nav, dFrame.First().Value), nav.Content);
 				navigationView.IsBackEnabled = iframe.CanGoBack;
 			}
-			else await new Dialogs.SettingsDialog().ShowAsync();
+			else
+			{
+				await new SettingsDialog().ShowAsync();
+				navigationView.SelectedItem = null;
+			}
 		}
 
 		private void navigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)

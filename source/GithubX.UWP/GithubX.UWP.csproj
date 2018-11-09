@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Handlers\SettingsHandler.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\IGithubApi.cs" />
@@ -112,8 +113,26 @@
     <Compile Include="Views\CategoriesPage.xaml.cs">
       <DependentUpon>CategoriesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\MarkdownPage.xaml.cs">
+    <Compile Include="Views\Controls\ActivityItem.xaml.cs">
+      <DependentUpon>ActivityItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\CategoriesItem.xaml.cs">
+      <DependentUpon>CategoriesItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\GistItem.xaml.cs">
+      <DependentUpon>GistItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\RepositoryItem.xaml.cs">
+      <DependentUpon>RepositoryItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\UserItem.xaml.cs">
+      <DependentUpon>UserItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MarkdownPage.xaml.cs">
       <DependentUpon>MarkdownPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\NotificationItem.xaml.cs">
+      <DependentUpon>NotificationItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\AboutPanel.xaml.cs">
       <DependentUpon>AboutPanel.xaml</DependentUpon>
@@ -121,7 +140,7 @@
     <Compile Include="Views\Dialogs\CategoryPanel.xaml.cs">
       <DependentUpon>CategoryPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\SettingsDialog.xaml.cs">
+    <Compile Include="Views\SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FollowPage.xaml.cs">
@@ -199,6 +218,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Assets\Files\devicon.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Package.xml" />
     <Content Include="Protocol.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -230,7 +252,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\MarkdownPage.xaml">
+    <Page Include="Views\Controls\ActivityItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\CategoriesItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\GistItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\RepositoryItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\UserItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MarkdownPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\NotificationItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -242,7 +288,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\SettingsDialog.xaml">
+    <Page Include="Views\SettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
