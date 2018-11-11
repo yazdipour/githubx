@@ -6,9 +6,48 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
-	mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <ListView Padding="84">
-	</ListView>
+	mc:Ignorable="d">
+	<Hub>
+		<HubSection Header="Activities">
+			<DataTemplate>
+				<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
+					 CanDragItems="False" SelectionMode="None" Padding="8" Margin="-8"
+					 ItemsSource="{Binding}">
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+					<ctrl:ActivityItem/>
+				</GridView>
+			</DataTemplate>
+		</HubSection>
+	</Hub>
 </Page>

@@ -5,10 +5,55 @@
     xmlns:local="using:GithubX.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
-
-    </Grid>
+	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
+	mc:Ignorable="d">
+	<Grid>
+		<Hub>
+		<HubSection Header="Categories">
+			<DataTemplate>
+				<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
+					 CanDragItems="False" SelectionMode="None" Padding="8" Margin="-8"
+					 ItemsSource="{Binding}">
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+					<ctrl:CategoriesItem/>
+				</GridView>
+			</DataTemplate>
+		</HubSection>
+	</Hub>
+		<Button Content="+" FontSize="32" Padding="0 -10 0 0"
+				Style="{StaticResource CircleButtonStyle}" Margin="24" Width="52" Height="52"
+				VerticalAlignment="Bottom" Foreground="White" Background="#FF44BD32"
+				HorizontalAlignment="Right"/>
+	</Grid>
 </Page>

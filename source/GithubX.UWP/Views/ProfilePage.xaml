@@ -49,7 +49,7 @@
 				</StackPanel>
 			</DataTemplate>
 		</HubSection>
-		<HubSection Header="Notification" Background="{ThemeResource SystemRevealListLowColor}">
+		<HubSection Header="Notification">
 			<DataTemplate>
 				<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
 					 CanDragItems="False" SelectionMode="None" Padding="8" Margin="-8"

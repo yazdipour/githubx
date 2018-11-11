@@ -5,10 +5,49 @@
     xmlns:local="using:GithubX.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
-
-    </Grid>
+	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
+	mc:Ignorable="d">
+	<Hub>
+		<HubSection Header="Tag}">
+			<DataTemplate>
+				<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
+					 CanDragItems="False" SelectionMode="None" Padding="8" Margin="-8"
+					 ItemsSource="{Binding}">
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+					<ctrl:RepositoryItem/>
+				</GridView>
+			</DataTemplate>
+		</HubSection>
+	</Hub>
 </Page>
