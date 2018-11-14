@@ -26,5 +26,10 @@ namespace GithubX.UWP.Views
 		{
 			this.InitializeComponent();
 		}
+
+		private async void AddToCategory_Click(object sender, RoutedEventArgs e)
+		{
+			await new Dialogs.AddCategoryDialog().ShowAsync();
+		}
 	}
 }

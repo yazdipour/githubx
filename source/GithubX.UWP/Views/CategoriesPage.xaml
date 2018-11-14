@@ -19,34 +19,34 @@
 							<ItemsWrapGrid Orientation="Vertical" />
 						</ItemsPanelTemplate>
 					</GridView.ItemsPanel>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
-					<ctrl:CategoriesItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
+					<ctrl:CategoryItem/>
 				</GridView>
 			</DataTemplate>
 		</HubSection>

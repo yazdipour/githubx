@@ -17,9 +17,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace GithubX.UWP.Views.Controls
 {
-	public sealed partial class CategoriesItem : UserControl
+	public sealed partial class CategoryItem : UserControl
 	{
-		public CategoriesItem()
+		public CategoryItem()
 		{
 			this.InitializeComponent();
 		}

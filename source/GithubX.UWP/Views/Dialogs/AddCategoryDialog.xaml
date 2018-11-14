@@ -1,0 +1,204 @@
+﻿<ContentDialog
+	x:Class="GithubX.UWP.Views.Dialogs.AddCategoryDialog"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:GithubX.UWP.Views.Dialogs"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	Loaded="ContentDialog_Loaded"
+	PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+	PrimaryButtonText="Save"
+	RequestedTheme="Light"
+	SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+	SecondaryButtonText="Cancel"
+	mc:Ignorable="d">
+	<Grid MinHeight="160">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="88" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<TextBlock
+			Grid.Row="0"
+			Grid.Column="0"
+			FontSize="22"
+			FontWeight="Light"
+			Text="Name:" />
+		<TextBox
+			Grid.Row="0"
+			Grid.Column="1"
+			Margin="12,0,0,0"
+			Text="new_category" />
+		<Border
+			Grid.Row="1"
+			Grid.Column="0"
+			Width="82"
+			Height="82"
+			Margin="0,8"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Center"
+			CornerRadius="6">
+			<Border.Background>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+					<GradientStop Color="#5B247A" />
+					<GradientStop Offset="1" Color="#1BCEDF" />
+				</LinearGradientBrush>
+			</Border.Background>
+
+			<TextBlock
+				x:Name="catIconTextBlock"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				FontSize="36"
+				RequestedTheme="Dark"
+				Text="💛" />
+		</Border>
+		<Pivot Grid.Row="1" Grid.Column="2">
+			<Pivot.HeaderTemplate>
+				<DataTemplate>
+					<TextBlock
+						HorizontalAlignment="Center"
+						FontSize="16"
+						FontWeight="SemiBold"
+						Text="{Binding}" />
+				</DataTemplate>
+			</Pivot.HeaderTemplate>
+			<PivotItem DataContext="{Binding}" Header="Color">
+				<GridView
+					MaxHeight="110"
+					Margin="-6,0,0,0"
+					ItemsSource="{Binding}"
+					SelectionMode="Single">
+					<GridView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</GridView.ItemsPanel>
+					<GridView.ItemTemplate>
+						<DataTemplate>
+							<!--<ctrl:ColorItem/>-->
+							<Border
+								Width="32"
+								Height="32"
+								Padding="8"
+								CornerRadius="20">
+								<Border.Background>
+									<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+										<GradientStop Color="{Binding}" />
+										<GradientStop Offset="1" Color="{Binding}" />
+									</LinearGradientBrush>
+								</Border.Background>
+							</Border>
+						</DataTemplate>
+					</GridView.ItemTemplate>
+				</GridView>
+			</PivotItem>
+			<PivotItem x:Name="pv1" Header="Icon">
+				<Grid MaxHeight="300" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+					<Grid.Resources>
+						<Style TargetType="Button">
+							<Setter Property="Background" Value="Transparent" />
+							<Setter Property="BorderThickness" Value="0" />
+							<Setter Property="Width" Value="40" />
+							<Setter Property="Height" Value="40" />
+							<Setter Property="HorizontalAlignment" Value="Stretch" />
+							<Setter Property="VerticalAlignment" Value="Stretch" />
+							<Setter Property="IsTabStop" Value="False" />
+						</Style>
+					</Grid.Resources>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<GridView
+						x:Name="EmojiPresenter"
+						Grid.Row="0"
+						Padding="12,0"
+						Background="{ThemeResource SystemChromeAltHighColor}"
+						IsItemClickEnabled="True"
+						IsTabStop="False"
+						ItemClick="EmojiPresenter_ItemClick"
+						TabIndex="0">
+						<GridView.ItemContainerStyle>
+							<Style TargetType="GridViewItem">
+								<Setter Property="Margin" Value="0" />
+								<Setter Property="IsTabStop" Value="False" />
+								<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+								<Setter Property="VerticalContentAlignment" Value="Stretch" />
+							</Style>
+						</GridView.ItemContainerStyle>
+						<GridView.ItemTemplate>
+							<DataTemplate>
+								<TextBlock
+									HorizontalAlignment="Stretch"
+									VerticalAlignment="Center"
+									Text="{Binding}"
+									TextAlignment="Center" />
+							</DataTemplate>
+						</GridView.ItemTemplate>
+					</GridView>
+
+					<Grid
+						x:Name="CategoriesPanel"
+						Grid.Row="1"
+						HorizontalAlignment="Center">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Button
+							x:Name="DevButton"
+							Grid.Column="1"
+							Content="👽"
+							Tag="0" />
+						<Button
+							x:Name="SmilesButton"
+							Grid.Column="2"
+							Content="😃"
+							Tag="1" />
+						<Button
+							x:Name="BalloonButton"
+							Grid.Column="3"
+							Content="🎈"
+							Tag="2" />
+						<Button
+							x:Name="PizzaButton"
+							Grid.Column="4"
+							Content="🍕"
+							Tag="3" />
+						<Button
+							x:Name="CarButton"
+							Grid.Column="5"
+							Content="🚗"
+							Tag="4" />
+						<Button
+							x:Name="HeartButton"
+							Grid.Column="6"
+							Content="❤"
+							Tag="5" />
+
+						<Border
+							x:Name="HighlightBorder"
+							Grid.Column="1"
+							Height="4"
+							VerticalAlignment="Bottom"
+							Background="{ThemeResource SystemControlBackgroundAccentBrush}" />
+					</Grid>
+				</Grid>
+			</PivotItem>
+		</Pivot>
+	</Grid>
+</ContentDialog>

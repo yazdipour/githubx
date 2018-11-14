@@ -12,8 +12,8 @@
 			<HubSection Header="TAG}">
 				<DataTemplate>
 					<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
-					 CanDragItems="False" SelectionMode="None" Padding="8" Margin="-8"
-					 ItemsSource="{Binding}">
+					 SelectionMode="None" Padding="8" Margin="-8"
+					 ItemsSource="{Binding}" ItemClick="GridView_ItemClick">
 						<GridView.ItemsPanel>
 							<ItemsPanelTemplate>
 								<ItemsWrapGrid Orientation="Vertical" />

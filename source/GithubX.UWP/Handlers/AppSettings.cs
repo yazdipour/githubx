@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GithubX.UWP.Handlers
 {
-    class SettingsHandler
+    class AppSettings
     {
     }
 }

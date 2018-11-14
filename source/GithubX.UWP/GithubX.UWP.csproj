@@ -99,7 +99,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\SettingsHandler.cs" />
+    <Compile Include="Converters\FalseToVisibleConverter.cs" />
+    <Compile Include="Handlers\AppSettings.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\IGithubApi.cs" />
@@ -116,8 +117,11 @@
     <Compile Include="Views\Controls\ActivityItem.xaml.cs">
       <DependentUpon>ActivityItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\CategoriesItem.xaml.cs">
-      <DependentUpon>CategoriesItem.xaml</DependentUpon>
+    <Compile Include="Views\Controls\CategoryItem.xaml.cs">
+      <DependentUpon>CategoryItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ColorItem.xaml.cs">
+      <DependentUpon>ColorItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\GistItem.xaml.cs">
       <DependentUpon>GistItem.xaml</DependentUpon>
@@ -127,6 +131,9 @@
     </Compile>
     <Compile Include="Views\Controls\UserItem.xaml.cs">
       <DependentUpon>UserItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AddCategoryDialog.xaml.cs">
+      <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MarkdownPage.xaml.cs">
       <DependentUpon>MarkdownPage.xaml</DependentUpon>
@@ -256,7 +263,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\CategoriesItem.xaml">
+    <Page Include="Views\Controls\CategoryItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\ColorItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -269,6 +280,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\UserItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddCategoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

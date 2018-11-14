@@ -5,6 +5,58 @@
     xmlns:local="using:GithubX.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
+	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	Background="{ThemeResource SystemChromeAltHighColor}"
+	mc:Ignorable="d">
+	<Hub>
+		<HubSection Header="Profile" Width="{ThemeResource DefaultWidth}" 
+					HorizontalContentAlignment="Stretch"
+					Background="{ThemeResource SystemRevealListMediumColor}">
+			<DataTemplate>
+				<StackPanel>
+					<toolkit:ImageEx Margin="0" Background="Gray" CornerRadius="6"
+									 Stretch="UniformToFill" PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
+									 HorizontalAlignment="Left" Height="140" Width="140"/>
+					<RichTextBlock Margin="0 4" FontFamily="Candara">
+						<Paragraph FontSize="26">
+							<Bold>repoName</Bold>
+						</Paragraph>
+						<Paragraph FontSize="20">
+							repoOwner
+						</Paragraph>
+						<Paragraph Margin="0 16">
+							repo description
+						</Paragraph>
+						<Paragraph>
+							<Hyperlink NavigateUri="0">repo url!</Hyperlink>
+						</Paragraph>
+						<Paragraph>
+							Repo TAG
+						</Paragraph>
+					</RichTextBlock>
+					<Button CornerRadius="2" Content="Add to Category" 
+							HorizontalAlignment="Center" Margin="0 8" Click="AddToCategory_Click"
+							RequestedTheme="Dark" Background="{ThemeResource PixelatedGrass}"/>
+					<CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right" Margin="-32 0" HorizontalAlignment="Center">
+						<AppBarToggleButton Icon="Add" Label="Add"/>
+						<AppBarToggleButton Icon="ReShare" Label="Share"/>
+						<AppBarToggleButton Icon="Edit" Label="Edit"/>
+						<CommandBar.SecondaryCommands>
+							<!--<AppBarButton Icon="Setting" Label="Settings" Visibility="Collapsed"/>-->
+						</CommandBar.SecondaryCommands>
+					</CommandBar>
+				</StackPanel>
+			</DataTemplate>
+		</HubSection>
+		<HubSection Header="Content" Background="{ThemeResource SystemRevealListLowColor}" MinWidth="220">
+			<DataTemplate>
+				<TextBlock Text="X"/>
+			</DataTemplate>
+		</HubSection>
+		<HubSection>
+			<DataTemplate>
+				<toolkit:MarkdownTextBlock Text="* MarkDown " Background="{ThemeResource SystemChromeAltHighColor}"/>
+			</DataTemplate>
+		</HubSection>
+	</Hub>
 </Page>
