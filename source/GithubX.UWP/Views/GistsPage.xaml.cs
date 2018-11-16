@@ -9,7 +9,7 @@ namespace GithubX.UWP.Views
 			this.InitializeComponent();
 		}
 
-		private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
+		private void GridView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			Frame.Navigate(typeof(RepositoryPage));
 		}

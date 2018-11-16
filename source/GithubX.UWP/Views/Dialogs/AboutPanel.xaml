@@ -1,59 +1,69 @@
 ﻿<ContentDialog
-    x:Class="GithubX.UWP.Views.AboutPanel"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GithubX.UWP.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title=""
-    SecondaryButtonText="Close">
-    <ContentDialog.Resources>
-        <Style TargetType="Image" x:Key="donateBtn">
-            <Setter Property="Height" Value="20"/>
-            <Setter Property="Margin" Value="4"/>
-        </Style>
-    </ContentDialog.Resources>
-    <StackPanel>
-        <Image Source="ms-appx:///Assets/LargeTile.png" Width="78" Height="78" />
-        <RichTextBlock>
-            <Paragraph>
-                <Bold>
-                    The goal of this application is to Make Categorizing Starred Github Repositories Easier for developers
-                </Bold>
-                <LineBreak/>
-                <LineBreak/>
-                <Run>
-                    This app is an Open Source Project Licensed under Apache and right now it is
-                    under-construction and you may see changes that may break stuff. You can follow submit issues at Github in this address:
-                </Run>
-                <LineBreak/>
-                <Hyperlink NavigateUri="https://github.com/yazdipour/githubx">https://github.com/yazdipour/githubx</Hyperlink>
-                <LineBreak/>
-                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Do not forget to ⭐Star GithubX</Run>
-            </Paragraph>
-            <Paragraph>
-                <LineBreak/>
-                <Run FontFamily="Segoe UI Emoji" FontSize="16" >Developed+Designed by 👦</Run>
-                <Hyperlink FontFamily="Segoe UI" FontWeight="Light" FontSize="16"
-                           NavigateUri="https://yazdipour.github.io">Shahriar Yazdipour</Hyperlink>
+	x:Class="GithubX.UWP.Views.AboutPanel"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:GithubX.UWP.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title=""
+	SecondaryButtonText="Close"
+	mc:Ignorable="d">
+	<ContentDialog.Resources>
+		<Style x:Key="donateBtn" TargetType="Image">
+			<Setter Property="Height" Value="20" />
+			<Setter Property="Margin" Value="4" />
+		</Style>
+	</ContentDialog.Resources>
+	<StackPanel>
+		<Image
+			Width="78"
+			Height="78"
+			Source="ms-appx:///Assets/LargeTile.png" />
+		<RichTextBlock>
+			<Paragraph>
+				<Bold>
+					The goal of this application is to Make Categorizing Starred Github Repositories Easier for developers
+				</Bold>
+				<LineBreak />
+				<LineBreak />
+				<Run>
+					This app is an Open Source Project Licensed under Apache and right now it is
+					under-construction and you may see changes that may break stuff. You can follow submit issues at Github in this address:
+				</Run>
+				<LineBreak />
+				<Hyperlink NavigateUri="https://github.com/yazdipour/githubx">https://github.com/yazdipour/githubx</Hyperlink>
+				<LineBreak />
+				<Run FontFamily="Segoe UI Emoji" FontSize="16">Do not forget to ⭐Star GithubX</Run>
+			</Paragraph>
+			<Paragraph>
+				<LineBreak />
+				<Run FontFamily="Segoe UI Emoji" FontSize="16">Developed+Designed by 👦</Run>
+				<Hyperlink
+					FontFamily="Segoe UI"
+					FontSize="16"
+					FontWeight="Light"
+					NavigateUri="https://yazdipour.github.io">
+					Shahriar Yazdipour
+				</Hyperlink>
 
-            </Paragraph>
-        </RichTextBlock>
-        <HyperlinkButton NavigateUri="https://www.payping.ir/yazdipour" HorizontalAlignment="Center">
-            <Image Source="ms-appx:///Assets/Files/d_iran.png" Style="{StaticResource donateBtn}"/>
-        </HyperlinkButton>
-        <HyperlinkButton NavigateUri="https://en.cryptobadges.io/donate/17BF1jES7ytyKsNHM3rmRZ5n63VSy28gLe" HorizontalAlignment="Center">
-            <Image Source="ms-appx:///Assets/Files/d_bitcoin.png" Style="{StaticResource donateBtn}"/>
-        </HyperlinkButton>
-        <HyperlinkButton NavigateUri="https://en.cryptobadges.io/donate/0x37C14DaF87ba7a680a5B4CfcB7ef52c71A5C7Be4" HorizontalAlignment="Center">
-            <Image Source="ms-appx:///Assets/Files/d_eth.png" Style="{StaticResource donateBtn}"/>
-        </HyperlinkButton>
-        <TextBlock Text="Rate GithubX in Store" 
-                   HorizontalAlignment="Center" 
-                   Margin="0 16 0 0"/>
-        <RatingControl PlaceholderValue="4.5" 
-                       IsReadOnly="True"
-                       Tapped="RatingControl_Tapped"/>
-    </StackPanel>
+			</Paragraph>
+		</RichTextBlock>
+		<HyperlinkButton HorizontalAlignment="Center" NavigateUri="https://www.payping.ir/yazdipour">
+			<Image Source="ms-appx:///Assets/Files/d_iran.png" Style="{StaticResource donateBtn}" />
+		</HyperlinkButton>
+		<HyperlinkButton HorizontalAlignment="Center" NavigateUri="https://en.cryptobadges.io/donate/17BF1jES7ytyKsNHM3rmRZ5n63VSy28gLe">
+			<Image Source="ms-appx:///Assets/Files/d_bitcoin.png" Style="{StaticResource donateBtn}" />
+		</HyperlinkButton>
+		<HyperlinkButton HorizontalAlignment="Center" NavigateUri="https://en.cryptobadges.io/donate/0x37C14DaF87ba7a680a5B4CfcB7ef52c71A5C7Be4">
+			<Image Source="ms-appx:///Assets/Files/d_eth.png" Style="{StaticResource donateBtn}" />
+		</HyperlinkButton>
+		<TextBlock
+			Margin="0,16,0,0"
+			HorizontalAlignment="Center"
+			Text="Rate GithubX in Store" />
+		<RatingControl
+			IsReadOnly="True"
+			PlaceholderValue="4.5"
+			Tapped="RatingControl_Tapped" />
+	</StackPanel>
 </ContentDialog>

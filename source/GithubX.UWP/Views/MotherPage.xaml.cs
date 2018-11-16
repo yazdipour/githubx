@@ -35,7 +35,7 @@ namespace GithubX.UWP.Views
 			foreach (var item in dFrame)
 				navigationView.MenuItems.Add(item.Key);
 			navigationView.SelectedItem = dFrame.First().Key;
-			Shared.Handlers.CacheHandler.InitCache();
+			Shared.Helpers.CacheHandler.InitCache();
 			Logger.Init(ApiKeys.AppCenter);
 		}
 

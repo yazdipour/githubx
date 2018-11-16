@@ -47,8 +47,8 @@ namespace GithubX.UWP.Views
 			flyoutTextBox.Text = "😍Fav";
 			ApiHandler.AllCategories.Add(new Category()
 			{
-				Id = ApiHandler.UnixTimestamp,
-				Text = catName,
+				Id = Services.Utils.GetUnixTime(),
+				Title = catName,
 				Color = colors[new Random().Next(colors.Length)]
 			});
 			fl.Hide();

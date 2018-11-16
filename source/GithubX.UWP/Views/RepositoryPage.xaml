@@ -1,30 +1,38 @@
 ﻿<Page
-    x:Class="GithubX.UWP.Views.RepositoryPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GithubX.UWP.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="GithubX.UWP.Views.RepositoryPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:GithubX.UWP.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	Background="{ThemeResource SystemChromeAltHighColor}"
 	mc:Ignorable="d">
 	<Hub>
-		<HubSection Header="Profile" Width="{ThemeResource DefaultWidth}" 
-					HorizontalContentAlignment="Stretch"
-					Background="{ThemeResource SystemRevealListMediumColor}">
+		<HubSection
+			Width="{ThemeResource DefaultWidth}"
+			HorizontalContentAlignment="Stretch"
+			Background="{ThemeResource SystemRevealListMediumColor}"
+			Header="Profile">
 			<DataTemplate>
 				<StackPanel>
-					<toolkit:ImageEx Margin="0" Background="Gray" CornerRadius="6"
-									 Stretch="UniformToFill" PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-									 HorizontalAlignment="Left" Height="140" Width="140"/>
-					<RichTextBlock Margin="0 4" FontFamily="Candara">
+					<toolkit:ImageEx
+						Width="140"
+						Height="140"
+						Margin="0"
+						HorizontalAlignment="Left"
+						Background="Gray"
+						CornerRadius="6"
+						PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
+						Stretch="UniformToFill" />
+					<RichTextBlock Margin="0,4" FontFamily="Candara">
 						<Paragraph FontSize="26">
 							<Bold>repoName</Bold>
 						</Paragraph>
 						<Paragraph FontSize="20">
 							repoOwner
 						</Paragraph>
-						<Paragraph Margin="0 16">
+						<Paragraph Margin="0,16">
 							repo description
 						</Paragraph>
 						<Paragraph>
@@ -34,13 +42,23 @@
 							Repo TAG
 						</Paragraph>
 					</RichTextBlock>
-					<Button CornerRadius="2" Content="Add to Category" 
-							HorizontalAlignment="Center" Margin="0 8" Click="AddToCategory_Click"
-							RequestedTheme="Dark" Background="{ThemeResource PixelatedGrass}"/>
-					<CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right" Margin="-32 0" HorizontalAlignment="Center">
-						<AppBarToggleButton Icon="Add" Label="Add"/>
-						<AppBarToggleButton Icon="ReShare" Label="Share"/>
-						<AppBarToggleButton Icon="Edit" Label="Edit"/>
+					<Button
+						Margin="0,8"
+						HorizontalAlignment="Center"
+						Background="{ThemeResource PixelatedGrass}"
+						Click="AddToCategory_Click"
+						Content="Add to Category"
+						CornerRadius="2"
+						RequestedTheme="Dark" />
+					<CommandBar
+						Margin="-32,0"
+						HorizontalAlignment="Center"
+						Background="Transparent"
+						DefaultLabelPosition="Right"
+						IsOpen="False">
+						<AppBarToggleButton Icon="Add" Label="Add" />
+						<AppBarToggleButton Icon="ReShare" Label="Share" />
+						<AppBarToggleButton Icon="Edit" Label="Edit" />
 						<CommandBar.SecondaryCommands>
 							<!--<AppBarButton Icon="Setting" Label="Settings" Visibility="Collapsed"/>-->
 						</CommandBar.SecondaryCommands>
@@ -48,14 +66,17 @@
 				</StackPanel>
 			</DataTemplate>
 		</HubSection>
-		<HubSection Header="Content" Background="{ThemeResource SystemRevealListLowColor}" MinWidth="220">
+		<HubSection
+			MinWidth="220"
+			Background="{ThemeResource SystemRevealListLowColor}"
+			Header="Content">
 			<DataTemplate>
-				<TextBlock Text="X"/>
+				<TextBlock Text="X" />
 			</DataTemplate>
 		</HubSection>
 		<HubSection>
 			<DataTemplate>
-				<toolkit:MarkdownTextBlock Text="* MarkDown " Background="{ThemeResource SystemChromeAltHighColor}"/>
+				<toolkit:MarkdownTextBlock Background="{ThemeResource SystemChromeAltHighColor}" Text="* MarkDown " />
 			</DataTemplate>
 		</HubSection>
 	</Hub>

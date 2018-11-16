@@ -1,10 +1,10 @@
 ﻿<Page
-    x:Class="GithubX.UWP.Views.MarkdownPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="GithubX.UWP.Views.MarkdownPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    mc:Ignorable="d">
-	<toolkit:MarkdownTextBlock Text="# Help" Padding="16 32"/>
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	mc:Ignorable="d">
+	<toolkit:MarkdownTextBlock Padding="16,32" Text="# Help" />
 </Page>

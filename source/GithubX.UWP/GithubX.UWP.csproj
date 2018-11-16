@@ -100,7 +100,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FalseToVisibleConverter.cs" />
-    <Compile Include="Handlers\AppSettings.cs" />
+    <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Helpers\FontHandler.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\IGithubApi.cs" />
@@ -119,9 +120,6 @@
     </Compile>
     <Compile Include="Views\Controls\CategoryItem.xaml.cs">
       <DependentUpon>CategoryItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\ColorItem.xaml.cs">
-      <DependentUpon>ColorItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\GistItem.xaml.cs">
       <DependentUpon>GistItem.xaml</DependentUpon>
@@ -264,10 +262,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\CategoryItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\ColorItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

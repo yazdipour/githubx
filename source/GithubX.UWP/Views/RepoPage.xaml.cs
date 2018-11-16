@@ -120,7 +120,7 @@ namespace GithubX.UWP.Views
 					foreach (var item in ApiHandler.AllCategories)
 					{
 						if (item.Id == 0) continue;
-						var el = new ToggleMenuFlyoutItem { Text = item.Text, Tag = item.Id.ToString(), IsChecked = tempCategoriesId.Contains(item.Id) };
+						var el = new ToggleMenuFlyoutItem { Text = item.Title, Tag = item.Id.ToString(), IsChecked = tempCategoriesId.Contains(item.Id) };
 						el.Click += El_Click;
 						menu.Items.Add(el);
 					}

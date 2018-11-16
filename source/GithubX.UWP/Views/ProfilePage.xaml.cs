@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System;
 
 namespace GithubX.UWP.Views
 {
@@ -28,46 +29,6 @@ namespace GithubX.UWP.Views
 			notifications.Add("xx");
 			notifications.Add("xx");
 			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
 		}
 
 		private void Notification_ItemClick(object sender, ItemClickEventArgs e)
@@ -75,9 +36,9 @@ namespace GithubX.UWP.Views
 
 		}
 
-		private void Logout_Clicked(object sender, RoutedEventArgs e)
+		private async void Logout_Clicked(object sender, RoutedEventArgs e)
 		{
-
+			await new Dialogs.AddCategoryDialog().ShowAsync();
 		}
 	}
 }

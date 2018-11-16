@@ -1,0 +1,18 @@
+[*]
+end_of_line  = crlf
+indent_style = tab
+
+[*.cs]
+csharp_style_expression_bodied_properties                     = true : suggestion
+csharp_prefer_braces                                          = false : warning
+trim_trailing_whitespace                                      = true
+indent_size                                                   = tab
+dotnet_style_explicit_tuple_names                             = true : suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names      = true : suggestion
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+[*.xaml]
+trim_trailing_whitespace = true
+indent_size              = tab
+
+[*.xml]
+indent_style = space

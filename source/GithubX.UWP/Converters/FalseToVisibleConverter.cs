@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace GithubX.UWP.Converters
 {
-	class FalseToVisibleConverter : IValueConverter
+	internal class FalseToVisibleConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{

@@ -1,7 +1,7 @@
 ﻿using Akavache;
 using System;
 
-namespace GithubX.Shared.Handlers
+namespace GithubX.Shared.Helpers
 {
 	public static class CacheHandler
 	{

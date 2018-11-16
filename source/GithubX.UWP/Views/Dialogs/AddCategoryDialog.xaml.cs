@@ -1,64 +1,73 @@
 ﻿using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
-using System.Collections.Generic;
-using System;
 using Windows.UI.Xaml;
+using GithubX.Shared.Models;
+using static GithubX.Shared.Helpers.CollectionExtension;
+using static GithubX.UWP.Handlers.FontHandler;
 
 namespace GithubX.UWP.Views.Dialogs
 {
 	public sealed partial class AddCategoryDialog : ContentDialog
 	{
-		private Button[] categoryButtons = new Button[6];
-		private readonly string[][] EmojiGroups = new string[][]
-		{
-			 new []{ ((Symbol)0xE601).ToString(), ((Symbol)0xEC04).ToString()},
-			 new []{"😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","😘","😗","😙","😚","🙂","🤗","🤔","😐","😑","😶","🙄","😏","😣","😥","😮","🤐","😯","😪","😫","😴","😌","😛","😜","😝","🤤","😒","😓","😔","😕","🙃","🤑","😲","🙁","😖","😞","😟","😤","😢","😭","😦","😧","😨","😩","😬","😰","😱","😳","😵","😡","😠","😷","🤒","🤕","🤢","🤧","😇","🤠","🤡","🤥","🤓","😈","👿","👹","👺","💀","👻","👽","👾","🤖","💩","😺","😸","😹","😻","😼","😽","🙀","😿","😾","🙈","🙉","🙊","👤","👥","🤺","👫","💏","💑","👪","👨‍👩‍👦‍👦","👨‍👩‍👧‍👧","👨‍👨‍👦","👨‍👨‍👧","👨‍👨‍👧‍👦","👨‍👨‍👦‍👦","👨‍👨‍👧‍👧","👩‍👩‍👦","👩‍👩‍👧","👩‍👩‍👧‍👦","👩‍👩‍👦‍👦","👩‍👩‍👧‍👧","👣","👀","👅","👄","🐵","🐒","🦍","🐶","🐕","🐩","🐺","🦊","🐱","🐈","🦁","🐯","🐅","🐆","🐴","🐎","🦄","🦌","🐮","🐂","🐃","🐄","🐷","🐖","🐗","🐽","🐏","🐑","🐐","🐪","🐫","🐘","🦏","🐭","🐁","🐀","🐹","🐰","🐇","🦇","🐻","🐨","🐼","🐾","🦃","🐔","🐓","🐣","🐤","🐥","🐦","🐧","🦅","🦆","🦉","🐸","🐊","🐢","🦎","🐍","🐲","🐉","🐳","🐋","🐬","🐟","🐠","🐡","🦈","🐙","🐚","🦀","🦐","🦑","🐌","🦋","🐛","🐜","🐝","🐞","🦂"},
-			 new []{"🎈","💋","💣","👓","👔","👕","👖","🧣","🧤","🧥","🧦","👗","👘","👙","👚","👛","👜","👝","🎒","👞","👟","👠","👡","👢","👑","👒","🎩","🎓","🧢","📿","💄","💍","💎","🔪","🎠","🎡","🎢","🎪","🎭","🎨","🎰","🛶","⌛","⏳","⌚","⏰","🎃","🎄","🎆","🎇","✨","🎉","🎊","🎋","🎍","🎎","🎏","🎐","🎑","🎀","🎁","🎫","🏆","🏅","🥇","🥈","🥉","⚽","⚾","🏀","🏐","🏈","🏉","🎾","🎱","🎳","🏑","🏒","🏓","🏸","🥊","🥋","🥅","🎯","⛳","🎣","🎽","🎿","🛷","🥌","🎮","🎲","🃏","🀄","🎴","🔈","🔉","🔊","📢","📣","📯","🔔","🎼","🎵","🎶","🎤","🎧","📻","🎷","🎸","🎹","🎺","🎻","🥁","📱","📲","📞","📟","📠","🔋","🔌","💻","💽","💾","💿","📀","🎥","🎬","📺","📷","📸","📹","📼","🔍","🔎","🔬","🔭","📡","💡","🔦","🏮","📔","📕","📖","📗","📘","📙","📚","📓","📒","📃","📜","📄","📰","📑","🔖","💰","💴","💵","💶","💷","💸","💳","📧","📨","📩","📤","📥","📦","📫","📪","📬","📭","📮","📝","💼","📁","📂","📅","📆","📇","📈","📉","📊","📋","📌","📍","📎","📏","📐","🔒","🔓","🔏","🔐","🔑","🔨","🔫","🏹","🔧","🔩","🔗","💉","💊","🚬","🗿","🔮","🛒","🏧","🎦","📳","📴"},
-			 new []{"🍔","🍟","🍕","🌭","🥪","🌮","🌯","🥐","🥖","🥨","🥞","🧀","🍖","🍗","🥩","🥓","🥙","🥚","🍳","🥘","🍲","🥣","🥗","🍿","🥫","🍱","🍘","🍙","🍚","🍛","🍜","🍝","🍠","🍢","🍣","🍤","🍥","🍡","🥟","🥠","🥡","🍦","🍧","🍨","🍩","🍪","🎂","🍰","🥧","🍫","🍬","🍭","🍮","🍯","🍼","🥛","☕","🍵","🍶","🍾","🍷","🍸","🍹","🍺","🍻","🥂","🥃","🥤","🥢","🍴","☐☐","🏺","💐","🌸","🌹","🥀","🌺","🌻","🌼","🌷","🌱","🌲","🌳","🌴","🌵","🌾","🌿","🍀","🍁","🍂","🍃","🍇","🍈","🍉","🍊","🍋","🍌","🍍","🍎","🍏","🍐","🍑","🍒","🍓","🥝","🍅","🥥","🥑","🍆","🥔","🥕","🌽","🥒","🥦","🍄","🥜","🌰","🍞"},
-			 new []{"🚗","🚘","🚂","🚃","🚄","🚅","🚆","🚇","🚈","🚉","🚊","🚝","🚞","🚋","🚌","🚍","🚎","🚐","🚑","🚒","🚓","🚔","🚕","🚖","🚙","🚚","🚛","🚜","🚲","🛴","🛵","🚏","⛽","🚨","🚥","🚦","🚧","⚓","⛵","🚤","🚢","🛫","🛬","💺","🚁","🚟","🚠","🚡","🚀","🛸","🚪","🚽","🚿","🛁","🌑","🌒","🌓","🌔","🌕","🌖","🌗","🌘","🌙","🌚","🌛","🌜","🌝","🌞","⭐","🌟","🌠","⛅","🌀","🌈","🌂","☔","⚡","⛄","🔥","💧","🌊","🏁","🚩","🎌","🏴","🌍","🌎","🌏","🗾","🌋","🗻","🏡","🏢","🏣","🏤","🏥","🏦","🏨","🏩","🏪","🏫","🏬","🏭","🏯","🏰","💒","🗼","🗽","⛪","🕌","🕍","🕋","⛲","⛺","🌁","🌃","🌄","🌅","🌆","🌇","🌉","🌌","💈"},
-			 new []{"💙","💙","💚","💛","🧡","💜","🖤","💘","💓","💔","💕","💖","💗","💝","💞","💟","💌","💤","💢","💥","💦","💨","💫","💬","💭","💮","🌐","🛑","🔇","🔕","💹","💱","💲","🚮","🚰","♿","🚹","🚺","🚻","🚼","🚾","🛂","🛃","🛄","🛅","🚸","⛔","🚫","🚳","🚭","🚯","🚱","🚷","📵","🔞","🔃","🔄","🔙","🔚","🔛","🔜","🔝","🛐","🕎","🔯","♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓","⛎","🔀","🔁","🔂","⏩","⏪","🔼","⏫","🔽","⏬","🔅","🔆","📶","🔱","📛","🔰","⭕","✅","❌","❎","➕","➖","➗","➰","➿","❓","❔","❕","❗","#️⃣","️⃣","0️⃣","1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟","💯","🔠","🔡","🔢","🔣","🔤","🆎","🆑","🆒","🆓","🆔","🆕","🆖","🆗","🆘","🆚","🈁","🈶","🈯","🉐","🈹","🈚","🈲","🉑","🈸","🈴","🈳","🈺","🈵","◽","◾","⬛","⬜","🔶","🔷","🔸","🔹","🔺","🔻","💠","🔘","🔲","🔳","⚪","⚫","🔴","🔵","🕛","🕧","🕐","🕜","🕑","🕝","🕒","🕞","🕓","🕟","🕔","🕠","🕕","🕡","🕖","🕢","🕗","🕣","🕘","🕤","🕙","🕥","🕚","🕦"}
-		};
+		#region Variables
+		private readonly Button[] categoryButtons = new Button[6];
+		private readonly ObservableCollection<GradientColor> colorsList = new ObservableCollection<GradientColor>() { new GradientColor() { Color1 = "#5B247A", Color2 = "#00ff00" } };
+		private readonly ObservableCollection<string> emojiKeboardList = new ObservableCollection<string>();
+		public Category category = new Category();
+		#endregion
+		#region ctor
+		public AddCategoryDialog() => InitializeComponent();
 
-		private readonly ObservableCollection<string> colors = new ObservableCollection<string>();
-		private readonly ObservableCollection<string> chars = new ObservableCollection<string>();
-		public AddCategoryDialog()
+		public AddCategoryDialog(Category cat)
 		{
 			this.InitializeComponent();
-			DataContext = this;
+			iconTextBlock.Text = category.Icon;
 		}
-
-		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-		{
-		}
-
-		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-		{
-		}
+		#endregion
 
 		private void ContentDialog_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
+			//set emoji buttons event
 			categoryButtons[0] = (Button)FindName("DevButton");
 			categoryButtons[1] = (Button)FindName("SmilesButton");
 			categoryButtons[2] = (Button)FindName("BalloonButton");
 			categoryButtons[3] = (Button)FindName("PizzaButton");
 			categoryButtons[4] = (Button)FindName("CarButton");
 			categoryButtons[5] = (Button)FindName("HeartButton");
-			foreach (var button in this.categoryButtons)
-				button.Click += this.ChangeCategoryClick;
+			foreach (var button in categoryButtons)
+				button.Click += ChangeCategoryClick;
+			ChangeCategoryClick(categoryButtons[0], null);
 		}
 
 		private void ChangeCategoryClick(object sender, RoutedEventArgs e)
 		{
 			var button = (Button)sender;
 			var tag = int.Parse(button.Tag.ToString());
-			Grid.SetColumn(HighlightBorder, tag + 1);
-			catIconTextBlock.FontFamily = new Windows.UI.Xaml.Media.FontFamily(tag == 0 ? "/Assets/Files/devicon.ttf#devicon" : "Segoe UI Emoji");
-
+			Grid.SetColumn(highlightBorder, tag + 1);
+			emojiKeboardList.RemoveAll();
+			emojiKeboardList.AddRange(GetEmojiGroup(tag));
 		}
 
-		private void EmojiPresenter_ItemClick(object sender, ItemClickEventArgs e)
+		private void EmojiPresenter_ItemClick(object sender, ItemClickEventArgs e) => iconTextBlock.Text = e?.ClickedItem?.ToString();
+
+
+		private void Color_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			if (sender is Button b) catIconTextBlock.Text = b.DataContext.ToString();
+			if (e.ClickedItem is GradientColor color)
+			{
+				category.Background = color;
+				Bindings.Update();
+			}
 		}
+
+		#region return
+
+		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+		{
+			if (category.Id == 0) category.Id = Services.Utils.GetUnixTime();
+		}
+
+		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) => category = null;
+		#endregion
 	}
 }

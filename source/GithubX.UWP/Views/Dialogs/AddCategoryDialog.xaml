@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views.Dialogs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:mdl="using:GithubX.Shared.Models"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	Loaded="ContentDialog_Loaded"
 	PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
@@ -33,7 +34,7 @@
 			Grid.Row="0"
 			Grid.Column="1"
 			Margin="12,0,0,0"
-			Text="new_category" />
+			Text="{Binding category.Title, Mode=TwoWay}" />
 		<Border
 			Grid.Row="1"
 			Grid.Column="0"
@@ -45,15 +46,16 @@
 			CornerRadius="6">
 			<Border.Background>
 				<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-					<GradientStop Color="#5B247A" />
-					<GradientStop Offset="1" Color="#1BCEDF" />
+					<GradientStop Color="{x:Bind category.Background.Color1, Mode=OneWay}" />
+					<GradientStop Offset="1" Color="{x:Bind category.Background.Color2, Mode=OneWay}" />
 				</LinearGradientBrush>
 			</Border.Background>
 
 			<TextBlock
-				x:Name="catIconTextBlock"
+				x:Name="iconTextBlock"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
+				FontFamily="/Assets/Files/devicon.ttf#devicon"
 				FontSize="36"
 				RequestedTheme="Dark"
 				Text="💛" />
@@ -68,11 +70,12 @@
 						Text="{Binding}" />
 				</DataTemplate>
 			</Pivot.HeaderTemplate>
-			<PivotItem DataContext="{Binding}" Header="Color">
+			<PivotItem Header="Color">
 				<GridView
 					MaxHeight="110"
-					Margin="-6,0,0,0"
-					ItemsSource="{Binding}"
+					IsItemClickEnabled="True"
+					ItemClick="Color_ItemClick"
+					ItemsSource="{x:Bind colorsList}"
 					SelectionMode="Single">
 					<GridView.ItemsPanel>
 						<ItemsPanelTemplate>
@@ -80,17 +83,16 @@
 						</ItemsPanelTemplate>
 					</GridView.ItemsPanel>
 					<GridView.ItemTemplate>
-						<DataTemplate>
-							<!--<ctrl:ColorItem/>-->
+						<DataTemplate x:DataType="mdl:GradientColor">
 							<Border
-								Width="32"
-								Height="32"
+								Width="30"
+								Height="30"
 								Padding="8"
 								CornerRadius="20">
 								<Border.Background>
 									<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-										<GradientStop Color="{Binding}" />
-										<GradientStop Offset="1" Color="{Binding}" />
+										<GradientStop Color="{x:Bind Color1}" />
+										<GradientStop Offset="1" Color="{x:Bind Color2}" />
 									</LinearGradientBrush>
 								</Border.Background>
 							</Border>
@@ -98,7 +100,7 @@
 					</GridView.ItemTemplate>
 				</GridView>
 			</PivotItem>
-			<PivotItem x:Name="pv1" Header="Icon">
+			<PivotItem Header="Icon">
 				<Grid MaxHeight="300" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
 					<Grid.Resources>
 						<Style TargetType="Button">
@@ -116,13 +118,14 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<GridView
-						x:Name="EmojiPresenter"
+						x:Name="EmojiKeyboard"
 						Grid.Row="0"
 						Padding="12,0"
 						Background="{ThemeResource SystemChromeAltHighColor}"
 						IsItemClickEnabled="True"
 						IsTabStop="False"
 						ItemClick="EmojiPresenter_ItemClick"
+						ItemsSource="{x:Bind emojiKeboardList, Mode=OneWay}"
 						TabIndex="0">
 						<GridView.ItemContainerStyle>
 							<Style TargetType="GridViewItem">
@@ -133,11 +136,12 @@
 							</Style>
 						</GridView.ItemContainerStyle>
 						<GridView.ItemTemplate>
-							<DataTemplate>
+							<DataTemplate x:DataType="x:String">
 								<TextBlock
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Center"
-									Text="{Binding}"
+									FontFamily="/Assets/Files/devicon.ttf#devicon"
+									Text="{x:Bind}"
 									TextAlignment="Center" />
 							</DataTemplate>
 						</GridView.ItemTemplate>
@@ -191,7 +195,7 @@
 							Tag="5" />
 
 						<Border
-							x:Name="HighlightBorder"
+							x:Name="highlightBorder"
 							Grid.Column="1"
 							Height="4"
 							VerticalAlignment="Bottom"
