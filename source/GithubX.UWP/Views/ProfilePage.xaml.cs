@@ -33,12 +33,15 @@ namespace GithubX.UWP.Views
 
 		private void Notification_ItemClick(object sender, ItemClickEventArgs e)
 		{
-
 		}
 
 		private async void Logout_Clicked(object sender, RoutedEventArgs e)
 		{
-			await new Dialogs.AddCategoryDialog().ShowAsync();
+			try
+			{
+				await new Dialogs.AddCategoryDialog().ShowAsync();
+			}
+			catch { }
 		}
 	}
 }

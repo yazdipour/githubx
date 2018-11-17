@@ -3,7 +3,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using GithubX.Shared.Models;
 using static GithubX.Shared.Helpers.CollectionExtension;
-using static GithubX.UWP.Handlers.FontHandler;
 
 namespace GithubX.UWP.Views.Dialogs
 {
@@ -11,7 +10,7 @@ namespace GithubX.UWP.Views.Dialogs
 	{
 		#region Variables
 		private readonly Button[] categoryButtons = new Button[6];
-		private readonly ObservableCollection<GradientColor> colorsList = new ObservableCollection<GradientColor>() { new GradientColor() { Color1 = "#5B247A", Color2 = "#00ff00" } };
+		private GradientColor[] colorsList => Shared.Helpers.FontHelper.colorGroups;
 		private readonly ObservableCollection<string> emojiKeboardList = new ObservableCollection<string>();
 		public Category category = new Category();
 		#endregion
@@ -45,11 +44,10 @@ namespace GithubX.UWP.Views.Dialogs
 			var tag = int.Parse(button.Tag.ToString());
 			Grid.SetColumn(highlightBorder, tag + 1);
 			emojiKeboardList.RemoveAll();
-			emojiKeboardList.AddRange(GetEmojiGroup(tag));
+			emojiKeboardList.AddRange(Shared.Helpers.FontHelper.GetEmojiGroup(tag));
 		}
 
 		private void EmojiPresenter_ItemClick(object sender, ItemClickEventArgs e) => iconTextBlock.Text = e?.ClickedItem?.ToString();
-
 
 		private void Color_ItemClick(object sender, ItemClickEventArgs e)
 		{

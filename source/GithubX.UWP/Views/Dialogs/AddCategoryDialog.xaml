@@ -72,10 +72,12 @@
 			</Pivot.HeaderTemplate>
 			<PivotItem Header="Color">
 				<GridView
-					MaxHeight="110"
+					Height="160"
 					IsItemClickEnabled="True"
 					ItemClick="Color_ItemClick"
 					ItemsSource="{x:Bind colorsList}"
+					ScrollViewer.HorizontalScrollBarVisibility="Visible"
+					ScrollViewer.HorizontalScrollMode="Enabled"
 					SelectionMode="Single">
 					<GridView.ItemsPanel>
 						<ItemsPanelTemplate>

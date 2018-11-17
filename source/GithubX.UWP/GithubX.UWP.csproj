@@ -101,7 +101,6 @@
     </Compile>
     <Compile Include="Converters\FalseToVisibleConverter.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
-    <Compile Include="Helpers\FontHandler.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />
     <Compile Include="Services\Api\IGithubApi.cs" />
