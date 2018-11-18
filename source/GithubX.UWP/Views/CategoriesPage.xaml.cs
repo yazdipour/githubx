@@ -14,7 +14,7 @@ namespace GithubX.UWP.Views
 
 		private async void Add_Click(object sender, RoutedEventArgs e)
 		{
-			try { await new Dialogs.AddCategoryDialog().ShowAsync(); } catch { }
+			try { await new AddCategoryDialog().ShowAsync(); } catch { }
 		}
 	}
 }

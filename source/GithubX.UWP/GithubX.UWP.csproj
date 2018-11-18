@@ -103,13 +103,12 @@
     <Compile Include="Converters\LanguageToColorConverter.cs" />
     <Compile Include="Converters\StringConcatConverter.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
-    <Compile Include="Services\Api\ApiHandler.cs" />
-    <Compile Include="Services\Api\ApiKeys.cs" />
-    <Compile Include="Services\Api\IGithubApi.cs" />
-    <Compile Include="Services\Api\IXApi.cs" />
-    <Compile Include="Services\CacheKeys.cs" />
-    <Compile Include="Services\UIHandler.cs" />
-    <Compile Include="Services\Utils.cs" />
+    <Compile Include="Helpers\Services\Api\ApiHandler.cs" />
+    <Compile Include="Helpers\Services\Api\ApiKeys.cs" />
+    <Compile Include="Helpers\Services\Api\IGithubApi.cs" />
+    <Compile Include="Helpers\Services\Api\IXApi.cs" />
+    <Compile Include="Helpers\Services\CacheKeys.cs" />
+    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Views\ActivitiesPage.xaml.cs">
       <DependentUpon>ActivitiesPage.xaml</DependentUpon>
     </Compile>
@@ -131,7 +130,7 @@
     <Compile Include="Views\Controls\UserItem.xaml.cs">
       <DependentUpon>UserItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\AddCategoryDialog.xaml.cs">
+    <Compile Include="Views\AddCategoryDialog.xaml.cs">
       <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MarkdownPage.xaml.cs">
@@ -139,9 +138,6 @@
     </Compile>
     <Compile Include="Views\Controls\NotificationItem.xaml.cs">
       <DependentUpon>NotificationItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Dialogs\AboutPanel.xaml.cs">
-      <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CategoryPanel.xaml.cs">
       <DependentUpon>CategoryPanel.xaml</DependentUpon>
@@ -185,11 +181,10 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="Assets\Files\d_bitcoin.png" />
-    <Content Include="Assets\Files\d_eth.png" />
-    <Content Include="Assets\Files\d_iran.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Files\d_coffee.png" />
+    <Content Include="Assets\Files\d_iran.png" />
     <Content Include="Assets\Files\Placeholder.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
@@ -225,6 +220,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Assets\Files\devicon.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Files\HELP.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Package.xml" />
@@ -278,7 +276,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\AddCategoryDialog.xaml">
+    <Page Include="Views\AddCategoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -287,10 +285,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\NotificationItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Dialogs\AboutPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,7 +16,7 @@ namespace GithubX.UWP.Views
 			LoadingControl.IsLoading = true;
 			try
 			{
-				var user = await Services.Api.ApiHandler.LoginAsync(accTextBox.Text.Trim());
+				var user = await Helpers.Api.ApiHandler.LoginAsync(accTextBox.Text.Trim());
 				if (user != null)
 					Frame.Navigate(typeof(ListPage), user);
 				else MainPage.NotifyElement.Show("Error! Try Again", 2000);

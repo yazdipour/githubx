@@ -26,13 +26,8 @@ namespace GithubX.UWP.Views
 		{
 		}
 
-		private async void Logout_Clicked(object sender, RoutedEventArgs e)
+		private void Logout_Clicked(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				await new Dialogs.AddCategoryDialog().ShowAsync();
-			}
-			catch { }
 		}
 	}
 }

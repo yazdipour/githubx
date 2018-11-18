@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using GithubX.Shared.Models;
 using GithubX.Shared.Services.Pocket;
-using GithubX.UWP.Services.Api;
-using GithubX.UWP.Services.Cache;
+using GithubX.UWP.Helpers.Api;
+using GithubX.UWP.Helpers.Cache;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Security.Authentication.Web;
@@ -149,7 +149,7 @@ namespace GithubX.UWP.Views
 				case "3":
 					if (ApiKeys.Pocket == null) return;
 					if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap ReadMe.Pocket");
-					if (!Services.Utils.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
+					if (!Helpers.Utils.CheckConnection) MainPage.NotifyElement.Show("✖ Error! No internet", 3000);
 					var pocket = new PocketService(ApiKeys.Pocket, _pocketProtocol);
 					pocket.LoadFromCache();
 					if (pocket.IsLoggedIn())

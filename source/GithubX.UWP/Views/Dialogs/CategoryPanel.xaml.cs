@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using GithubX.Shared.Models;
-using GithubX.UWP.Services.Api;
+using GithubX.UWP.Helpers.Api;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -20,7 +20,7 @@ namespace GithubX.UWP.Views
 			assetsVisibilityBinding.Source = ApiHandler.AllCategories;
 			assetsVisibilityBinding.Mode = BindingMode.TwoWay;
 			CatList.SetBinding(ItemsControl.ItemsSourceProperty, assetsVisibilityBinding);
-			
+
 			// Making ALL invisible > to make ALL immutable :))
 			Loaded += (s, e) =>
 				(CatList.ContainerFromItem(ApiHandler.AllCategories[0]) as ListViewItem).Visibility = Visibility.Collapsed;
@@ -47,7 +47,7 @@ namespace GithubX.UWP.Views
 			flyoutTextBox.Text = "😍Fav";
 			ApiHandler.AllCategories.Add(new Category()
 			{
-				Id = Services.Utils.GetUnixTime(),
+				Id = Helpers.Utils.GetUnixTime(),
 				Title = catName,
 				Color = colors[new Random().Next(colors.Length)]
 			});
@@ -78,7 +78,7 @@ namespace GithubX.UWP.Views
 			var inx = ApiHandler.AllCategories.IndexOf(el);
 			ApiHandler.AllCategories.Insert(inx + 1, el);
 			ApiHandler.AllCategories.RemoveAt(inx);
-			if (CurrentCat == inx) new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", ApiHandler.AllCategories[inx].Color);
+			if (CurrentCat == inx) Helpers.Utils.ChangeHeaderTheme("HeaderAcrylic", ApiHandler.AllCategories[inx].Color);
 		}
 
 		//Editor

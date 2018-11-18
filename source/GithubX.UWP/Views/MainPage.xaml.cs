@@ -10,10 +10,7 @@ namespace GithubX.UWP.Views
 		{
 			this.InitializeComponent();
 			NotifyElement = Notif;
-			var h = new Services.UI.UIHandler();
-			h.TitleBarVisiblity(false, myTitleBar);
-			h.TitleBarButton_TranparentBackground(false);
-			var acc = Services.Api.ApiHandler.LoginFromCache();
+			var acc = Helpers.Api.ApiHandler.LoginFromCache();
 			if (acc == null)
 				iframe.Navigate(typeof(LoginPage));
 			else

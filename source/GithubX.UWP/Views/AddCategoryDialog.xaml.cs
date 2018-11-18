@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using GithubX.Shared.Models;
 using static GithubX.Shared.Helpers.CollectionExtension;
 
-namespace GithubX.UWP.Views.Dialogs
+namespace GithubX.UWP.Views
 {
 	public sealed partial class AddCategoryDialog : ContentDialog
 	{
@@ -62,7 +62,7 @@ namespace GithubX.UWP.Views.Dialogs
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
-			if (category.Id == 0) category.Id = Services.Utils.GetUnixTime();
+			if (category.Id == 0) category.Id = Helpers.Utils.GetUnixTime();
 		}
 
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) => category = null;

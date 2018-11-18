@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using System.Linq;
 using GithubX.Shared.Models;
-using GithubX.UWP.Services.Api;
+using GithubX.UWP.Helpers.Api;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -51,7 +51,7 @@ namespace GithubX.UWP.Views
 						await ApiHandler.PrepareAllRepos(User.login);
 						var ls = ApiHandler.GetRepoOfCategory(0);
 						Repositories = new ObservableCollection<Repo>(ls);
-						new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", ApiHandler.AllCategories[0].Color);
+						Helpers.Utils.ChangeHeaderTheme("HeaderAcrylic", ApiHandler.AllCategories[0].Color);
 						Bindings.Update();
 						if (tabList.Items.Count > 0) tabList.SelectedIndex = 0;
 					}
@@ -85,7 +85,7 @@ namespace GithubX.UWP.Views
 			try
 			{
 				currentTabId = item.Id;
-				new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", item.Color);
+				Helpers.Utils.ChangeHeaderTheme("HeaderAcrylic", item.Color);
 				var ls = ApiHandler.GetRepoOfCategory(item.Id);
 				Repositories = new ObservableCollection<Repo>(ls);
 				Bindings.Update();
@@ -96,7 +96,7 @@ namespace GithubX.UWP.Views
 			}
 		}
 
-		private async void AvatarBtn_Click(object sender, RoutedEventArgs e)
+		private void AvatarBtn_Click(object sender, RoutedEventArgs e)
 		{
 			if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap Avatar.FlyoutButton");
 
@@ -105,7 +105,7 @@ namespace GithubX.UWP.Views
 			switch (el.Tag.ToString())
 			{
 				case "-1":
-					await new AboutPanel().ShowAsync();
+					//await new AboutPanel().ShowAsync();
 					break;
 				case "0":
 					// load with cache disable
@@ -119,7 +119,7 @@ namespace GithubX.UWP.Views
 					//logout
 					ApiHandler.LogOut();
 					Frame.BackStack.Clear();
-					new Services.UI.UIHandler().ChangeHeaderTheme("HeaderAcrylic", Windows.UI.Colors.WhiteSmoke);
+					Helpers.Utils.ChangeHeaderTheme("HeaderAcrylic", Windows.UI.Colors.WhiteSmoke);
 					Frame.Navigate(typeof(LoginPage));
 					break;
 			}
