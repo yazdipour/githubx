@@ -2,15 +2,20 @@
 	x:Class="GithubX.UWP.Views.Controls.ActivityItem"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:GithubX.UWP.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
+	<UserControl.Resources>
+		<converters:StringConcatConverter x:Key="StringConcatConverter" x:Name="StringConcatConverter" />
+	</UserControl.Resources>
 	<StackPanel>
 		<TextBlock Margin="0,4" FontWeight="SemiLight">
-			<Run Text="Ali" /> <Run FontWeight="Bold" Text="forked" /> <Run Text="yazdipour/githubx" />
+			<Hyperlink NavigateUri="{x:Bind User, Converter={StaticResource StringConcatConverter}, ConverterParameter='githubx://user/'}">
+				<Run Text="{x:Bind Msg}" />
+			</Hyperlink> <Run FontWeight="Bold" Text="{x:Bind Msg}" />
 		</TextBlock>
-		<local:RepositoryItem />
+		<local:RepositoryItem Repo="{x:Bind repository}" />
 	</StackPanel>
 </UserControl>

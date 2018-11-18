@@ -100,6 +100,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FalseToVisibleConverter.cs" />
+    <Compile Include="Converters\LanguageToColorConverter.cs" />
+    <Compile Include="Converters\StringConcatConverter.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Services\Api\ApiHandler.cs" />
     <Compile Include="Services\Api\ApiKeys.cs" />

@@ -6,5 +6,5 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
-	<toolkit:MarkdownTextBlock Padding="16,32" Text="# Help" />
+	<toolkit:MarkdownTextBlock Background="Transparent" Padding="16,32" Text="# Help" />
 </Page>

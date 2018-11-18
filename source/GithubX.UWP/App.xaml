@@ -30,8 +30,32 @@
 				FallbackColor="#FFF"
 				TintColor="#19FFFFFF"
 				TintOpacity="0.1" />
-
-
+			<Style x:Key="MainGridView" TargetType="GridView">
+				<Setter Property="Padding" Value="8" />
+				<Setter Property="CanDragItems" Value="False" />
+				<Setter Property="IsItemClickEnabled" Value="True" />
+				<Setter Property="IsSwipeEnabled" Value="True" />
+				<Setter Property="SelectionMode" Value="None" />
+				<Setter Property="HeaderTemplate">
+					<Setter.Value>
+						<DataTemplate>
+							<TextBlock Style="{StaticResource PageHeader}" Text="{Binding}" />
+						</DataTemplate>
+					</Setter.Value>
+				</Setter>
+				<Setter Property="ItemsPanel">
+					<Setter.Value>
+						<ItemsPanelTemplate>
+							<ItemsWrapGrid Orientation="Vertical" />
+						</ItemsPanelTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+			<Style x:Key="PageHeader" TargetType="TextBlock">
+				<Setter Property="FontSize" Value="{ThemeResource HubSectionHeaderThemeFontSize}" />
+				<Setter Property="Margin" Value="0,16" />
+				<Setter Property="FontWeight" Value="{ThemeResource HubSectionHeaderThemeFontWeight}" />
+			</Style>
 			<Style x:Key="CardGrid" TargetType="Grid">
 				<Setter Property="Background" Value="{ThemeResource CardColor}" />
 				<Setter Property="HorizontalAlignment" Value="Stretch" />

@@ -1,27 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using Octokit;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace GithubX.UWP.Views.Controls
 {
-    public sealed partial class ActivityItem : UserControl
+	public sealed partial class ActivityItem : UserControl
     {
-        public ActivityItem()
-        {
-            this.InitializeComponent();
-        }
-    }
+		public ActivityItem() => InitializeComponent();
+
+		public string User
+		{
+			get { return (string)GetValue(UserProperty); }
+			set { SetValue(UserProperty, value); }
+		}
+
+		public static readonly DependencyProperty UserProperty =
+			DependencyProperty.Register("User", typeof(string), typeof(ActivityItem), null);
+
+		public string Msg
+		{
+			get { return (string)GetValue(MsgProperty); }
+			set { SetValue(MsgProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for Msg2.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty MsgProperty =
+			DependencyProperty.Register("Msg", typeof(string), typeof(ActivityItem), null);
+
+		private Repository repository => null;
+		public Repository Repository
+		{
+			get { return (Repository)GetValue(RepositoryProperty); }
+			set { SetValue(RepositoryProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for Repository.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty RepositoryProperty =
+			DependencyProperty.Register("Repository", typeof(Repository), typeof(RepositoryItem), null);
+	}
 }

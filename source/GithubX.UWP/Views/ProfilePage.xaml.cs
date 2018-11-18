@@ -8,27 +8,18 @@ namespace GithubX.UWP.Views
 {
 	public sealed partial class ProfilePage : Page
 	{
-		private readonly ObservableCollection<string> notifications = new ObservableCollection<string> { "Xxx", "Xxx" };
+		private readonly ObservableCollection<Octokit.Notification> notifications = new ObservableCollection<Octokit.Notification> { };
+		private readonly Octokit.User user = new Octokit.User();
 
 		public ProfilePage()
 		{
 			this.InitializeComponent();
-			DataContext = notifications;
 		}
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			//get user info
 			//get notification
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
-			notifications.Add("xx");
 		}
 
 		private void Notification_ItemClick(object sender, ItemClickEventArgs e)

@@ -2,13 +2,15 @@
 	x:Class="GithubX.UWP.Views.Controls.RepositoryItem"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:GithubX.UWP.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:GithubX.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	d:DesignHeight="300"
-	d:DesignWidth="400"
+	d:DesignWidth="{ThemeResource DefaultWidth}"
 	mc:Ignorable="d">
+	<UserControl.Resources>
+		<converters:LanguageToColorConverter x:Key="LanguageToColorConverter" x:Name="LanguageToColorConverter" />
+	</UserControl.Resources>
 	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
 		<Grid Style="{StaticResource CardGrid}">
 			<Grid.ColumnDefinitions>
@@ -19,7 +21,7 @@
 			<!--  x:Phase="3"  -->
 			<toolkit:ImageEx
 				CornerRadius="6"
-				Source="x:Bind owner.avatar_url"
+				Source="{x:Bind Repo.Owner.AvatarUrl}"
 				Style="{StaticResource ImageCard}" />
 			<TextBlock
 				Grid.Column="1"
@@ -27,16 +29,17 @@
 				VerticalAlignment="Center"
 				MaxLines="3"
 				TextWrapping="Wrap">
-				<Run Text="Bind full_name" /><LineBreak /><Run
+				<Run Text="{x:Bind Repo.FullName}" /><LineBreak />
+				<Run
 					FontSize="11"
 					FontWeight="SemiLight"
-					Text="Description" />
+					Text="{x:Bind Repo.Description}" />
 			</TextBlock>
 			<Border Grid.RowSpan="2" Grid.Column="2">
 				<Border
 					Width="125"
 					HorizontalAlignment="Center"
-					Background="Green">
+					Background="{x:Bind Repo.Language, Converter={StaticResource LanguageToColorConverter}}">
 					<TextBlock
 						Height="20"
 						HorizontalAlignment="Center"
@@ -44,7 +47,7 @@
 						FontWeight="SemiBold"
 						Foreground="White"
 						RenderTransformOrigin="0.5,0.4"
-						Text="JavaScript">
+						Text="{x:Bind Repo.Language}">
 						<TextBlock.RenderTransform>
 							<RotateTransform Angle="90" />
 						</TextBlock.RenderTransform>

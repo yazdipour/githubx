@@ -1,53 +1,21 @@
 ﻿<Page
-    x:Class="GithubX.UWP.Views.ActivitiesPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GithubX.UWP.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="GithubX.UWP.Views.ActivitiesPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:GithubX.UWP.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Loaded="Page_Loaded"
 	mc:Ignorable="d">
-	<Hub>
-		<HubSection Header="Activities">
+	<GridView
+		Header="Activities"
+		ItemsSource="{x:Bind activityRepositories}"
+		Style="{StaticResource MainGridView}">
+		<GridView.ItemTemplate>
 			<DataTemplate>
-				<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
-					 CanDragItems="False" SelectionMode="None" Padding="8" Margin="-8"
-					 ItemsSource="{Binding}">
-					<GridView.ItemsPanel>
-						<ItemsPanelTemplate>
-							<ItemsWrapGrid Orientation="Vertical" />
-						</ItemsPanelTemplate>
-					</GridView.ItemsPanel>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-					<ctrl:ActivityItem/>
-				</GridView>
+				<ctrl:ActivityItem Repository="{Binding}" />
 			</DataTemplate>
-		</HubSection>
-	</Hub>
+		</GridView.ItemTemplate>
+	</GridView>
 </Page>

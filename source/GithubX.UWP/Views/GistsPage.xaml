@@ -1,55 +1,21 @@
 ﻿<Page
-    x:Class="GithubX.UWP.Views.GistsPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GithubX.UWP.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	x:Class="GithubX.UWP.Views.GistsPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:ctrl="using:GithubX.UWP.Views.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:GithubX.UWP.Views"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
-	<Grid>
-		<Hub>
-			<HubSection Header="TAG}">
-				<DataTemplate>
-					<GridView IsItemClickEnabled="True" IsSwipeEnabled="True"
-					 SelectionMode="None" Padding="8" Margin="-8"
-					 ItemsSource="{Binding}" ItemClick="GridView_ItemClick">
-						<GridView.ItemsPanel>
-							<ItemsPanelTemplate>
-								<ItemsWrapGrid Orientation="Vertical" />
-							</ItemsPanelTemplate>
-						</GridView.ItemsPanel>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-						<ctrl:GistItem/>
-					</GridView>
-				</DataTemplate>
-			</HubSection>
-		</Hub>
-	</Grid>
+	<GridView
+		Header="Gists"
+		ItemClick="GridView_ItemClick"
+		ItemsSource="{x:Bind gists}"
+		Style="{StaticResource MainGridView}">
+		<GridView.ItemTemplate>
+			<DataTemplate>
+				<ctrl:GistItem />
+			</DataTemplate>
+		</GridView.ItemTemplate>
+	</GridView>
 </Page>
