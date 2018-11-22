@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace GithubX.Shared.Services
 {
-	internal class GistService
+	public class GistService
 	{
 		private readonly GitHubClient client;
 		public GistService(ref GitHubClient client) => this.client = client;

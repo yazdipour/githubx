@@ -33,7 +33,10 @@
 						PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
 						Source="{Binding user.AvatarUrl}"
 						Stretch="UniformToFill" />
-					<RichTextBlock Margin="0,4" IsTextSelectionEnabled="False" FontFamily="Candara">
+					<RichTextBlock
+						Margin="0,4"
+						FontFamily="Candara"
+						IsTextSelectionEnabled="False">
 						<Paragraph FontSize="26">
 							<Run FontWeight="Bold" Text="{Binding user.Name}" />
 						</Paragraph>
@@ -55,7 +58,7 @@
 							</Hyperlink>
 						</Paragraph>
 						<Paragraph>
-							🌐<Hyperlink NavigateUri="0">
+							🌐<Hyperlink NavigateUri="{Binding user.Blog}">
 								<Run Text="{Binding user.Blog}" />
 							</Hyperlink>
 						</Paragraph>

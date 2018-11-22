@@ -5,7 +5,7 @@ using Akavache;
 
 namespace GithubX.Shared.Services
 {
-	internal class AuthService
+	public class AuthService
 	{
 		public Uri GetOauthUrl(GitHubClient client, string ClientId, string FallBackUri)
 		{
@@ -41,14 +41,13 @@ namespace GithubX.Shared.Services
 
 		public Credentials ReadCredential()
 		{
-			//TODO: Check
 			Credentials c = null;
 			var result = BlobCache.Secure.GetLoginAsync()
 				.Subscribe(_ => c = new Credentials(_.UserName, _.Password));
 			return c;
 		}
 
-		public bool IsLoadedIn(GitHubClient client) => client.Credentials != null;
+		public bool IsLoggedIn(GitHubClient client) => client.Credentials != null;
 
 		public void LogOut() => BlobCache.Secure.EraseLogin();
 	}

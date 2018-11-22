@@ -30,6 +30,13 @@
 				FallbackColor="#FFF"
 				TintColor="#19FFFFFF"
 				TintOpacity="0.1" />
+
+			<media:AcrylicBrush
+				x:Key="BodyAcrylicBackgroundBrush"
+				BackgroundSource="HostBackdrop"
+				FallbackColor="{StaticResource AcrylicBrushFallbackColor1}"
+				TintColor="{StaticResource AcrylicBrushTintColor1}"
+				TintOpacity="0.4" />
 			<Style x:Key="MainGridView" TargetType="GridView">
 				<Setter Property="Padding" Value="8" />
 				<Setter Property="CanDragItems" Value="False" />

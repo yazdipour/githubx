@@ -2,82 +2,188 @@
 	x:Class="GithubX.UWP.Views.RepositoryPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:GithubX.UWP.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:octo="using:Octokit"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	Background="{ThemeResource SystemChromeAltHighColor}"
+	Loading="Page_Loading"
 	mc:Ignorable="d">
-	<Hub>
-		<HubSection
-			Width="{ThemeResource DefaultWidth}"
+	<UserControl.Resources>
+		<converters:StringConcatConverter x:Key="StringConcatConverter" x:Name="StringConcatConverter" />
+		<converters:ContentTypeToSymbolConverter x:Key="ContentTypeToSymbolConverter" x:Name="ContentTypeToSymbolConverter" />
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<SplitView
+			x:Name="splitView"
+			Grid.Row="1"
+			Margin="0,-8,0,0"
+			CompactPaneLength="48"
+			DisplayMode="CompactInline"
+			IsPaneOpen="True"
+			OpenPaneLength="{ThemeResource DefaultWidth}"
+			PaneBackground="Transparent"
+			PanePlacement="Right">
+			<SplitView.Pane>
+				<toolkit:DropShadowPanel
+					Margin="4,0,0,0"
+					HorizontalContentAlignment="Stretch"
+					ShadowOpacity=".5"
+					Color="Black">
+					<Grid>
+						<ListView
+							Margin="0,0,0,42"
+							HorizontalAlignment="Stretch"
+							Background="{ThemeResource SystemControlAltLowAcrylicElementBrush}"
+							ItemClick="Content_Click"
+							ItemsSource="{x:Bind _contents, Mode=OneWay}"
+							ScrollViewer.VerticalScrollBarVisibility="Visible"
+							ScrollViewer.VerticalScrollMode="Enabled">
+							<ListView.Header>
+								<StackPanel>
+									<DropDownButton
+										x:Name="branchDropDown"
+										HorizontalAlignment="Stretch"
+										Content="{Binding _repository.DefaultBranch, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Branch → '}">
+										<DropDownButton.Flyout>
+											<MenuFlyout Placement="Bottom">
+												<ToggleMenuFlyoutItem Text="{x:Bind _repository.DefaultBranch}" />
+												<ToggleMenuFlyoutItem Text="{x:Bind _repository.DefaultBranch}" />
+											</MenuFlyout>
+										</DropDownButton.Flyout>
+									</DropDownButton>
+									<Button
+										HorizontalAlignment="Stretch"
+										HorizontalContentAlignment="Left"
+										Background="Transparent"
+										Content="&#xE76B;"
+										FontFamily="Segoe MDL2 Assets" />
+								</StackPanel>
+							</ListView.Header>
+							<ListView.ItemTemplate>
+								<DataTemplate x:DataType="octo:RepositoryContent">
+									<StackPanel Orientation="Horizontal">
+										<SymbolIcon Symbol="{x:Bind Type.Value, Converter={StaticResource ContentTypeToSymbolConverter}}" />
+										<TextBlock Text="{x:Bind Name}" />
+									</StackPanel>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+						<ToggleButton
+							Grid.Row="1"
+							Width="{Binding ElementName=splitView, Path=OpenPaneLength}"
+							Height="42"
+							VerticalAlignment="Bottom"
+							HorizontalContentAlignment="Left"
+							Content="&#xE76B;&#xE76C;"
+							FlowDirection="RightToLeft"
+							FontFamily="Segoe MDL2 Assets"
+							FontSize="16"
+							IsChecked="{Binding ElementName=splitView, Path=IsPaneOpen, Mode=TwoWay}"
+							Style="{ThemeResource ToggleButtonRevealStyle}" />
+					</Grid>
+				</toolkit:DropShadowPanel>
+			</SplitView.Pane>
+			<toolkit:MarkdownTextBlock
+				Padding="8"
+				Background="{ThemeResource SystemChromeAltHighColor}"
+				Text="{x:Bind _markdownContent, Mode=TwoWay}" />
+		</SplitView>
+		<toolkit:DropShadowPanel
+			Margin="0,0,0,8"
 			HorizontalContentAlignment="Stretch"
-			Background="{ThemeResource SystemRevealListMediumColor}"
-			Header="Profile">
-			<DataTemplate>
-				<StackPanel>
-					<toolkit:ImageEx
-						Width="140"
-						Height="140"
-						Margin="0"
-						HorizontalAlignment="Left"
-						Background="Gray"
-						CornerRadius="6"
-						PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-						Stretch="UniformToFill" />
-					<RichTextBlock Margin="0,4" FontFamily="Candara">
-						<Paragraph FontSize="26">
-							<Bold>repoName</Bold>
-						</Paragraph>
-						<Paragraph FontSize="20">
-							repoOwner
-						</Paragraph>
-						<Paragraph Margin="0,16">
-							repo description
-						</Paragraph>
-						<Paragraph>
-							<Hyperlink NavigateUri="0">repo url!</Hyperlink>
-						</Paragraph>
-						<Paragraph>
-							Repo TAG
-						</Paragraph>
-					</RichTextBlock>
-					<Button
-						Margin="0,8"
-						HorizontalAlignment="Center"
-						Background="{ThemeResource PixelatedGrass}"
-						Click="AddToCategory_Click"
-						Content="Add to Category"
-						CornerRadius="2"
-						RequestedTheme="Dark" />
-					<CommandBar
-						Margin="-32,0"
-						HorizontalAlignment="Center"
-						Background="Transparent"
-						DefaultLabelPosition="Right"
-						IsOpen="False">
-						<AppBarToggleButton Icon="Add" Label="Add" />
-						<AppBarToggleButton Icon="ReShare" Label="Share" />
-						<AppBarToggleButton Icon="Edit" Label="Edit" />
-						<CommandBar.SecondaryCommands>
-							<!--<AppBarButton Icon="Setting" Label="Settings" Visibility="Collapsed"/>-->
-						</CommandBar.SecondaryCommands>
-					</CommandBar>
+			ShadowOpacity=".5"
+			Color="Black">
+			<Grid Height="48" Background="{ThemeResource SystemControlBaseLowAcrylicElementBrush}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="48" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<toolkit:ImageEx
+					PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
+					PlaceholderStretch="UniformToFill"
+					Source="{x:Bind _repository.Owner.AvatarUrl}"
+					Stretch="UniformToFill" />
+				<StackPanel
+					Grid.Column="1"
+					Margin="8,0"
+					VerticalAlignment="Stretch">
+					<TextBlock
+						Style="{ThemeResource SubtitleTextBlockStyle}"
+						Text="{x:Bind _repository.FullName}"
+						TextWrapping="NoWrap" />
+					<TextBlock
+						Style="{ThemeResource CaptionTextBlockStyle}"
+						Text="{x:Bind _repository.Description}"
+						TextWrapping="NoWrap" />
 				</StackPanel>
-			</DataTemplate>
-		</HubSection>
-		<HubSection
-			MinWidth="220"
-			Background="{ThemeResource SystemRevealListLowColor}"
-			Header="Content">
-			<DataTemplate>
-				<TextBlock Text="X" />
-			</DataTemplate>
-		</HubSection>
-		<HubSection>
-			<DataTemplate>
-				<toolkit:MarkdownTextBlock Background="{ThemeResource SystemChromeAltHighColor}" Text="* MarkDown " />
-			</DataTemplate>
-		</HubSection>
-	</Hub>
+				<CommandBar
+					Grid.Column="2"
+					VerticalAlignment="Center"
+					Background="Transparent"
+					DefaultLabelPosition="Right">
+					<AppBarButton
+						Click="AppBarButton_Click"
+						Icon="Link"
+						Label="GitUrl"
+						Tag="Git" />
+					<AppBarButton
+						Click="AppBarButton_Click"
+						Icon="Library"
+						Label="Add to Category"
+						Tag="Category" />
+					<AppBarToggleButton
+						Checked="ToggleButton_Checked"
+						Icon="SolidStar"
+						Label="{x:Bind _repository.StargazersCount, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Star '}"
+						Tag="Star"
+						Unchecked="ToggleButton_UnChecked" />
+					<AppBarToggleButton
+						Checked="ToggleButton_Checked"
+						Icon="Cut"
+						Label="{x:Bind _repository.ForksCount, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Fork '}"
+						Tag="Fork"
+						Unchecked="ToggleButton_UnChecked" />
+					<AppBarToggleButton
+						Checked="ToggleButton_Checked"
+						Icon="View"
+						Label="{x:Bind _repository.SubscribersCount, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Watch '}"
+						Tag="Watch"
+						Unchecked="ToggleButton_UnChecked" />
+					<CommandBar.SecondaryCommands>
+						<AppBarButton
+							Icon="Clock"
+							Label="Commits"
+							Tag="Commits" />
+						<AppBarButton
+							Icon="ReportHacked"
+							Label="{x:Bind _repository.OpenIssuesCount, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Issues '}"
+							Tag="Issues" />
+						<AppBarButton
+							Click="AppBarButton_Click"
+							Icon="Save"
+							Label="Save in Pocket"
+							Tag="Pocket" />
+						<AppBarButton
+							Click="AppBarButton_Click"
+							Icon="Download"
+							Label="Download (master)"
+							Tag="Download" />
+						<AppBarButton
+							Click="AppBarButton_Click"
+							Icon="Globe"
+							Label="Open in Browser"
+							Tag="Browser" />
+					</CommandBar.SecondaryCommands>
+				</CommandBar>
+			</Grid>
+		</toolkit:DropShadowPanel>
+	</Grid>
 </Page>

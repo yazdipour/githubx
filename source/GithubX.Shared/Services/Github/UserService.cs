@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GithubX.Shared.Services
 {
-	internal class UserService
+	public class UserService
 	{
 		private readonly GitHubClient client;
 		public UserService(ref GitHubClient client) => this.client = client;

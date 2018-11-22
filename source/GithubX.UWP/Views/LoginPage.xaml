@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Background="{StaticResource BodyAcrylicBackgroundBrush}"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<Style TargetType="TextBlock">
@@ -19,24 +20,21 @@
 			<TextBlock FontSize="58" Text="Github✘" />
 			<TextBlock FontSize="68" Text="👽" />
 			<TextBlock Margin="8" Text="Github Account" />
-			<TextBox x:Name="accTextBox" Width="180" />
-
 			<Button
 				Width="180"
 				Margin="8"
 				HorizontalAlignment="Center"
 				Click="Login_Click"
-				Content="Lets Go" />
+				Content="Login" />
 		</StackPanel>
 		<TextBlock
 			Margin="8"
 			VerticalAlignment="Bottom"
-			Text="GithubX is a place to review and manage your starred repos readme (even offline)" />
-
-		<controls:Loading x:Name="LoadingControl" IsLoading="False">
-			<controls:Loading.Background>
-				<SolidColorBrush Opacity="0.7" Color="Black" />
-			</controls:Loading.Background>
+			Text="GithubX is a place to review and manage your starred repositories" />
+		<controls:Loading
+			x:Name="LoadingControl"
+			Background="#77212121"
+			IsLoading="False">
 			<StackPanel>
 				<ProgressRing
 					HorizontalAlignment="Center"

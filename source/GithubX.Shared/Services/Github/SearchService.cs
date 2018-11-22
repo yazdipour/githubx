@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GithubX.Shared.Services
 {
-	internal class SearchService
+	public class SearchService
 	{
 		private readonly GitHubClient client;
 		public SearchService(ref GitHubClient _client) => client = _client;

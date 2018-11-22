@@ -67,5 +67,10 @@ namespace GithubX.UWP.Views
 				navigationView.SelectionChanged += NavigationView_SelectionChanged;
 			}
 		}
+
+		private void RepoSearch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+		{
+
+		}
 	}
 }

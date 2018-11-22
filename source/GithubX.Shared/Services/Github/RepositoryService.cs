@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GithubX.Shared.Services
 {
-	internal class RepositoryService
+	public class RepositoryService
 	{
 		private readonly GitHubClient client;
 		public RepositoryService(ref GitHubClient _client) => client = _client;
@@ -22,8 +22,14 @@ namespace GithubX.Shared.Services
 		public async Task<string> GetReadmeHTMLForRepository(long repoId)
 			=> await client.Repository.Content.GetReadmeHtml(repoId).ConfigureAwait(false);
 
-		public async Task<Readme> GetReadmeForRepository(long repoId)
+		public async Task<Readme> GetRepositoryReadme(long repoId)
 			=> await client.Repository.Content.GetReadme(repoId).ConfigureAwait(false);
+
+		public async Task<ObservableCollection<RepositoryContent>> GetRepositoryContent(long repoId)
+			=> new ObservableCollection<RepositoryContent>(await client.Repository.Content.GetAllContents(repoId));
+
+		public async Task<ObservableCollection<RepositoryContent>> GetRepositoryContent(long repoId, string path)
+			=> new ObservableCollection<RepositoryContent>(await client.Repository.Content.GetAllContents(repoId, path));
 		#endregion
 
 		#region Branch

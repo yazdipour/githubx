@@ -26,7 +26,7 @@ namespace GithubX.UWP
 			if (args?.PrelaunchActivated != true)
 			{
 				if (rootFrame.Content == null)
-					rootFrame.Navigate(typeof(Views.MotherPage), args?.Arguments);
+					rootFrame.Navigate(typeof(Views.LoginPage), args?.Arguments);
 				Window.Current.Activate();
 			}
 		}

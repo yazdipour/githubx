@@ -61,11 +61,10 @@ namespace GithubX.UWP.Views
 		#region return
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-		{
-			if (category.Id == 0) category.Id = Helpers.Utils.GetUnixTime();
-		}
+			=> category.Id = (category.Id == 0) ? Helpers.Utils.GetUnixTime() : category.Id;
 
-		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args) => category = null;
+		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+			=> category = null;
 		#endregion
 	}
 }

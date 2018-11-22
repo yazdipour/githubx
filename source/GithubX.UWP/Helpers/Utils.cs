@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Akavache;
+using System;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
@@ -45,40 +47,46 @@ namespace GithubX.UWP.Helpers
 		public static string SolidColorToHex(SolidColorBrush solidColorBrush)
 			=> string.Format("#{0:X2}{1:X2}{2:X2}", solidColorBrush.Color.R, solidColorBrush.Color.G, solidColorBrush.Color.B);
 
-		public static int GetUnixTime() => (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+		public static int GetUnixTime()
+			=> (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
 
 		public static async Task<string> ReadFileFromAsset(string uri)
 			=> await FileIO.ReadTextAsync(await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri)));
 
+		public static async Task OpenUri(string uri)
+			=> await Windows.System.Launcher.LaunchUriAsync(new Uri(uri));
 
 		public static void ChangeHeaderTheme(string resourceKey, string HexColor)
 		{
-			var cl = (AcrylicBrush)App.Current.Resources[resourceKey];
+			var cl = (AcrylicBrush)Windows.UI.Xaml.Application.Current.Resources[resourceKey];
 			cl.TintColor = cl.FallbackColor = HexToSolidColor(HexColor).Color;
 		}
+
 		public static void ChangeHeaderTheme(string resourceKey, Color color)
 		{
-			var cl = (AcrylicBrush)App.Current.Resources[resourceKey];
+			var cl = (AcrylicBrush)Windows.UI.Xaml.Application.Current.Resources[resourceKey];
 			cl.TintColor = cl.FallbackColor = color;
 		}
-		//internal static async Task<string> Get(string url)
-		//{
-		//	var httpClient = new Windows.Web.Http.HttpClient();
-		//	var headers = httpClient.DefaultRequestHeaders;
-		//	var httpResponse = new Windows.Web.Http.HttpResponseMessage();
-		//	string httpResponseBody = null;
-		//	try
-		//	{
-		//		httpResponse = await httpClient.GetAsync(new Uri(url));
-		//		httpResponse.EnsureSuccessStatusCode();
-		//		httpResponseBody = await httpResponse.Content.ReadAsStringAsync();
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		throw new Exception();
-		//	}
-		//	return httpResponseBody;
-		//}
 
+		public static async Task<string> GetMarkDownReadyAsync(string url, bool fromCache = true)
+		{
+			var buffer = await BlobCache.LocalMachine.DownloadUrl(url, fetchAlways: !fromCache);
+			string md = System.Text.Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+			try
+			{
+				// Html2Markdown needs HtmlAgilityPack.NugetPkg
+				md = new Html2Markdown.Converter().Convert(md).Trim();
+				//md = md.Replace("[`", "[").Replace("`]", "]").Replace("<<", "");
+				if (md == null || md.Length < 2) return "> 404 🤔";
+				return md;
+			}
+			catch { return md; }
+		}
+		public static async Task<string> GetMarkDownReadyAsync(string url, string sha)
+		{
+			var oldSha = await BlobCache.LocalMachine.GetObject<string>("_" + url) ?? "";
+			await BlobCache.LocalMachine.InsertObject("_" + url, sha);
+			return await GetMarkDownReadyAsync(url, sha.Equals(oldSha));
+		}
 	}
 }

@@ -28,6 +28,7 @@ namespace GithubX.UWP.Views
 
 		private void Logout_Clicked(object sender, RoutedEventArgs e)
 		{
+			Frame.Navigate(typeof(RepositoryPage));
 		}
 	}
 }
