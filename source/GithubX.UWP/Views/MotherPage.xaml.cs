@@ -36,7 +36,7 @@ namespace GithubX.UWP.Views
 				navigationView.MenuItems.Add(item.Key);
 			navigationView.SelectedItem = dFrame.First().Key;
 			Shared.Helpers.CacheHandler.InitCache();
-			Logger.Init(ApiKeys.AppCenter);
+			Logger.Init(Shared.Keys.AppCenteerToken);
 		}
 
 		private async void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

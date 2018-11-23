@@ -6,11 +6,8 @@
 	xmlns:local="using:GithubX.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	d:DesignHeight="300"
-	d:DesignWidth="400"
 	mc:Ignorable="d">
 	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
-
 		<Grid Style="{StaticResource CardGrid}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
@@ -21,14 +18,14 @@
 			<TextBlock
 				Margin="4,8"
 				VerticalAlignment="Center"
-				FontSize="22"
-				Text="❌" />
+				FontSize="2"
+				Text="{Binding Subject.Type}" />
 			<TextBlock
 				Grid.Column="1"
 				VerticalAlignment="Center"
-				FontFamily="Candara"
-				MaxLines="1"
-				Text="Favorites" />
+				MaxLines="1">
+				<Run Text="{Binding Subject.Title}" /><LineBreak /><Run FontSize="12" Text="{Binding LastReadAt}" />
+			</TextBlock>
 			<SymbolIcon
 				Grid.Column="2"
 				HorizontalAlignment="Right"

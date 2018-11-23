@@ -1,68 +1,51 @@
-﻿<media:Page
+﻿<Page
 	x:Class="GithubX.UWP.Views.MotherPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	extensions:TitleBarExtensions.ButtonBackgroundColor="Transparent"
-	extensions:TitleBarExtensions.ButtonForegroundColor="White"
+	Background="{StaticResource BodyAcrylicBackgroundBrush}"
 	Loaded="Page_Loaded"
 	RequestedTheme="Light"
 	mc:Ignorable="d">
-	<media:Page.Resources>
-		<media:ResourceDictionary>
-			<media:ResourceDictionary.ThemeDictionaries>
-				<media:ResourceDictionary x:Key="Default">
-					<media:AcrylicBrush
-						x:Key="CustomAcrylicBackgroundBrush"
-						BackgroundSource="HostBackdrop"
-						FallbackColor="{StaticResource AcrylicBrushFallbackColor1}"
-						TintColor="{StaticResource AcrylicBrushTintColor1}"
-						TintOpacity="0.4" />
-				</media:ResourceDictionary>
-			</media:ResourceDictionary.ThemeDictionaries>
-		</media:ResourceDictionary>
-	</media:Page.Resources>
 
-	<media:Grid Background="{ThemeResource CustomAcrylicBackgroundBrush}">
-		<media:Grid.RowDefinitions>
-			<media:RowDefinition Height="32" />
-			<media:RowDefinition Height="*" />
-		</media:Grid.RowDefinitions>
-		<media:Grid Grid.Row="0" Height="32">
-			<media:TextBlock
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="32" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" Height="32">
+			<TextBlock
 				HorizontalAlignment="Center"
 				VerticalAlignment="Center"
 				FontFamily="Candara"
 				Foreground="Black"
 				Text="Github✘" />
-		</media:Grid>
-		<media:Grid
+		</Grid>
+		<Grid
 			Grid.Row="1"
 			Margin="16,0,16,16"
 			Background="{ThemeResource RegionBrush}"
 			CornerRadius="2">
-			<media:NavigationView
+			<NavigationView
 				x:Name="navigationView"
 				BackRequested="navigationView_BackRequested"
 				IsSettingsVisible="True"
 				PaneDisplayMode="Top"
 				SelectionChanged="NavigationView_SelectionChanged"
 				SelectionFollowsFocus="Enabled">
-				<media:NavigationView.AutoSuggestBox>
-					<media:AutoSuggestBox
+				<NavigationView.AutoSuggestBox>
+					<AutoSuggestBox
 						Width="160"
 						PlaceholderText="Repository Search"
 						QueryIcon="Find"
 						QuerySubmitted="RepoSearch_QuerySubmitted" />
-				</media:NavigationView.AutoSuggestBox>
-				<media:Frame x:Name="iframe" Background="{ThemeResource SystemRevealListLowColor}" />
-			</media:NavigationView>
-		</media:Grid>
+				</NavigationView.AutoSuggestBox>
+				<Frame x:Name="iframe" Background="{ThemeResource SystemRevealListLowColor}" />
+			</NavigationView>
+		</Grid>
 		<toolkit:InAppNotification
 			x:Name="Notifer"
 			Grid.Row="1"
@@ -70,5 +53,5 @@
 			AnimationDuration="00:00:00.1000000"
 			BorderBrush="#EA2027"
 			ShowDismissButton="True" />
-	</media:Grid>
-</media:Page>
+	</Grid>
+</Page>

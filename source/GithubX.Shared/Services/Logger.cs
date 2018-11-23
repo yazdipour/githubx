@@ -20,15 +20,15 @@ namespace GithubX.Shared.Services
 
 		public static async System.Threading.Tasks.Task<string> didAppCrashed()
 		{
-			bool didAppCrash = await Crashes.HasCrashedInLastSessionAsync().ConfigureAwait(false);
+			bool didAppCrash = await Crashes.HasCrashedInLastSessionAsync();
 			if (!didAppCrash) return null;
-			ErrorReport crashReport = await Crashes.GetLastSessionCrashReportAsync().ConfigureAwait(false);
+			ErrorReport crashReport = await Crashes.GetLastSessionCrashReportAsync();
 			Crashes.NotifyUserConfirmation(UserConfirmation.Send);
 			return crashReport.ToString();
 		}
 
 		public static async System.Threading.Tasks.Task SystemGuIdAsync() =>
-			await AppCenter.GetInstallIdAsync().ConfigureAwait(false);
+			await AppCenter.GetInstallIdAsync();
 
 		public static void E(Exception e, Dictionary<string, string> properties = null)
 		{
@@ -47,6 +47,6 @@ namespace GithubX.Shared.Services
 			=> AppCenter.SetEnabledAsync(enable);
 
 		public static async System.Threading.Tasks.Task<bool> IsEnable()
-			=> await AppCenter.IsEnabledAsync().ConfigureAwait(false);
+			=> await AppCenter.IsEnabledAsync();
 	}
 }

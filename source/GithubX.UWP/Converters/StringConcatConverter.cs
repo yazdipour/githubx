@@ -6,13 +6,17 @@ namespace GithubX.UWP.Converters
 	internal class StringConcatConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
-			=> language.Equals("End", StringComparison.OrdinalIgnoreCase)
-			? (string)parameter + (string)value
-			: (string)value + (string)parameter;
+		{
+			var res = language.Equals("End", StringComparison.OrdinalIgnoreCase)
+					   ? (string)parameter + (string)value
+					   : (string)value + (string)parameter;
+			if (targetType.Name == "Uri") return new Uri(res);
+			return res;
+		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
-			throw new NotImplementedException();
+			return "";
 		}
 	}
 }

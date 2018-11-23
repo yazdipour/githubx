@@ -1,34 +1,32 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System;
+using GithubX.Shared.Services;
 
 namespace GithubX.UWP.Views
 {
 	public sealed partial class ProfilePage : Page
 	{
-		private readonly ObservableCollection<Octokit.Notification> notifications = new ObservableCollection<Octokit.Notification> { };
-		private readonly Octokit.User user = new Octokit.User();
+		private ObservableCollection<Octokit.Notification> _notifications = new ObservableCollection<Octokit.Notification>();
+		private Octokit.User _user { get; set; }
 
-		public ProfilePage()
+		public ProfilePage() => InitializeComponent();
+
+		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			this.InitializeComponent();
+			if (_notifications.Count > 0) return;
+			_user = await GithubService.UserService.GetUser();
+			Bindings.Update();
+			var temp = await GithubService.UserService.GetAllNotifications(new Octokit.ApiOptions() { PageSize = 10 });
+			foreach (var t in temp) _notifications.Add(t);
 		}
-
-		private void Page_Loaded(object sender, RoutedEventArgs e)
-		{
-			//get user info
-			//get notification
-		}
-
 		private void Notification_ItemClick(object sender, ItemClickEventArgs e)
 		{
+			Frame.Navigate(typeof(RepositoryPage));
 		}
 
 		private void Logout_Clicked(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(RepositoryPage));
 		}
 	}
 }

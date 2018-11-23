@@ -15,7 +15,7 @@ namespace GithubX.UWP.Views
 {
 	public sealed partial class RepositoryPage : Windows.UI.Xaml.Controls.Page
 	{
-		private ObservableCollection<RepositoryContent> _contents { get; set; }
+		private ObservableCollection<RepositoryContent> _contents = new ObservableCollection<RepositoryContent>();
 		private string _markdownContent { get; set; } = "> Loading";
 		private Repository _repository { get; set; }
 		private string currentBranch { get; set; } = "master";
@@ -23,7 +23,7 @@ namespace GithubX.UWP.Views
 		public RepositoryPage()
 		{
 			InitializeComponent();
-			DataTransferManager.GetForCurrentView().DataRequested += (sender, args) =>
+			DataTransferManager.GetForCurrentView().DataRequested += (_, args) =>
 			{
 				DataRequest request = args.Request;
 				request.Data.SetText(_repository.HtmlUrl);
@@ -33,7 +33,9 @@ namespace GithubX.UWP.Views
 
 		private async void Page_Loading(FrameworkElement sender, object args)
 		{
-			_contents = await GithubService.RepositoryService.GetRepositoryContent(_repository.Id);
+			if (_repository == null) return;
+			var temp = await GithubService.RepositoryService.GetRepositoryContent(_repository.Id);
+			foreach (var t in temp) _contents.Add(t);
 			_markdownContent = (await GithubService.RepositoryService.GetRepositoryReadme(_repository.Id))?.Content;
 		}
 
@@ -49,7 +51,9 @@ namespace GithubX.UWP.Views
 			switch (content.Type.Value)
 			{
 				case ContentType.Dir:
-					_contents = await GithubService.RepositoryService.GetRepositoryContent(_repository.Id, content.Path);
+					var temp = await GithubService.RepositoryService.GetRepositoryContent(_repository.Id, content.Path);
+					if (temp.Count > 0) _contents.Clear();
+					foreach (var t in temp) _contents.Add(t);
 					break;
 				case ContentType.File:
 					try

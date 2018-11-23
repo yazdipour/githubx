@@ -15,13 +15,14 @@
 				Grid.Column="1"
 				Margin="8,0"
 				VerticalAlignment="Center"
-				MaxLines="3"
-				TextWrapping="Wrap">
-				<Run Text="Bind full_name" /><LineBreak /><Run
-					FontSize="11"
-					FontWeight="SemiLight"
-					Text="Description" />
-			</TextBlock>
+				Text="{Binding Description}"
+				TextWrapping="NoWrap" />
+			<TextBlock
+				VerticalAlignment="Center"
+				FontSize="11"
+				FontWeight="SemiLight"
+				Text="{Binding CreatedAt}"
+				TextWrapping="NoWrap" />
 		</StackPanel>
 	</toolkit:DropShadowPanel>
 </UserControl>

@@ -15,80 +15,82 @@
 	<Page.Resources>
 		<conv:StringConcatConverter x:Key="StringConcatConverter" x:Name="StringConcatConverter" />
 	</Page.Resources>
-	<Hub>
-		<HubSection
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<StackPanel
+			Grid.Column="0"
 			Width="{ThemeResource DefaultWidth}"
-			HorizontalContentAlignment="Stretch"
-			Background="{ThemeResource SystemRevealListMediumColor}"
-			Header="Profile">
-			<DataTemplate>
-				<StackPanel>
-					<toolkit:ImageEx
-						Width="140"
-						Height="140"
-						Margin="0"
-						HorizontalAlignment="Left"
-						Background="Gray"
-						CornerRadius="6"
-						PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-						Source="{Binding user.AvatarUrl}"
-						Stretch="UniformToFill" />
-					<RichTextBlock
-						Margin="0,4"
-						FontFamily="Candara"
-						IsTextSelectionEnabled="False">
-						<Paragraph FontSize="26">
-							<Run FontWeight="Bold" Text="{Binding user.Name}" />
-						</Paragraph>
-						<Paragraph FontSize="20">
-							<Run Text="{Binding user.Login}" />
-						</Paragraph>
-						<Paragraph Margin="0,16">
-							<Run Text="{Binding user.Bio}" />
-						</Paragraph>
-						<Paragraph>
-							🏪<Run Text="{Binding user.Company}" />
-						</Paragraph>
-						<Paragraph>
-							🗺<Run Text="{Binding user.Location}" />
-						</Paragraph>
-						<Paragraph>
-							✉<Hyperlink NavigateUri="{Binding user.Email, Converter={StaticResource StringConcatConverter}, ConverterParameter='mailto:', ConverterLanguage='End'}">
-								<Run Text="{Binding user.Email}" />
-							</Hyperlink>
-						</Paragraph>
-						<Paragraph>
-							🌐<Hyperlink NavigateUri="{Binding user.Blog}">
-								<Run Text="{Binding user.Blog}" />
-							</Hyperlink>
-						</Paragraph>
-					</RichTextBlock>
-					<Button
-						Margin="0,32,0,0"
-						HorizontalAlignment="Center"
-						Background="{ThemeResource RedPigment}"
-						Click="Logout_Clicked"
-						Content="Logout"
-						CornerRadius="2"
-						RequestedTheme="Dark" />
-				</StackPanel>
-			</DataTemplate>
-		</HubSection>
-		<HubSection Header="Notification">
-			<DataTemplate>
-				<GridView
-					ItemClick="Notification_ItemClick"
-					ItemsSource="{Binding notifications}"
-					Style="{StaticResource MainGridView}">
-					<GridView.ItemTemplate>
-						<DataTemplate>
-							<StackPanel>
-								<ctrl:NotificationItem />
-							</StackPanel>
-						</DataTemplate>
-					</GridView.ItemTemplate>
-				</GridView>
-			</DataTemplate>
-		</HubSection>
-	</Hub>
+			Padding="8,16"
+			Background="{ThemeResource SystemRevealListMediumColor}">
+			<TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Profile" />
+			<toolkit:ImageEx
+				Width="140"
+				Height="140"
+				Margin="0,8"
+				HorizontalAlignment="Left"
+				Background="Gray"
+				CornerRadius="6"
+				PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
+				Source="{x:Bind _user.AvatarUrl.ToString()}"
+				Stretch="UniformToFill" />
+			<RichTextBlock
+				Margin="0,4"
+				FontFamily="Candara"
+				IsTextSelectionEnabled="False">
+				<Paragraph FontSize="26">
+					<Run FontWeight="Bold" Text="{x:Bind _user.Name}" />
+				</Paragraph>
+				<Paragraph FontSize="20">
+					<Run Text="{x:Bind _user.Login}" />
+				</Paragraph>
+				<Paragraph Margin="0,16">
+					<Run Text="{x:Bind _user.Bio}" />
+				</Paragraph>
+				<Paragraph>
+					🏪<Run Text="{x:Bind _user.Company}" />
+				</Paragraph>
+				<Paragraph>
+					🗺<Run Text="{x:Bind _user.Location}" />
+				</Paragraph>
+				<Paragraph>
+					✉<Hyperlink NavigateUri="{x:Bind _user.Email, Converter={StaticResource StringConcatConverter}, ConverterParameter='mailto:', ConverterLanguage='End'}">
+						<Run Text="{x:Bind _user.Email}" />
+					</Hyperlink>
+				</Paragraph>
+				<Paragraph>
+					🌐<Hyperlink NavigateUri="{x:Bind _user.Blog}">
+						<Run Text="{x:Bind _user.Blog}" />
+					</Hyperlink>
+				</Paragraph>
+			</RichTextBlock>
+			<Button
+				Margin="0,32,0,0"
+				HorizontalAlignment="Center"
+				Background="{ThemeResource RedPigment}"
+				Click="Logout_Clicked"
+				Content="Logout"
+				CornerRadius="2"
+				RequestedTheme="Dark" />
+		</StackPanel>
+		<Grid Grid.Column="1">
+			<TextBlock
+				Margin="8,16,0,0"
+				Style="{StaticResource TitleTextBlockStyle}"
+				Text="Notification" />
+			<GridView
+				Margin="8,52,0,4"
+				ItemClick="Notification_ItemClick"
+				ItemsSource="{x:Bind _notifications, Mode=OneWay}"
+				Style="{StaticResource MainGridView}">
+				<GridView.ItemTemplate>
+					<DataTemplate x:DataType="octo:Notification">
+						<ctrl:NotificationItem />
+					</DataTemplate>
+				</GridView.ItemTemplate>
+			</GridView>
+		</Grid>
+	</Grid>
 </Page>

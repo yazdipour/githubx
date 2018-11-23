@@ -21,7 +21,7 @@ namespace GithubX.Shared.Services.Pocket
 
 		public async Task<(string requestCode, Uri uri)> GenerateAuthUri()
 		{
-			RequestCode requestCode = await Api.GetRequestToken(FallBackUri, ApiKey).ConfigureAwait(false);
+			RequestCode requestCode = await Api.GetRequestToken(FallBackUri, ApiKey);
 			if (requestCode == null) throw new NullReferenceException("Null request_code");
 			const string authentificationUri = "https://getpocket.com/auth/authorize?request_token={0}&redirect_uri={1}&mobile={2}&force={3}&webauthenticationbroker={4}";
 			return (requestCode.Code, new Uri(string.Format(authentificationUri, requestCode.Code, FallBackUri, "1", "login", "1")));
@@ -30,12 +30,12 @@ namespace GithubX.Shared.Services.Pocket
 		public async Task<string> GetUserToken(string requestCode)
 		{
 			if (requestCode == null) throw new NullReferenceException("Call GetRequestCode() first to receive a request_code");
-			var user = await Api.GetUserToken(requestCode, ApiKey).ConfigureAwait(false);
+			var user = await Api.GetUserToken(requestCode, ApiKey);
 			return AccessToken = user.Access_token;
 		}
 
 		public async Task Add(Uri uri)
-			=> await Api.PostArticle(new AddParameters(uri?.AbsoluteUri, ApiKey, AccessToken)).ConfigureAwait(false);
+			=> await Api.PostArticle(new AddParameters(uri?.AbsoluteUri, ApiKey, AccessToken));
 
 		public async void LoadFromCache() => AccessToken = await BlobCache.UserAccount.GetObject<string>("pocket");
 
