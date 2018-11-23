@@ -78,7 +78,7 @@ namespace GithubX.UWP.Views
 
 		private void tabList_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap CategoriesTab");
+			//if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap CategoriesTab");
 
 			var item = e.ClickedItem as Category;
 			if (item.Id == currentTabId) return;
@@ -98,7 +98,7 @@ namespace GithubX.UWP.Views
 
 		private void AvatarBtn_Click(object sender, RoutedEventArgs e)
 		{
-			if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap Avatar.FlyoutButton");
+			//if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("Tap Avatar.FlyoutButton");
 
 			var el = sender as FrameworkElement;
 			if (el == null) return;
@@ -129,12 +129,12 @@ namespace GithubX.UWP.Views
 		#region GridView Events
 		private void AdaptiveGridViewControl_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			if (e.ClickedItem is Repo repo) Frame.Navigate(typeof(RepoPage), repo);
+			if (e.ClickedItem is Repo repo) Frame.Navigate(typeof(RepositoryPage), repo);
 		}
 
 		private void gridView_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
 		{
-			if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("RightClick Repo");
+			//if (ApiKeys.AppCenter != null) Microsoft.AppCenter.Analytics.Analytics.TrackEvent("RightClick Repo");
 
 			var senderElement = sender as GridView;
 			var repo = ((FrameworkElement)e.OriginalSource).DataContext as Repo;

@@ -11,21 +11,20 @@ namespace GithubX.Shared.Services.Pocket
 		private readonly IPocketApi Api = RestService.For<IPocketApi>("https://getpocket.com/v3/");
 		private string ApiKey { get; } //consumer_key
 		private string AccessToken { get; set; }
-		public string CallbackUri { get; }
+		public string FallBackUri { get; } = "githubx://pocket";
 
-		public PocketService(string apiKey, string callbackUri, string accessToken = null)
+		public PocketService(string apiKey, string accessToken = null)
 		{
 			ApiKey = apiKey;
-			CallbackUri = Uri.EscapeUriString(callbackUri);
 			if (accessToken != null) AccessToken = accessToken;
 		}
 
 		public async Task<(string requestCode, Uri uri)> GenerateAuthUri()
 		{
-			RequestCode requestCode = await Api.GetRequestToken(CallbackUri, ApiKey).ConfigureAwait(false);
+			RequestCode requestCode = await Api.GetRequestToken(FallBackUri, ApiKey).ConfigureAwait(false);
 			if (requestCode == null) throw new NullReferenceException("Null request_code");
 			const string authentificationUri = "https://getpocket.com/auth/authorize?request_token={0}&redirect_uri={1}&mobile={2}&force={3}&webauthenticationbroker={4}";
-			return (requestCode.Code, new Uri(string.Format(authentificationUri, requestCode.Code, CallbackUri, "1", "login", "1")));
+			return (requestCode.Code, new Uri(string.Format(authentificationUri, requestCode.Code, FallBackUri, "1", "login", "1")));
 		}
 
 		public async Task<string> GetUserToken(string requestCode)

@@ -7,6 +7,7 @@
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Background="{StaticResource BodyAcrylicBackgroundBrush}"
+	Loading="Page_Loading"
 	mc:Ignorable="d">
 	<Page.Resources>
 		<Style TargetType="TextBlock">
@@ -32,15 +33,18 @@
 			VerticalAlignment="Bottom"
 			Text="GithubX is a place to review and manage your starred repositories" />
 		<controls:Loading
-			x:Name="LoadingControl"
-			Background="#77212121"
-			IsLoading="False">
+			x:Name="loadingControl"
+			Background="#f0212121"
+			IsLoading="True"
+			Tag="Loading Credential...">
 			<StackPanel>
 				<ProgressRing
+					Width="48"
+					Height="48"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center"
-					IsEnabled="{x:Bind LoadingControl.IsLoading, Mode=OneWay}" />
-				<TextBlock Foreground="White" Text="Gadering Data ..." />
+					IsActive="{x:Bind loadingControl.IsLoading, Mode=OneWay}" />
+				<TextBlock Foreground="White" Text="{x:Bind loadingControl.Tag, Mode=OneWay}" />
 			</StackPanel>
 		</controls:Loading>
 	</Grid>

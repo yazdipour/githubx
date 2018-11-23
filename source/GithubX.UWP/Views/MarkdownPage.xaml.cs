@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace GithubX.UWP.Views
@@ -21,6 +22,11 @@ namespace GithubX.UWP.Views
 				var fileContent = await Helpers.Utils.ReadFileFromAsset("ms-appx:///Assets/Files/HELP.md");
 				markdownTextBlock.Text = $"# Github✘ v{App.Version}{fileContent}";
 			}
+		}
+
+		private async void markdownTextBlock_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)
+		{
+			await Windows.System.Launcher.LaunchUriAsync(new Uri(e?.Link));
 		}
 	}
 }

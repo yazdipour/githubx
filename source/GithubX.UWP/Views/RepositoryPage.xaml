@@ -92,6 +92,7 @@
 			</SplitView.Pane>
 			<toolkit:MarkdownTextBlock
 				Padding="8"
+				LinkClicked="MarkdownTextBlock_LinkClicked"
 				Background="{ThemeResource SystemChromeAltHighColor}"
 				Text="{x:Bind _markdownContent, Mode=TwoWay}" />
 		</SplitView>
@@ -159,10 +160,12 @@
 						Unchecked="ToggleButton_UnChecked" />
 					<CommandBar.SecondaryCommands>
 						<AppBarButton
+							Click="AppBarButton_Click"
 							Icon="Clock"
 							Label="Commits"
 							Tag="Commits" />
 						<AppBarButton
+							Click="AppBarButton_Click"
 							Icon="ReportHacked"
 							Label="{x:Bind _repository.OpenIssuesCount, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Issues '}"
 							Tag="Issues" />
@@ -171,6 +174,11 @@
 							Icon="Save"
 							Label="Save in Pocket"
 							Tag="Pocket" />
+						<AppBarButton
+							Click="AppBarButton_Click"
+							Icon="Share"
+							Label="Share"
+							Tag="Share" />
 						<AppBarButton
 							Click="AppBarButton_Click"
 							Icon="Download"

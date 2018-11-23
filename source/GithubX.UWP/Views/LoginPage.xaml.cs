@@ -2,7 +2,6 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using GithubX.Shared.Services;
-using Windows.Security.Authentication.Web;
 using Windows.UI.Popups;
 
 namespace GithubX.UWP.Views
@@ -11,31 +10,41 @@ namespace GithubX.UWP.Views
 	{
 		public LoginPage() => InitializeComponent();
 
+		private async void Page_Loading(FrameworkElement sender, object args)
+		{
+			Logger.Init(Shared.Keys.AppCenteerToken);
+			loadingControl.IsEnabled = true;
+			var cred = await GithubService.Auth.ReadCredential();
+			loadingControl.IsEnabled = false;
+			if (cred == null) return;
+			GithubService.SetClient(cred.Password);
+			Frame.Navigate(typeof(MotherPage));
+		}
+
 		private async void Login_Click(object sender, RoutedEventArgs e)
 		{
+			loadingControl.IsEnabled = true;
+			loadingControl.Tag = "Waiting for Authentication...";
 			try
 			{
-				var url = GithubService.Auth.GetOauthUrl(GithubService.Client, GithubService.ClientId, GithubService.FallBackUri);
-				WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(
-						WebAuthenticationOptions.None, url, new Uri(GithubService.FallBackUri));
-				if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
-				{
-					var response = WebAuthenticationResult.ResponseData;
-					var cred = await GithubService.Auth.GetCredentialsAsync(GithubService.Client, response, GithubService.ClientId, GithubService.ClientSecret);
-					GithubService.Auth.SaveCredential(cred);
-					GithubService.SetClient(GithubService.Auth.ReadCredential().Password);
-					Frame.Navigate(typeof(MotherPage));
-				}
-				else if (WebAuthenticationResult.ResponseStatus != WebAuthenticationStatus.UserCancel)
-					throw new Exception(WebAuthenticationResult.ResponseStatus.ToString());
+				var url = GithubService.Auth.GetOauthUrl();
+				await Helpers.Utils.OpenUri(url);
+				Octokit.Credentials cred = null;
+				while ((cred = await GithubService.Auth.ReadCredential()) == null)
+					await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(3));
+				GithubService.SetClient(cred?.Password);
+				Frame.Navigate(typeof(MotherPage));
 			}
 			catch (Exception _)
 			{
-				//Logger.Init();
-				//Logger.E(_);
+				Logger.E(_);
 				var dialog = new MessageDialog("Error! Try Again");
 				dialog.Commands.Add(new UICommand("Close"));
 				await dialog.ShowAsync();
+			}
+			finally
+			{
+				loadingControl.IsEnabled = false;
 			}
 		}
 	}

@@ -1,6 +1,9 @@
-﻿using Octokit;
+﻿using Akavache;
+using Octokit;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Reactive.Linq;
+using System;
 
 namespace GithubX.Shared.Services
 {
@@ -30,6 +33,35 @@ namespace GithubX.Shared.Services
 
 		public async Task<ObservableCollection<RepositoryContent>> GetRepositoryContent(long repoId, string path)
 			=> new ObservableCollection<RepositoryContent>(await client.Repository.Content.GetAllContents(repoId, path));
+
+		private async Task<string> GetMarkDownReadyAsync(string url, bool fromCache = true)
+		{
+			var buffer = await BlobCache.LocalMachine.DownloadUrl(url, fetchAlways: !fromCache);
+			string md = System.Text.Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+			try
+			{
+				// Html2Markdown needs HtmlAgilityPack.NugetPkg
+				//md = new Html2Markdown.Converter().Convert(md).Trim();
+				//md = md.Replace("[`", "[").Replace("`]", "]").Replace("<<", "");
+				if (md == null || md.Length < 2) return "> 404 🤔";
+				return md;
+			}
+			catch { return md; }
+		}
+		public async Task<string> GetMarkDownReadyAsync(RepositoryContent content)
+		{
+			var type = content.Name.Substring(content.Name.LastIndexOf("."));
+			if (type.Equals("png", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("jpg", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("jpeg", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("bmp", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("tiff", StringComparison.OrdinalIgnoreCase))
+				return $"![]({content.Url})";
+			var oldSha = await BlobCache.LocalMachine.GetObject<string>("_" + content.Url) ?? "";
+			await BlobCache.LocalMachine.InsertObject("_" + content.Url, content.Sha);
+			var result = await GetMarkDownReadyAsync(content.Url, content.Sha.Equals(oldSha));
+			return type.Equals("md", StringComparison.OrdinalIgnoreCase) ? result : $"``` {result} ```";
+		}
 		#endregion
 
 		#region Branch

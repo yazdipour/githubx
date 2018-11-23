@@ -1,5 +1,6 @@
 ﻿using Octokit;
 using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
 
@@ -7,47 +8,48 @@ namespace GithubX.Shared.Services
 {
 	public class AuthService
 	{
-		public Uri GetOauthUrl(GitHubClient client, string ClientId, string FallBackUri)
+		public Uri GetOauthUrl()
 		{
-			var request = new OauthLoginRequest(ClientId)
+			var request = new OauthLoginRequest(GithubService.ClientId)
 			{
 				Scopes = { "user", "repo", "gist" },
-				RedirectUri = new Uri(FallBackUri),
+				RedirectUri = new Uri(GithubService.FallBackUri),
 			};
-			return client?.Oauth?.GetGitHubLoginUrl(request);
+			return GithubService.Client.Oauth?.GetGitHubLoginUrl(request);
 		}
 
-		public async Task<Credentials> GetCredentialsAsync
-			(GitHubClient client, string response, string clientId, string clientSecret)
+		public async Task<Credentials> GetCredentialsAsync(string response)
 		{
 			try
 			{
 				string responseData = response.Substring(response.IndexOf("code"));
 				string[] keyValPairs = responseData.Split('=');
 				string code = keyValPairs[1].Split('&')[0];
-				var request = new OauthTokenRequest(clientId, clientSecret, code);
-				var token = await client.Oauth.CreateAccessToken(request).ConfigureAwait(false);
+				var request = new OauthTokenRequest(GithubService.ClientId, GithubService.ClientSecret, code);
+				var token = await GithubService.Client.Oauth.CreateAccessToken(request);
 				return new Credentials(token.AccessToken);
 			}
 			catch (Exception e)
 			{
-				//Log e
+				Logger.E(e);
 				return null;
 			}
 		}
 
 		public void SaveCredential(Credentials credentials)
-			=> BlobCache.Secure.SaveLogin(credentials.Login, credentials.GetToken());
+			=> BlobCache.UserAccount.InsertObject(GithubService.FallBackUri, credentials.GetToken());
 
-		public Credentials ReadCredential()
+		public async Task<Credentials> ReadCredential()
 		{
-			Credentials c = null;
-			var result = BlobCache.Secure.GetLoginAsync()
-				.Subscribe(_ => c = new Credentials(_.UserName, _.Password));
-			return c;
+			try
+			{
+				var token= await BlobCache.UserAccount.GetObject<string>(GithubService.FallBackUri);
+				return new Credentials(token);
+			}
+			catch { return null; }
 		}
 
-		public bool IsLoggedIn(GitHubClient client) => client.Credentials != null;
+		public bool IsLoggedIn() => GithubService.Client.Credentials != null;
 
 		public void LogOut() => BlobCache.Secure.EraseLogin();
 	}

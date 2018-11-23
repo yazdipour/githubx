@@ -10,5 +10,6 @@
 	<toolkit:MarkdownTextBlock
 		x:Name="markdownTextBlock"
 		Padding="16,32"
+		LinkClicked="markdownTextBlock_LinkClicked"
 		Background="Transparent" />
 </Page>

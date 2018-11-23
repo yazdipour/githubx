@@ -24,8 +24,7 @@ namespace GithubX.UWP.Helpers
 				StorageFolder folder = KnownFolders.VideosLibrary;
 				if (string.IsNullOrWhiteSpace(url) || !Uri.TryCreate(url, UriKind.Absolute, out source))
 					throw new Exception("Invalid URI");
-				StorageFile destinationFile;
-				destinationFile = await folder.CreateFileAsync(name, CreationCollisionOption.GenerateUniqueName);
+				StorageFile destinationFile = await folder.CreateFileAsync(name, CreationCollisionOption.GenerateUniqueName);
 				var download = new BackgroundDownloader().CreateDownload(source, destinationFile);
 				download.Priority = BackgroundTransferPriority.High;
 				await download.StartAsync().AsTask(token);
@@ -54,7 +53,10 @@ namespace GithubX.UWP.Helpers
 			=> await FileIO.ReadTextAsync(await StorageFile.GetFileFromApplicationUriAsync(new Uri(uri)));
 
 		public static async Task OpenUri(string uri)
-			=> await Windows.System.Launcher.LaunchUriAsync(new Uri(uri));
+			=> await OpenUri(new Uri(uri));
+
+		public static async Task OpenUri(Uri uri)
+			=> await Windows.System.Launcher.LaunchUriAsync(uri);
 
 		public static void ChangeHeaderTheme(string resourceKey, string HexColor)
 		{
@@ -66,27 +68,6 @@ namespace GithubX.UWP.Helpers
 		{
 			var cl = (AcrylicBrush)Windows.UI.Xaml.Application.Current.Resources[resourceKey];
 			cl.TintColor = cl.FallbackColor = color;
-		}
-
-		public static async Task<string> GetMarkDownReadyAsync(string url, bool fromCache = true)
-		{
-			var buffer = await BlobCache.LocalMachine.DownloadUrl(url, fetchAlways: !fromCache);
-			string md = System.Text.Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-			try
-			{
-				// Html2Markdown needs HtmlAgilityPack.NugetPkg
-				md = new Html2Markdown.Converter().Convert(md).Trim();
-				//md = md.Replace("[`", "[").Replace("`]", "]").Replace("<<", "");
-				if (md == null || md.Length < 2) return "> 404 🤔";
-				return md;
-			}
-			catch { return md; }
-		}
-		public static async Task<string> GetMarkDownReadyAsync(string url, string sha)
-		{
-			var oldSha = await BlobCache.LocalMachine.GetObject<string>("_" + url) ?? "";
-			await BlobCache.LocalMachine.InsertObject("_" + url, sha);
-			return await GetMarkDownReadyAsync(url, sha.Equals(oldSha));
 		}
 	}
 }

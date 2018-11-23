@@ -1,4 +1,5 @@
-﻿using Windows.ApplicationModel;
+﻿using GithubX.Shared.Services;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,12 +35,14 @@ namespace GithubX.UWP
 		private void OnSuspending(object sender, SuspendingEventArgs e) =>
 			e.SuspendingOperation.GetDeferral().Complete();
 
-		protected override void OnActivated(IActivatedEventArgs args)
+		protected async override void OnActivated(IActivatedEventArgs args)
 		{
 			switch (args.Kind)
 			{
 				case ActivationKind.Protocol:
-					string uri = ((ProtocolActivatedEventArgs)args)?.Uri?.ToString();
+					string response = ((ProtocolActivatedEventArgs)args)?.Uri?.ToString();
+					if (response.Contains(GithubService.FallBackUri))
+						GithubService.Auth.SaveCredential(await GithubService.Auth.GetCredentialsAsync(response));
 					break;
 				case ActivationKind.CommandLineLaunch:
 					OnLaunched(null);

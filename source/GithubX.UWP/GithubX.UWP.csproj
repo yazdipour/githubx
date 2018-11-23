@@ -105,7 +105,6 @@
     <Compile Include="Converters\StringConcatConverter.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\Services\Api\ApiHandler.cs" />
-    <Compile Include="Helpers\Services\Api\ApiKeys.cs" />
     <Compile Include="Helpers\Services\Api\IGithubApi.cs" />
     <Compile Include="Helpers\Services\Api\IXApi.cs" />
     <Compile Include="Helpers\Services\CacheKeys.cs" />
@@ -164,9 +163,6 @@
     </Compile>
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RepoPage.xaml.cs">
-      <DependentUpon>RepoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListPage.xaml.cs">
       <DependentUpon>ListPage.xaml</DependentUpon>
@@ -318,10 +314,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProfilePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RepoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

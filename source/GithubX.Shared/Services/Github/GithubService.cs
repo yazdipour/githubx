@@ -6,8 +6,8 @@ namespace GithubX.Shared.Services
 	{
 		//TODO: revoke these keys and get new ones and Ignore them
 		public const string AppName = "XGithub";
-		public const string ClientId = "2e33e200f38ca1bb532b";
-		public const string ClientSecret = "4162f549c706999244a32f035d658c94dc1a16dd";
+		public const string ClientId = Keys.GithubClientId;
+		public const string ClientSecret = Keys.GithubClientSecret;
 		public const string FallBackUri = "githubx://auth";
 		public static GitHubClient Client { get; set; } = new GitHubClient(new ProductHeaderValue(AppName));
 		public static AuthService Auth = new AuthService();
