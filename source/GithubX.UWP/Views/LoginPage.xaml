@@ -12,6 +12,7 @@
 	extensions:TitleBarExtensions.ButtonBackgroundColor="Transparent"
 	extensions:TitleBarExtensions.ButtonForegroundColor="White"
 	extensions:TitleBarExtensions.ForegroundColor="White"
+	extensions:TitleBarExtensions.InactiveBackgroundColor="Transparent"
 	Background="{StaticResource BodyAcrylicBackgroundBrush}"
 	Loading="Page_Loading"
 	mc:Ignorable="d">

@@ -34,7 +34,7 @@
 				Background="Gray"
 				CornerRadius="6"
 				PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
-				Source="{x:Bind _user.AvatarUrl.ToString()}"
+				Source="{x:Bind _user.AvatarUrl}"
 				Stretch="UniformToFill" />
 			<RichTextBlock
 				Margin="0,4"
@@ -61,7 +61,8 @@
 					</Hyperlink>
 				</Paragraph>
 				<Paragraph>
-					🌐<Hyperlink NavigateUri="{x:Bind _user.Blog}">
+					<Hyperlink NavigateUri="{x:Bind _user.Blog}">
+						🌐
 						<Run Text="{x:Bind _user.Blog}" />
 					</Hyperlink>
 				</Paragraph>

@@ -8,26 +8,29 @@ namespace GithubX.UWP.Views
 	public sealed partial class GistsPage : Page
 	{
 		private ObservableCollection<Octokit.Gist> gists = new ObservableCollection<Octokit.Gist>();
+		private Octokit.User previousUser;
+		public GistsPage() => InitializeComponent();
 
-		public GistsPage()
-		{
-			this.InitializeComponent();
-			Loaded += async (_, __) =>
-			{
-				var x = await GithubService.Client.Gist.GetAll();
-				var temp = await GithubService.UserService.GetUserGists(new Octokit.ApiOptions() { PageSize = 10, StartPage = 0 }, "yazdipour");
-				foreach (var t in x) gists.Add(t);
-			};
-		}
-
-		protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected async override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+			if (e.Parameter is Octokit.User user)
+			{
+				if (user == previousUser && gists.Count > 0)
+					return;
+				previousUser = user;
+			}
+			else
+			{
+				previousUser = null;
+				if (gists.Count > 0) return;
+			}
+			var temp = await GithubService.UserService.GetUserGists(previousUser?.Login);
+			gists.Clear();
+			foreach (var t in temp) gists.Add(t);
 		}
 
 		private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			Frame.Navigate(typeof(RepositoryPage));
-		}
+			=> Frame.Navigate(typeof(GistPage), e?.ClickedItem as Octokit.Gist);
 	}
 }

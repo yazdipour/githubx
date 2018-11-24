@@ -13,12 +13,9 @@
 		<StackPanel Style="{StaticResource CardStack}">
 			<TextBlock
 				Grid.Column="1"
-				Margin="8,0"
-				VerticalAlignment="Center"
 				Text="{Binding Description}"
 				TextWrapping="NoWrap" />
 			<TextBlock
-				VerticalAlignment="Center"
 				FontSize="11"
 				FontWeight="SemiLight"
 				Text="{Binding CreatedAt}"

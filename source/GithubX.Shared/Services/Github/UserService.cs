@@ -1,6 +1,5 @@
 ﻿using Octokit;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace GithubX.Shared.Services
@@ -11,7 +10,7 @@ namespace GithubX.Shared.Services
 		public UserService(ref GitHubClient client) => this.client = client;
 
 		public Task<User> GetUser(string userName = null)
-			=> userName == null ? client?.User?.Current() : client?.User?.Get(userName);
+			=> userName != null ? client?.User?.Get(userName): client?.User?.Current();
 
 		#region Following/er
 		public async Task<bool> FollowUserAsync(string user)
@@ -31,10 +30,10 @@ namespace GithubX.Shared.Services
 		#endregion
 
 		#region Gist
-		public async Task<IReadOnlyList<Gist>> GetUserGists(ApiOptions options, string user = null)
+		public async Task<IReadOnlyList<Gist>> GetUserGists(string user = null)
 			=> (user == null)
-			? await client.Gist.GetAll(options)
-			: await client.Gist.GetAllForUser(user, options);
+			? await client.Gist.GetAll()
+			: await client.Gist.GetAllForUser(user);
 		#endregion
 
 		#region Repos

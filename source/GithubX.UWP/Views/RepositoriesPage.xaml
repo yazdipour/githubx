@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:octo="using:Octokit"
 	mc:Ignorable="d">
 	<GridView ItemsSource="{x:Bind repositories}" Style="{StaticResource MainGridView}">
 		<GridView.ItemTemplate>

@@ -10,7 +10,6 @@
 	Loaded="Page_Loaded"
 	RequestedTheme="Light"
 	mc:Ignorable="d">
-
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="32" />

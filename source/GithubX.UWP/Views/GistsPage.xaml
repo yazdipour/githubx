@@ -7,15 +7,24 @@
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:octo="using:Octokit"
+	NavigationCacheMode="Enabled"
 	mc:Ignorable="d">
-	<GridView
-		ItemClick="GridView_ItemClick"
-		ItemsSource="{x:Bind gists}"
-		Style="{StaticResource MainGridView}">
-		<GridView.ItemTemplate>
-			<DataTemplate x:DataType="octo:Gist">
-				<ctrl:GistItem />
-			</DataTemplate>
-		</GridView.ItemTemplate>
-	</GridView>
+	<Grid>
+		<TextBlock
+			Margin="16"
+			Style="{StaticResource TitleTextBlockStyle}"
+			Text="Gists" />
+		<GridView
+			Margin="8,42,0,0"
+			ItemClick="GridView_ItemClick"
+			ItemsSource="{x:Bind gists}"
+			ScrollViewer.HorizontalScrollMode="Auto"
+			Style="{StaticResource MainGridView}">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="octo:Gist">
+					<ctrl:GistItem />
+				</DataTemplate>
+			</GridView.ItemTemplate>
+		</GridView>
+	</Grid>
 </Page>
