@@ -134,6 +134,12 @@
     <Compile Include="Views\AddCategoryDialog.xaml.cs">
       <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\NotificationDialog.xaml.cs">
+      <DependentUpon>NotificationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GistPage.xaml.cs">
       <DependentUpon>GistPage.xaml</DependentUpon>
     </Compile>
@@ -143,8 +149,8 @@
     <Compile Include="Views\Controls\NotificationItem.xaml.cs">
       <DependentUpon>NotificationItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\CategoryPanel.xaml.cs">
-      <DependentUpon>CategoryPanel.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\CategoryDialog.xaml.cs">
+      <DependentUpon>CategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FollowPage.xaml.cs">
       <DependentUpon>FollowPage.xaml</DependentUpon>
@@ -272,6 +278,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\NotificationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GistPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -284,7 +298,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Dialogs\CategoryPanel.xaml">
+    <Page Include="Views\Dialogs\CategoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
