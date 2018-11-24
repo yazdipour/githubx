@@ -103,6 +103,7 @@
     <Compile Include="Converters\FalseToVisibleConverter.cs" />
     <Compile Include="Converters\LanguageToColorConverter.cs" />
     <Compile Include="Converters\StringConcatConverter.cs" />
+    <Compile Include="Converters\TypeToActionStringConverter.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\Services\Api\ApiHandler.cs" />
     <Compile Include="Helpers\Services\Api\IGithubApi.cs" />
@@ -154,18 +155,12 @@
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\MotherPage.xaml.cs">
       <DependentUpon>MotherPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ListPage.xaml.cs">
-      <DependentUpon>ListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RepositoriesPage.xaml.cs">
       <DependentUpon>RepositoriesPage.xaml</DependentUpon>
@@ -305,19 +300,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\MotherPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProfilePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

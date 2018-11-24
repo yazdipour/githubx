@@ -7,12 +7,24 @@
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:octo="using:Octokit"
+	Loaded="Page_Loaded"
 	mc:Ignorable="d">
-	<GridView ItemsSource="{x:Bind repositories}" Style="{StaticResource MainGridView}">
-		<GridView.ItemTemplate>
-			<DataTemplate>
-				<ctrl:RepositoryItem />
-			</DataTemplate>
-		</GridView.ItemTemplate>
-	</GridView>
+	<Grid>
+		<TextBlock
+			Margin="16"
+			Style="{StaticResource TitleTextBlockStyle}"
+			Text="{x:Bind Title}" />
+		<GridView
+			Margin="8,42,0,0"
+			ItemClick="GridView_ItemClick"
+			ItemsSource="{x:Bind repositories}"
+			ScrollViewer.HorizontalScrollMode="Auto"
+			Style="{StaticResource MainGridView}">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="octo:Repository">
+					<ctrl:RepositoryItem Repo="{x:Bind}"/>
+				</DataTemplate>
+			</GridView.ItemTemplate>
+		</GridView>
+	</Grid>
 </Page>

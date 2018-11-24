@@ -50,7 +50,7 @@ namespace GithubX.UWP.Views
 			}
 			else
 			{
-				await new SettingsDialog().ShowAsync();
+				//await new SettingsDialog().ShowAsync();
 				navigationView.SelectedItem = null;
 			}
 		}

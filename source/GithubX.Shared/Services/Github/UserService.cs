@@ -10,7 +10,7 @@ namespace GithubX.Shared.Services
 		public UserService(ref GitHubClient client) => this.client = client;
 
 		public Task<User> GetUser(string userName = null)
-			=> userName != null ? client?.User?.Get(userName): client?.User?.Current();
+			=> userName != null ? client?.User?.Get(userName) : client?.User?.Current();
 
 		#region Following/er
 		public async Task<bool> FollowUserAsync(string user)
@@ -22,11 +22,15 @@ namespace GithubX.Shared.Services
 		public async Task<bool> IsFollowAsync(string user)
 			=> await client.User.Followers.IsFollowingForCurrent(user);
 
-		public async Task<IReadOnlyList<User>> GetAllFollowing(string user, ApiOptions options)
-			=> (await client.User.Followers.GetAllFollowing(user, options));
+		public async Task<IReadOnlyList<User>> GetAllFollowing(ApiOptions options, string user = null)
+			=> user == null
+			? await client.User.Followers.GetAllFollowingForCurrent(options)
+			: await client.User.Followers.GetAllFollowing(user, options);
 
-		public async Task<IReadOnlyList<User>> GetAllFollowers(string user, ApiOptions options)
-			=> (await client.User.Followers.GetAll(user, options));
+		public async Task<IReadOnlyList<User>> GetAllFollowers(ApiOptions options, string user = null)
+			=> user == null
+			? await client.User.Followers.GetAllForCurrent(options)
+			: await client.User.Followers.GetAll(user, options);
 		#endregion
 
 		#region Gist
@@ -45,15 +49,14 @@ namespace GithubX.Shared.Services
 		#endregion
 
 		#region Star
-		public async Task<IReadOnlyList<Repository>> GetStarredRepositories(ApiOptions options)
-			=> (await client.Activity.Starring.GetAllForCurrent(options));
-
-		public async Task<IReadOnlyList<Repository>> GetStarredRepositoriesForUser(string user, ApiOptions options)
-			=> (await client.Activity.Starring.GetAllForUser(user, options));
+		public async Task<IReadOnlyList<Repository>> GetStarredRepositories(ApiOptions options, string user = null)
+			=> (user == null)
+			? (await client.Activity.Starring.GetAllForCurrent(options))
+			: (await client.Activity.Starring.GetAllForUser(user, options));
 		#endregion
 
-		public async Task<IReadOnlyList<Activity>> GetUserActivity(string user, ApiOptions options)
-			=> await client.Activity.Events.GetAllUserReceivedPublic(user, options);
+		public async Task<IReadOnlyList<Activity>> GetUserActivity(ApiOptions options, string user)
+			=> await client.Activity.Events.GetAllUserReceived(user, options);
 
 		#region Notification
 		public async Task<IReadOnlyList<Notification>> GetAllNotifications(ApiOptions options)

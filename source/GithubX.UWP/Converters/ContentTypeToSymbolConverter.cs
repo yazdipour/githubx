@@ -9,15 +9,19 @@ namespace GithubX.UWP.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			switch ((ContentType)value)
-			{
-				case ContentType.Submodule:
-					return Symbol.MapDrive;
-				case ContentType.Dir:
-					return Symbol.Folder;
-				default:
-					return Symbol.Page;
-			}
+			if (value is ContentType type)
+				switch (type)
+				{
+					case ContentType.Submodule:
+						return Symbol.MapDrive;
+					case ContentType.Dir:
+						return Symbol.Folder;
+					default:
+						return Symbol.Page;
+				}
+			else if (value.ToString().Contains("Pull"))
+				return Symbol.Shuffle;
+			else return Symbol.Import;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)

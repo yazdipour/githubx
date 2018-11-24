@@ -9,13 +9,16 @@
 	mc:Ignorable="d">
 	<UserControl.Resources>
 		<converters:StringConcatConverter x:Key="StringConcatConverter" x:Name="StringConcatConverter" />
+		<converters:TypeToActionStringConverter x:Key="TypeToActionStringConverter" x:Name="TypeToActionStringConverter" />
 	</UserControl.Resources>
-	<StackPanel>
+	<StackPanel Padding="4">
 		<TextBlock Margin="0,4" FontWeight="SemiLight">
-			<Hyperlink NavigateUri="{x:Bind User, Converter={StaticResource StringConcatConverter}, ConverterParameter='githubx://user/'}">
-				<Run Text="{x:Bind Msg}" />
-			</Hyperlink> <Run FontWeight="Bold" Text="{x:Bind Msg}" />
+			<Hyperlink UnderlineStyle="None" NavigateUri="{Binding Actor.Login, Converter={StaticResource StringConcatConverter}, ConverterParameter='githubx://user/', ConverterLanguage='End'}">
+				<Run Text="{Binding Actor.Login}" />
+			</Hyperlink> <Run FontWeight="Bold" Text="{Binding Type, Converter={StaticResource TypeToActionStringConverter}}" />
 		</TextBlock>
-		<local:RepositoryItem Repo="{x:Bind repository}" />
+		<local:RepositoryItem Repo="{Binding Repo}" />
+		<TextBlock Text="{Binding CreatedAt.LocalDateTime}" Style="{ThemeResource CaptionTextBlockStyle}"
+				   HorizontalAlignment="Right" FontSize="10"/>
 	</StackPanel>
 </UserControl>

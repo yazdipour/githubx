@@ -7,15 +7,23 @@
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:octo="using:Octokit"
+	Loaded="Page_Loaded"
+	NavigationCacheMode="Enabled"
 	mc:Ignorable="d">
-	<GridView
-		Header="{x:Bind Title}"
-		ItemsSource="{x:Bind users}"
-		Style="{StaticResource MainGridView}">
-		<GridView.ItemTemplate>
-			<DataTemplate>
-				<ctrl:UserItem />
-			</DataTemplate>
-		</GridView.ItemTemplate>
-	</GridView>
+	<Grid>
+		<TextBlock
+			Margin="16"
+			Style="{StaticResource TitleTextBlockStyle}"
+			Text="{x:Bind Title}" />
+		<GridView
+			Margin="8,42,0,0"
+			ItemsSource="{x:Bind users}"
+			Style="{StaticResource MainGridView}">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="octo:User">
+					<ctrl:UserItem />
+				</DataTemplate>
+			</GridView.ItemTemplate>
+		</GridView>
+	</Grid>
 </Page>

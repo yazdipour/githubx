@@ -125,7 +125,7 @@ namespace GithubX.UWP.Views
 					var pkg = new DataPackage();
 					pkg.SetText(_repository.CloneUrl);
 					Clipboard.SetContent(pkg);
-					MainPage.NotifyElement.Show("Copied", 2000);
+					MotherPage.NotifyElement.Show("Copied", 2000);
 					break;
 				case "Category":
 					break;
@@ -150,7 +150,7 @@ namespace GithubX.UWP.Views
 				if (pocket.IsLoggedIn())
 				{
 					await pocket.Add(new Uri(url));
-					MainPage.NotifyElement.Show("✔ Saved in your Pocket", 3000);
+					MotherPage.NotifyElement.Show("✔ Saved in your Pocket", 3000);
 				}
 				else
 				{
@@ -163,13 +163,13 @@ namespace GithubX.UWP.Views
 						var res = auth.ResponseData;
 						var token = await pocket.GetUserToken(requestCode);
 						pocket.SaveInCache();
-						MainPage.NotifyElement.Show((token?.Length > 1) ? "✔ Logged in Pocket" : "✖ Failed to login", 3000);
+						MotherPage.NotifyElement.Show((token?.Length > 1) ? "✔ Logged in Pocket" : "✖ Failed to login", 3000);
 					}));
 					dialog.Commands.Add(new UICommand("Cancel"));
 					await dialog.ShowAsync();
 				}
 			}
-			catch { MainPage.NotifyElement.Show("✖ Error!", 3000); }
+			catch { MotherPage.NotifyElement.Show("✖ Error!", 3000); }
 		}
 
 		private async void MarkdownTextBlock_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)

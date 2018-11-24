@@ -6,8 +6,6 @@
 	xmlns:local="using:GithubX.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	d:DesignHeight="300"
-	d:DesignWidth="400"
 	mc:Ignorable="d">
 	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
 		<StackPanel Style="{StaticResource CardStack}">
@@ -16,9 +14,10 @@
 				Text="{Binding Description}"
 				TextWrapping="NoWrap" />
 			<TextBlock
+				HorizontalAlignment="Right"
 				FontSize="11"
 				FontWeight="SemiLight"
-				Text="{Binding CreatedAt}"
+				Text="{Binding CreatedAt.LocalDateTime}"
 				TextWrapping="NoWrap" />
 		</StackPanel>
 	</toolkit:DropShadowPanel>

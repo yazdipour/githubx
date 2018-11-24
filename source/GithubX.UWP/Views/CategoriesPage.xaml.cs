@@ -16,5 +16,10 @@ namespace GithubX.UWP.Views
 		{
 			try { await new AddCategoryDialog().ShowAsync(); } catch { }
 		}
+
+		private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+
+		}
 	}
 }

@@ -7,7 +7,7 @@ namespace GithubX.UWP.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			var res = language.Equals("End", StringComparison.OrdinalIgnoreCase)
+			var res = language.Equals("End")
 					   ? (string)parameter + (string)value
 					   : (string)value + (string)parameter;
 			if (targetType.Name == "Uri") return new Uri(res);

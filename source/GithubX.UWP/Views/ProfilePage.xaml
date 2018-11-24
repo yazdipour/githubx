@@ -50,18 +50,13 @@
 					<Run Text="{x:Bind _user.Bio}" />
 				</Paragraph>
 				<Paragraph>
-					🏪<Run Text="{x:Bind _user.Company}" />
-				</Paragraph>
-				<Paragraph>
-					🗺<Run Text="{x:Bind _user.Location}" />
-				</Paragraph>
-				<Paragraph>
-					✉<Hyperlink NavigateUri="{x:Bind _user.Email, Converter={StaticResource StringConcatConverter}, ConverterParameter='mailto:', ConverterLanguage='End'}">
+					🏪 <Run Text="{x:Bind _user.Company}" />
+					<LineBreak/>🗺 <Run Text="{x:Bind _user.Location}" />
+					<LineBreak/><Hyperlink NavigateUri="{x:Bind _user.Email, Converter={StaticResource StringConcatConverter}, ConverterParameter='mailto:', ConverterLanguage='End'}">
+						✉
 						<Run Text="{x:Bind _user.Email}" />
 					</Hyperlink>
-				</Paragraph>
-				<Paragraph>
-					<Hyperlink NavigateUri="{x:Bind _user.Blog}">
+					<LineBreak/><Hyperlink NavigateUri="{x:Bind _user.Blog}">
 						🌐
 						<Run Text="{x:Bind _user.Blog}" />
 					</Hyperlink>
@@ -84,7 +79,7 @@
 			<GridView
 				Margin="8,52,0,4"
 				ItemClick="Notification_ItemClick"
-				ItemsSource="{x:Bind _notifications, Mode=OneWay}"
+				ItemsSource="{x:Bind _notifications}"
 				Style="{StaticResource MainGridView}">
 				<GridView.ItemTemplate>
 					<DataTemplate x:DataType="octo:Notification">

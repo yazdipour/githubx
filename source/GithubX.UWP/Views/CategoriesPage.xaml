@@ -6,14 +6,21 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:model="using:GithubX.Shared.Models"
 	mc:Ignorable="d">
 	<Grid>
+		<TextBlock
+			Margin="16"
+			Style="{StaticResource TitleTextBlockStyle}"
+			Text="Categories" />
 		<GridView
-			Header="Categories"
+			Margin="8,42,0,0"
+			ItemClick="GridView_ItemClick"
 			ItemsSource="{x:Bind categories}"
+			ScrollViewer.HorizontalScrollMode="Auto"
 			Style="{ThemeResource MainGridView}">
 			<GridView.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate x:DataType="model:Category">
 					<ctrl:CategoryItem />
 				</DataTemplate>
 			</GridView.ItemTemplate>

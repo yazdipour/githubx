@@ -43,6 +43,8 @@
 				<Setter Property="IsItemClickEnabled" Value="True" />
 				<Setter Property="IsSwipeEnabled" Value="True" />
 				<Setter Property="SelectionMode" Value="None" />
+				<Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto" />
+				<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
 				<Setter Property="HeaderTemplate">
 					<Setter.Value>
 						<DataTemplate>

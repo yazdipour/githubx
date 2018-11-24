@@ -2,37 +2,34 @@
 	x:Class="GithubX.UWP.Views.Controls.NotificationItem"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters="using:GithubX.UWP.Converters"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
+	<UserControl.Resources>
+		<converters:ContentTypeToSymbolConverter x:Key="ContentTypeToSymbolConverter" x:Name="ContentTypeToSymbolConverter" />
+	</UserControl.Resources>
 	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
 		<Grid Style="{StaticResource CardGrid}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<TextBlock
+			<SymbolIcon
 				Margin="4,8"
 				VerticalAlignment="Center"
-				FontSize="2"
-				Text="{Binding Subject.Type}" />
+				Symbol="{Binding Subject.Type, Converter={StaticResource ContentTypeToSymbolConverter}}" />
 			<TextBlock
 				Grid.Column="1"
 				VerticalAlignment="Center"
-				MaxLines="1">
-				<Run Text="{Binding Subject.Title}" /><LineBreak /><Run FontSize="12" Text="{Binding LastReadAt}" />
+				MaxLines="2">
+				<Run Text="{Binding Subject.Title}" /><LineBreak /><Run FontSize="12" Text="{Binding UpdatedAt}" />
 			</TextBlock>
 			<SymbolIcon
 				Grid.Column="2"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Center"
-				Symbol="Mute" />
-			<SymbolIcon
-				Grid.Column="3"
 				Margin="8,0"
 				HorizontalAlignment="Right"
 				VerticalAlignment="Center"

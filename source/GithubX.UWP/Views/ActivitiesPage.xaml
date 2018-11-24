@@ -8,15 +8,25 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:octo="using:Octokit"
 	Loaded="Page_Loaded"
+	NavigationCacheMode="Enabled"
 	mc:Ignorable="d">
-	<GridView
-		Header="Activities"
-		ItemsSource="{x:Bind activityRepositories}"
-		Style="{StaticResource MainGridView}">
-		<GridView.ItemTemplate>
-			<DataTemplate x:DataType="octo:Activity">
-				<ctrl:ActivityItem Repository="{Binding}" />
-			</DataTemplate>
-		</GridView.ItemTemplate>
-	</GridView>
+	<Grid>
+		<TextBlock
+			Margin="16"
+			Style="{StaticResource TitleTextBlockStyle}"
+			Text="Activities" />
+		<GridView
+			Margin="8,42,0,0"
+			ItemClick="GridView_ItemClick"
+			ItemsSource="{x:Bind activityRepositories}"
+			ScrollViewer.HorizontalScrollMode="Auto"
+			ScrollViewer.HorizontalScrollBarVisibility="Auto"
+			Style="{StaticResource MainGridView}">
+			<GridView.ItemTemplate>
+				<DataTemplate x:DataType="octo:Activity">
+					<ctrl:ActivityItem />
+				</DataTemplate>
+			</GridView.ItemTemplate>
+		</GridView>
+	</Grid>
 </Page>

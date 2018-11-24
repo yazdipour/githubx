@@ -17,7 +17,7 @@
 		CornerRadius="6"
 		PlaceholderSource="ms-appx:///Assets/Files/Placeholder.png"
 		PlaceholderStretch="UniformToFill"
-		Source="{Binding Owner.AvatarUrl}"
+		Source="{Binding AvatarUrl}"
 		Stretch="UniformToFill"
 		ToolTipService.ToolTip="{Binding Login}" />
 </UserControl>
