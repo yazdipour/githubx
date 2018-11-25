@@ -6,19 +6,39 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
 	<UserControl.Resources>
 		<converters:StringConcatConverter x:Key="StringConcatConverter" x:Name="StringConcatConverter" />
 		<converters:TypeToActionStringConverter x:Key="TypeToActionStringConverter" x:Name="TypeToActionStringConverter" />
 	</UserControl.Resources>
-	<StackPanel Padding="4">
-		<TextBlock Margin="0,4" FontWeight="SemiLight">
-			<Hyperlink UnderlineStyle="None" NavigateUri="{Binding Actor.Login, Converter={StaticResource StringConcatConverter}, ConverterParameter='githubx://user/', ConverterLanguage='End'}">
-				<Run Text="{Binding Actor.Login}" />
-			</Hyperlink> <Run FontWeight="Bold" Text="{Binding Type, Converter={StaticResource TypeToActionStringConverter}}" />
-		</TextBlock>
-		<local:RepositoryItem Repo="{Binding Repo}" />
-		<TextBlock Text="{Binding CreatedAt.LocalDateTime}" Style="{ThemeResource CaptionTextBlockStyle}"
-				   HorizontalAlignment="Right" FontSize="10"/>
-	</StackPanel>
+	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
+		<Grid Style="{StaticResource CardGrid}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<toolkit:ImageEx
+				CornerRadius="6"
+				Source="{Binding Actor.AvatarUrl}"
+				Style="{StaticResource ImageCard}" />
+			<StackPanel
+				Grid.Column="1"
+				Margin="8,0"
+				VerticalAlignment="Center">
+				<TextBlock FontWeight="SemiLight">
+					<Hyperlink NavigateUri="{Binding Actor.Login, Converter={StaticResource StringConcatConverter}, ConverterParameter='githubx://user/', ConverterLanguage='End'}" UnderlineStyle="None">
+						<Run FontWeight="SemiBold" Text="{Binding Actor.Login}" />
+					</Hyperlink> <Run Text="{Binding Type, Converter={StaticResource TypeToActionStringConverter}}" />
+					<LineBreak />
+					<Run FontWeight="SemiBold" Text="{Binding Repo.Name}" />
+				</TextBlock>
+				<TextBlock
+					Margin="0,4,0,0"
+					FontSize="9"
+					Style="{ThemeResource CaptionTextBlockStyle}"
+					Text="{Binding CreatedAt.LocalDateTime}" />
+			</StackPanel>
+		</Grid>
+	</toolkit:DropShadowPanel>
 </UserControl>

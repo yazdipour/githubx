@@ -16,7 +16,6 @@ namespace GithubX.UWP.Views
 	public sealed partial class RepositoryPage : Windows.UI.Xaml.Controls.Page
 	{
 		private ObservableCollection<RepositoryContent> _contents = new ObservableCollection<RepositoryContent>();
-		private string _markdownContent { get; set; } = "> Loading";
 		private Repository _repository { get; set; }
 		private string currentBranch { get; set; } = "master";
 
@@ -27,7 +26,7 @@ namespace GithubX.UWP.Views
 			{
 				DataRequest request = args.Request;
 				request.Data.SetText(_repository.HtmlUrl);
-				request.Data.Properties.Title = "Shared by GithubX";
+				request.Data.Properties.Title = "Checkout this Repo, SharedBy_GithubX";
 			};
 		}
 
@@ -36,7 +35,8 @@ namespace GithubX.UWP.Views
 			if (_repository == null) return;
 			var temp = await GithubService.RepositoryService.GetRepositoryContent(_repository.Id);
 			foreach (var t in temp) _contents.Add(t);
-			_markdownContent = (await GithubService.RepositoryService.GetRepositoryReadme(_repository.Id))?.Content;
+			try { markDown.Text = (await GithubService.RepositoryService.GetRepositoryReadme(_repository.Id))?.Content; }
+			catch { }
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -58,12 +58,12 @@ namespace GithubX.UWP.Views
 				case ContentType.File:
 					try
 					{
-						_markdownContent = "> Loading";
-						_markdownContent = await GithubService.RepositoryService.GetMarkDownReadyAsync(content);
+						markDown.Text = "> Loading";
+						markDown.Text = await GithubService.RepositoryService.GetMarkDownReadyAsync(content);
 					}
 					catch
 					{
-						_markdownContent = "> Unsupported file ***OR*** Error happend while getting the file.";
+						markDown.Text = "> Unsupported file ***OR*** Error happend while getting the file.";
 					}
 					break;
 				case ContentType.Submodule:
@@ -109,17 +109,17 @@ namespace GithubX.UWP.Views
 			switch (btn?.Tag?.ToString())
 			{
 				case "Pocket":
-					await SaveInPocketAsync(_repository.Url);
+					await SaveInPocketAsync(_repository.HtmlUrl);
 					break;
 				case "Share":
 					DataTransferManager.ShowShareUI();
 					break;
 				case "Browser":
-					await Helpers.Utils.OpenUri(_repository.Url);
+					await Helpers.Utils.OpenUri(_repository.HtmlUrl);
 					break;
 				case "Download":
 					//TODO: Download with app
-					await Helpers.Utils.OpenUri($"{_repository.HtmlUrl}archive/{currentBranch}.zip");
+					await Helpers.Utils.OpenUri($"{_repository.HtmlUrl}/archive/{currentBranch}.zip");
 					break;
 				case "Git":
 					var pkg = new DataPackage();

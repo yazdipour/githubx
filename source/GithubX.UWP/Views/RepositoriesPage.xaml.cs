@@ -8,13 +8,16 @@ namespace GithubX.UWP.Views
 	public sealed partial class RepositoriesPage : Page
 	{
 		private ObservableCollection<Octokit.Repository> repositories = new ObservableCollection<Octokit.Repository>();
-		private string Title = "Repositories";
+		private string Title = "Repositories", prevTitle;
+		private Octokit.ApiOptions options = new Octokit.ApiOptions() { PageCount = 1, PageSize = 30 };
 
 		public RepositoriesPage() => InitializeComponent();
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
 			Title = e.Parameter as string;
+			if (prevTitle != Title) NavigationCacheMode = NavigationCacheMode.Disabled;
+			else NavigationCacheMode = NavigationCacheMode.Enabled;
 		}
 
 		private void GridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -22,10 +25,12 @@ namespace GithubX.UWP.Views
 
 		private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
-			Octokit.ApiOptions options = new Octokit.ApiOptions() { PageCount = 1, PageSize = 30 };
+			//if (repositories.Count > 0 && prevTitle == Title) return;
+			prevTitle = Title;
+			repositories.Clear();
 			var temp = Title == "Repositories"
-				? await GithubService.UserService.GetStarredRepositories(options)
-				: await GithubService.UserService.GetStarredRepositories(options); ;
+				? await GithubService.UserService.GetUserRepositories(options)
+				: await GithubService.UserService.GetStarredRepositories(options);
 			foreach (var t in temp) repositories.Add(t);
 		}
 	}

@@ -119,9 +119,6 @@
     <Compile Include="Views\Controls\ActivityItem.xaml.cs">
       <DependentUpon>ActivityItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\CategoryItem.xaml.cs">
-      <DependentUpon>CategoryItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Controls\GistItem.xaml.cs">
       <DependentUpon>GistItem.xaml</DependentUpon>
     </Compile>
@@ -131,7 +128,7 @@
     <Compile Include="Views\Controls\UserItem.xaml.cs">
       <DependentUpon>UserItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AddCategoryDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\AddCategoryDialog.xaml.cs">
       <DependentUpon>AddCategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\NotificationDialog.xaml.cs">
@@ -148,9 +145,6 @@
     </Compile>
     <Compile Include="Views\Controls\NotificationItem.xaml.cs">
       <DependentUpon>NotificationItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Dialogs\CategoryDialog.xaml.cs">
-      <DependentUpon>CategoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FollowPage.xaml.cs">
       <DependentUpon>FollowPage.xaml</DependentUpon>
@@ -258,10 +252,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Controls\CategoryItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Controls\GistItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,7 +264,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AddCategoryDialog.xaml">
+    <Page Include="Views\Dialogs\AddCategoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -295,10 +285,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\NotificationItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Dialogs\CategoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

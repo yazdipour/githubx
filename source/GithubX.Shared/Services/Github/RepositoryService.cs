@@ -30,10 +30,10 @@ namespace GithubX.Shared.Services
 			=> await client.Repository.Content.GetReadme(repoId);
 
 		public async Task<IReadOnlyList<RepositoryContent>> GetRepositoryContent(long repoId)
-			=> (await client.Repository.Content.GetAllContents(repoId));
+			=> await client.Repository.Content.GetAllContents(repoId);
 
 		public async Task<IReadOnlyList<RepositoryContent>> GetRepositoryContent(long repoId, string path)
-			=> (await client.Repository.Content.GetAllContents(repoId, path));
+			=> await client.Repository.Content.GetAllContents(repoId, path);
 
 		private async Task<string> GetMarkDownReadyAsync(string url, bool fromCache = true)
 		{
@@ -51,17 +51,29 @@ namespace GithubX.Shared.Services
 		}
 		public async Task<string> GetMarkDownReadyAsync(RepositoryContent content)
 		{
-			var type = content.Name.Substring(content.Name.LastIndexOf("."));
+			var type = content.Name.Substring(content.Name.LastIndexOf(".") + 1);
 			if (type.Equals("png", StringComparison.OrdinalIgnoreCase)
 				|| type.Equals("jpg", StringComparison.OrdinalIgnoreCase)
 				|| type.Equals("jpeg", StringComparison.OrdinalIgnoreCase)
 				|| type.Equals("bmp", StringComparison.OrdinalIgnoreCase)
 				|| type.Equals("tiff", StringComparison.OrdinalIgnoreCase))
-				return $"![]({content.Url})";
-			var oldSha = await BlobCache.LocalMachine.GetObject<string>("_" + content.Url) ?? "";
+				return $"![]({content.DownloadUrl})";
+			else if (type.Equals("mp4", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("mkv", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("flv", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("flv", StringComparison.OrdinalIgnoreCase)
+				|| type.Equals("mp3", StringComparison.OrdinalIgnoreCase)){
+				return $"Can't Open {type} file.\nDownload Link → {content.DownloadUrl}";
+			}
+			var oldSha = "";
+			try
+			{
+				oldSha = await BlobCache.LocalMachine.GetObject<string>("_" + content.Url) ?? "";
+			}
+			catch { }
+			var result = await GetMarkDownReadyAsync(content.DownloadUrl, content.Sha.Equals(oldSha));
 			await BlobCache.LocalMachine.InsertObject("_" + content.Url, content.Sha);
-			var result = await GetMarkDownReadyAsync(content.Url, content.Sha.Equals(oldSha));
-			return type.Equals("md", StringComparison.OrdinalIgnoreCase) ? result : $"``` {result} ```";
+			return type.Equals("md", StringComparison.OrdinalIgnoreCase) ? result : $"```{type} {result} ```";
 		}
 		#endregion
 

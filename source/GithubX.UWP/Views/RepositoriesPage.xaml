@@ -8,12 +8,13 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:octo="using:Octokit"
 	Loaded="Page_Loaded"
+	NavigationCacheMode="Enabled"
 	mc:Ignorable="d">
 	<Grid>
 		<TextBlock
 			Margin="16"
 			Style="{StaticResource TitleTextBlockStyle}"
-			Text="{x:Bind Title}" />
+			Text="{x:Bind Title, Mode=OneWay}" />
 		<GridView
 			Margin="8,42,0,0"
 			ItemClick="GridView_ItemClick"
@@ -22,7 +23,7 @@
 			Style="{StaticResource MainGridView}">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="octo:Repository">
-					<ctrl:RepositoryItem Repo="{x:Bind}"/>
+					<ctrl:RepositoryItem />
 				</DataTemplate>
 			</GridView.ItemTemplate>
 		</GridView>

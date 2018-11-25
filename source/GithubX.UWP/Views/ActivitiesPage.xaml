@@ -19,8 +19,7 @@
 			Margin="8,42,0,0"
 			ItemClick="GridView_ItemClick"
 			ItemsSource="{x:Bind activityRepositories}"
-			ScrollViewer.HorizontalScrollMode="Auto"
-			ScrollViewer.HorizontalScrollBarVisibility="Auto"
+			ScrollViewer.VerticalScrollMode="Disabled"
 			Style="{StaticResource MainGridView}">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="octo:Activity">

@@ -7,6 +7,7 @@
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:model="using:GithubX.Shared.Models"
+	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
 	<Grid>
 		<TextBlock
@@ -21,7 +22,47 @@
 			Style="{ThemeResource MainGridView}">
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="model:Category">
-					<ctrl:CategoryItem />
+					<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
+						<Grid
+							Width="{StaticResource DefaultWidth}"
+							RequestedTheme="Dark"
+							Style="{StaticResource CardGrid}">
+							<Grid.Background>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+									<GradientStop Color="{x:Bind Background.Color1}" />
+									<GradientStop Offset="1" Color="{x:Bind Background.Color2}" />
+								</LinearGradientBrush>
+							</Grid.Background>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock
+								Grid.Column="0"
+								Margin="4,8"
+								VerticalAlignment="Center"
+								FontFamily="/Assets/Files/devicon.ttf#devicon"
+								FontSize="36"
+								Text="{x:Bind Icon}" />
+							<TextBlock
+								Grid.Column="1"
+								VerticalAlignment="Center"
+								FontFamily="Candara"
+								FontSize="22"
+								FontWeight="SemiBold"
+								MaxLines="1"
+								Text="{x:Bind Title}" />
+							<Button
+								Grid.Column="2"
+								Background="Transparent"
+								Click="Add_Click"
+								Content=""
+								DataContext="{x:Bind}"
+								FontFamily="Segoe MDL2 Assets"
+								Style="{StaticResource CircleButtonStyle}" />
+						</Grid>
+					</toolkit:DropShadowPanel>
 				</DataTemplate>
 			</GridView.ItemTemplate>
 		</GridView>

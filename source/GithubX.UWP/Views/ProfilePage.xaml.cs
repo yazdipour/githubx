@@ -16,11 +16,18 @@ namespace GithubX.UWP.Views
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			if (_notifications.Count > 0) return;
-			_user = await GithubService.UserService.GetUser();
-			Bindings.Update();
-			var temp = await GithubService.UserService.GetAllNotifications(new Octokit.ApiOptions() { PageSize = 10, PageCount = 1 });
-			foreach (var t in temp) if (t.Unread) _notifications.Add(t);
+			try
+			{
+				if (_notifications.Count > 0) return;
+				_user = await GithubService.UserService.GetUser();
+				Bindings.Update();
+				var temp = await GithubService.UserService.GetAllNotifications(new Octokit.ApiOptions() { PageSize = 10, PageCount = 1 });
+				foreach (var t in temp) if (t.Unread) _notifications.Add(t);
+			}
+			catch (Exception ex)
+			{
+				Logger.E(ex);
+			}
 		}
 
 		private void Notification_ItemClick(object sender, ItemClickEventArgs e)

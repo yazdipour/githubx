@@ -41,16 +41,17 @@
 							Margin="0,0,0,42"
 							HorizontalAlignment="Stretch"
 							Background="{ThemeResource SystemControlAltLowAcrylicElementBrush}"
+							IsItemClickEnabled="True"
 							ItemClick="Content_Click"
 							ItemsSource="{x:Bind _contents, Mode=OneWay}"
-							ScrollViewer.VerticalScrollBarVisibility="Visible"
-							ScrollViewer.VerticalScrollMode="Enabled">
+							ScrollViewer.VerticalScrollBarVisibility="Auto"
+							ScrollViewer.VerticalScrollMode="Auto">
 							<ListView.Header>
 								<StackPanel>
 									<DropDownButton
 										x:Name="branchDropDown"
 										HorizontalAlignment="Stretch"
-										Content="{Binding _repository.DefaultBranch, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Branch → '}">
+										Content="{Binding currentBranch, Converter={StaticResource StringConcatConverter}, ConverterLanguage='End', ConverterParameter='Branch → '}">
 										<DropDownButton.Flyout>
 											<MenuFlyout Placement="Bottom">
 												<ToggleMenuFlyoutItem Text="{x:Bind _repository.DefaultBranch}" />
@@ -69,7 +70,7 @@
 							<ListView.ItemTemplate>
 								<DataTemplate x:DataType="octo:RepositoryContent">
 									<StackPanel Orientation="Horizontal">
-										<SymbolIcon Symbol="{x:Bind Type.Value, Converter={StaticResource ContentTypeToSymbolConverter}}" />
+										<SymbolIcon Margin="0,0,8,0" Symbol="{x:Bind Type.Value, Converter={StaticResource ContentTypeToSymbolConverter}}" />
 										<TextBlock Text="{x:Bind Name}" />
 									</StackPanel>
 								</DataTemplate>
@@ -90,11 +91,15 @@
 					</Grid>
 				</toolkit:DropShadowPanel>
 			</SplitView.Pane>
-			<toolkit:MarkdownTextBlock
-				Padding="8"
-				LinkClicked="MarkdownTextBlock_LinkClicked"
-				Background="{ThemeResource SystemChromeAltHighColor}"
-				Text="{x:Bind _markdownContent, Mode=TwoWay}" />
+
+			<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+				<toolkit:MarkdownTextBlock
+					x:Name="markDown"
+					Padding="8"
+					Background="{ThemeResource SystemChromeAltHighColor}"
+					LinkClicked="MarkdownTextBlock_LinkClicked"
+					Text="&gt; Loading" />
+			</ScrollViewer>
 		</SplitView>
 		<toolkit:DropShadowPanel
 			Margin="0,0,0,8"

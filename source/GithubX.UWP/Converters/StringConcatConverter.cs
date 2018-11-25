@@ -7,11 +7,20 @@ namespace GithubX.UWP.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			var res = language.Equals("End")
-					   ? (string)parameter + (string)value
-					   : (string)value + (string)parameter;
-			if (targetType.Name == "Uri") return new Uri(res);
-			return res;
+			try
+			{
+				var res = language.Equals("End")
+					   ? parameter.ToString() + value.ToString()
+					   : value.ToString() + parameter.ToString();
+				if (targetType.Name == "Uri") return new Uri(res);
+				return res;
+			}
+			catch (Exception ex)
+			{
+
+				Shared.Services.Logger.E(ex);
+				return null;
+			}
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)

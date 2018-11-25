@@ -18,7 +18,8 @@ namespace GithubX.UWP.Views
 			loadingControl.IsEnabled = false;
 			if (cred == null) return;
 			GithubService.SetClient(cred.Password);
-			Frame.Navigate(typeof(MotherPage));
+			if (GithubService.Auth.IsLoggedIn())
+				Frame.Navigate(typeof(MotherPage));
 		}
 
 		private async void Login_Click(object sender, RoutedEventArgs e)

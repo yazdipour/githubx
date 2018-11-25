@@ -50,14 +50,16 @@
 					<Run Text="{x:Bind _user.Bio}" />
 				</Paragraph>
 				<Paragraph>
-					🏪 <Run Text="{x:Bind _user.Company}" />
-					<LineBreak/>🗺 <Run Text="{x:Bind _user.Location}" />
-					<LineBreak/><Hyperlink NavigateUri="{x:Bind _user.Email, Converter={StaticResource StringConcatConverter}, ConverterParameter='mailto:', ConverterLanguage='End'}">
-						✉
+					<Run Text="🏪 " />
+					<Run Text="{x:Bind _user.Company}" />
+					<LineBreak /><Run Text="🗺 " />
+					<Run Text="{x:Bind _user.Location}" />
+					<LineBreak /><Hyperlink NavigateUri="{x:Bind _user.Email, Converter={StaticResource StringConcatConverter}, ConverterParameter='mailto:', ConverterLanguage='End'}">
+						<Run Text="✉ " />
 						<Run Text="{x:Bind _user.Email}" />
 					</Hyperlink>
-					<LineBreak/><Hyperlink NavigateUri="{x:Bind _user.Blog}">
-						🌐
+					<LineBreak /><Hyperlink NavigateUri="{x:Bind _user.Blog}">
+						<Run Text="🌐 " />
 						<Run Text="{x:Bind _user.Blog}" />
 					</Hyperlink>
 				</Paragraph>

@@ -33,27 +33,20 @@ namespace GithubX.Shared.Services
 			: await client.User.Followers.GetAll(user, options);
 		#endregion
 
-		#region Gist
 		public async Task<IReadOnlyList<Gist>> GetUserGists(string user = null)
-			=> (user == null)
+			=> user == null
 			? await client.Gist.GetAll()
 			: await client.Gist.GetAllForUser(user);
-		#endregion
 
-		#region Repos
-		public async Task<IReadOnlyList<Repository>> GetUserRepositories(ApiOptions options)
-			=> (await client.Repository.GetAllForCurrent(options));
+		public async Task<IReadOnlyList<Repository>> GetUserRepositories(ApiOptions options, string user = null)
+			=> user == null
+			? (await client.Repository.GetAllForCurrent(options))
+			: (await client.Repository.GetAllForUser(user, options));
 
-		public async Task<IReadOnlyList<Repository>> GetRepositoriesForUser(string user, ApiOptions options)
-			=> (await client.Repository.GetAllForUser(user, options));
-		#endregion
-
-		#region Star
 		public async Task<IReadOnlyList<Repository>> GetStarredRepositories(ApiOptions options, string user = null)
-			=> (user == null)
+			=> user == null
 			? (await client.Activity.Starring.GetAllForCurrent(options))
 			: (await client.Activity.Starring.GetAllForUser(user, options));
-		#endregion
 
 		public async Task<IReadOnlyList<Activity>> GetUserActivity(ApiOptions options, string user)
 			=> await client.Activity.Events.GetAllUserReceived(user, options);

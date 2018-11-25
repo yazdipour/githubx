@@ -50,7 +50,7 @@ namespace GithubX.UWP.Views
 			}
 			else
 			{
-				//await new SettingsDialog().ShowAsync();
+				await new Dialogs.SettingsDialog().ShowAsync();
 				navigationView.SelectedItem = null;
 			}
 		}
@@ -70,7 +70,7 @@ namespace GithubX.UWP.Views
 
 		private void RepoSearch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
-
+			//TODO
 		}
 	}
 }
