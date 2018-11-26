@@ -105,16 +105,15 @@
     <Compile Include="Converters\StringConcatConverter.cs" />
     <Compile Include="Converters\TypeToActionStringConverter.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
-    <Compile Include="Helpers\Services\Api\ApiHandler.cs" />
-    <Compile Include="Helpers\Services\Api\IGithubApi.cs" />
-    <Compile Include="Helpers\Services\Api\IXApi.cs" />
-    <Compile Include="Helpers\Services\CacheKeys.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Views\ActivitiesPage.xaml.cs">
       <DependentUpon>ActivitiesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CategoriesPage.xaml.cs">
       <DependentUpon>CategoriesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CategoryPage.xaml.cs">
+      <DependentUpon>CategoryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ActivityItem.xaml.cs">
       <DependentUpon>ActivityItem.xaml</DependentUpon>
@@ -245,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CategoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CategoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -53,7 +53,7 @@ namespace GithubX.Shared.Services
 
 		#region Notification
 		public async Task<IReadOnlyList<Notification>> GetAllNotifications(ApiOptions options)
-			=> await client.Activity.Notifications.GetAllForCurrent(new NotificationsRequest { All = true, Participating = true }, options);
+			=> await client.Activity.Notifications.GetAllForCurrent(new NotificationsRequest { All = true }, options);
 
 		public async Task MarkAllNotificationsAsRead() => await client.Activity.Notifications.MarkAsRead();
 

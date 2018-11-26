@@ -16,11 +16,7 @@ namespace GithubX.UWP.Views
 		{
 			var user = await GithubService.UserService.GetUser();
 			var temp = await GithubService.UserService.GetUserActivity(options, user?.Login);
-			foreach (var item in temp)
-			{
-				if (item.Type == "PublicEvent") continue;//>> X made X/Y public
-				activityRepositories.Add(item);
-			}
+			foreach (var item in temp) activityRepositories.Add(item);
 		}
 
 		private void GridView_ItemClick(object sender, ItemClickEventArgs e)

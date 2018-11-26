@@ -1,5 +1,4 @@
 ﻿using GithubX.Shared.Services;
-using GithubX.UWP.Helpers.Api;
 using Windows.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;

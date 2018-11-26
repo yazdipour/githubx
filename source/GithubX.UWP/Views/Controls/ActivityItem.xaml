@@ -13,7 +13,7 @@
 		<converters:TypeToActionStringConverter x:Key="TypeToActionStringConverter" x:Name="TypeToActionStringConverter" />
 	</UserControl.Resources>
 	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
-		<Grid Style="{StaticResource CardGrid}">
+		<Grid Style="{StaticResource CardGrid}" ToolTipService.ToolTip="{Binding Converter={StaticResource TypeToActionStringConverter}}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="*" />
@@ -29,7 +29,7 @@
 				<TextBlock FontWeight="SemiLight">
 					<Hyperlink NavigateUri="{Binding Actor.Login, Converter={StaticResource StringConcatConverter}, ConverterParameter='githubx://user/', ConverterLanguage='End'}" UnderlineStyle="None">
 						<Run FontWeight="SemiBold" Text="{Binding Actor.Login}" />
-					</Hyperlink> <Run Text="{Binding Type, Converter={StaticResource TypeToActionStringConverter}}" />
+					</Hyperlink> <Run Text="{Binding Converter={StaticResource TypeToActionStringConverter}}" />
 					<LineBreak />
 					<Run FontWeight="SemiBold" Text="{Binding Repo.Name}" />
 				</TextBlock>

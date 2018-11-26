@@ -7,14 +7,24 @@ namespace GithubX.UWP.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			var str = (string)value;
-			if (str.Contains("Watch"))
-				str = "starred";
-			else if (str.Contains("Fork"))
-				str = "forked";
-			else if (str.Contains("Create"))
-				str = "created";
-			return str;
+			var act = (Octokit.Activity)value;
+			switch (act.Type)
+			{
+				case "WatchEvent":
+					return "starred";
+				case "ForkEvent":
+					return "forked";
+				case "CreateEvent":
+					return "created" + (act.Payload.ToString().Contains("branch") ? " a branch" : "");
+				case "PullRequestEvent":
+					return "opened a PR";
+				case "MemberEvent":
+					return "added";
+				case "PublicEvent":
+					return "made public";
+				default:
+					return "";
+			}
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language)

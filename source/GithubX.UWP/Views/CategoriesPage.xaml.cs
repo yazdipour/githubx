@@ -1,7 +1,6 @@
 ﻿using GithubX.Shared.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -14,14 +13,10 @@ namespace GithubX.UWP.Views
 		public CategoriesPage() => InitializeComponent();
 
 		private void Add_Click(object sender, RoutedEventArgs e)
-		{
-			if (sender is Button btn) openCategoryDialog(btn?.DataContext as Category);
-		}
+			=> openCategoryDialog((sender as Button)?.DataContext as Category);
 
 		private void GridView_ItemClick(object sender, ItemClickEventArgs e)
-		{
-
-		}
+			=> Frame.Navigate(typeof(CategoryPage), e?.ClickedItem as Category);
 
 		private async void openCategoryDialog(Category category = null)
 		{
@@ -29,7 +24,7 @@ namespace GithubX.UWP.Views
 			{
 				var d = new AddCategoryDialog(category);
 				await d.ShowAsync();
-				if (d?.category?.Id != -1)
+				if ((d?.category?.Id ?? -1) != -1)
 					categories.Add(d.category);
 			}
 			catch { }
