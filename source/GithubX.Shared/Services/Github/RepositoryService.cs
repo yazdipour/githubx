@@ -35,7 +35,7 @@ namespace GithubX.Shared.Services
 		public async Task<IReadOnlyList<RepositoryContent>> GetRepositoryContent(long repoId, string path)
 			=> await client.Repository.Content.GetAllContents(repoId, path);
 
-		private async Task<string> GetMarkDownReadyAsync(string url, bool fromCache = true)
+		public async Task<string> GetMarkDownReadyAsync(string url, bool fromCache = true)
 		{
 			var buffer = await BlobCache.LocalMachine.DownloadUrl(url, fetchAlways: !fromCache);
 			string md = System.Text.Encoding.UTF8.GetString(buffer, 0, buffer.Length);

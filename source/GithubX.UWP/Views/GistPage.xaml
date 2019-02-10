@@ -5,22 +5,42 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:GithubX.UWP.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:octo="using:Octokit"
 	xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	mc:Ignorable="d">
-	<toolkit:Expander
-		x:Name="Expander2"
-		Margin="0"
-		VerticalAlignment="Top"
-		HorizontalContentAlignment="Stretch"
-		ExpandDirection="Down"
-		Header="This is the header - expander 2"
-		IsExpanded="False">
-		<Grid Height="256" Background="Red">
-			<TextBlock
-				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Text="This is the expanded content without a content overlay"
-				TextWrapping="Wrap" />
-		</Grid>
-	</toolkit:Expander>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<ListView
+			x:Name="listView"
+			IsItemClickEnabled="True"
+			ItemClick="listView_ItemClick"
+			ItemsSource="{x:Bind gist.Files.Values}"
+			ScrollViewer.HorizontalScrollBarVisibility="Auto"
+			ScrollViewer.HorizontalScrollMode="Enabled"
+			ScrollViewer.IsHorizontalRailEnabled="True"
+			SelectionMode="None">
+			<ListView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<VirtualizingStackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ListView.ItemsPanel>
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="octo:GistFile">
+					<Button Content="{x:Bind Filename}" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<ScrollViewer
+			Grid.Row="1"
+			HorizontalScrollBarVisibility="Disabled"
+			VerticalScrollBarVisibility="Visible">
+			<toolkit:MarkdownTextBlock
+				x:Name="markdown"
+				Padding="12"
+				Text="Loading" />
+		</ScrollViewer>
+	</Grid>
 </Page>

@@ -12,7 +12,7 @@
 		<converters:ContentTypeToSymbolConverter x:Key="ContentTypeToSymbolConverter" x:Name="ContentTypeToSymbolConverter" />
 	</UserControl.Resources>
 	<toolkit:DropShadowPanel Style="{StaticResource ShadowCard}">
-		<Grid Style="{StaticResource CardGrid}">
+		<Grid Style="{StaticResource CardGrid}" ToolTipService.ToolTip="{Binding Subject.Title}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="*" />
